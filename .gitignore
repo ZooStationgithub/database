@@ -4,5 +4,6 @@
 # Files by IntelliJ IDEA
 **.iml
 **/.gradle/**
-**/idea/**
+**/.idea/**
 **/build/**
+**/out/**

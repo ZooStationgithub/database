@@ -1,8 +1,10 @@
 package nl.zoostation.database.web.config;
 
+import nl.zoostation.database.service.config.ServiceConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
+@Import(ServiceConfig.class)
 @ComponentScan({"nl.zoostation.database.web.controller"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
 

@@ -13,7 +13,7 @@ select
     p.visa_needed as visa_needed,
     cp.company_list as preferred_company_types,
     p.experience as experience,
-    r.role_list as preferred_roles,
+    r.role_list as roles,
     p.work_history as work_history,
     p.english_level as english_level,
     p.travel_time as travel_time,

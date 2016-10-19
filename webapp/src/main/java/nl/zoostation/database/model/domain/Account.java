@@ -3,6 +3,7 @@ package nl.zoostation.database.model.domain;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author valentinnastasi
@@ -87,8 +88,8 @@ public class Account extends Identifiable {
         this.creationDate = creationDate;
     }
 
-    public Instant getActivationDate() {
-        return activationDate;
+    public Optional<Instant> getActivationDate() {
+        return Optional.ofNullable(activationDate);
     }
 
     public void setActivationDate(Instant activationDate) {

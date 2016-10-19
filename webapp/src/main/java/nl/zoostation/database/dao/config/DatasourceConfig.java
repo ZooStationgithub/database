@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 
 /**
  * @author valentinnastasi
- * @created 17/10/2016 17:36
  */
 @Configuration
 @PropertySource({"classpath:database.properties"})

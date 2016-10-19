@@ -17,7 +17,7 @@ public abstract class HibernateGenericDAO<E extends PersistentEntity, K extends 
 
     private final SessionFactory sessionFactory;
 
-    public HibernateGenericDAO(@Autowired SessionFactory sessionFactory) {
+    public HibernateGenericDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

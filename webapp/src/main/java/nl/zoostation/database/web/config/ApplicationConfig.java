@@ -1,15 +1,16 @@
 package nl.zoostation.database.web.config;
 
+import nl.zoostation.database.security.config.SecurityConfig;
+import nl.zoostation.database.service.config.ServiceConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 /**
  * @author valentinnastasi
- * @created 14/10/2016 09:51
  */
 @Configuration
-@Import({MvcConfig.class})
-@ImportResource({"/WEB-INF/spring-security.xml"})
+@Import({MvcConfig.class, ServiceConfig.class})
+@ImportResource("/WEB-INF/spring-security.xml")
 public class ApplicationConfig {
 }

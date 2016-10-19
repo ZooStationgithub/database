@@ -11,4 +11,6 @@ public interface IAccountDAO extends IGenericDAO<Account, Long> {
 
     Optional<Account> findByLogin(String login);
 
+    void activate(String login);
+
 }

@@ -31,7 +31,9 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>nl.zoostation.testapp.web.config.MvcConfig</param-value>
+            <param-value>
+                nl.zoostation.testapp.web.config.ApplicationConfig
+            </param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

@@ -9,10 +9,9 @@ import org.springframework.stereotype.Repository;
 /**
  * @author valentinnastasi
  */
-@Repository("profileDAO")
 public class ProfileDAO extends HibernateGenericDAO<Profile, Long> implements IProfileDAO {
 
-    public ProfileDAO(@Autowired SessionFactory sessionFactory) {
+    public ProfileDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

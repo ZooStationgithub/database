@@ -1,7 +1,7 @@
-package nl.zoostation.database.web.config;
+package nl.zoostation.database.app.config;
 
-import nl.zoostation.database.security.config.SecurityConfig;
-import nl.zoostation.database.service.config.ServiceConfig;
+import nl.zoostation.database.app.config.MvcConfig;
+import nl.zoostation.database.app.config.ServiceConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;

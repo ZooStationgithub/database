@@ -1,4 +1,4 @@
-package nl.zoostation.database.dao.config;
+package nl.zoostation.database.app.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import javax.sql.DataSource;
  * @author valentinnastasi
  */
 @Configuration
-@PropertySource({"classpath:database.properties"})
 @EnableTransactionManagement
 public class DatasourceConfig {
 
@@ -28,11 +27,6 @@ public class DatasourceConfig {
     @Value("${database.driver}") private String driverClassName;
     @Value("${hibernate.dialect}") private String hibernateDialect;
     @Value("${database.schema}") private String defaultSchema;
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 
     @Bean
     public DataSource dataSource() {

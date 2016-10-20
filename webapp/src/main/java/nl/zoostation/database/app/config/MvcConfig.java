@@ -1,6 +1,6 @@
-package nl.zoostation.database.web.config;
+package nl.zoostation.database.app.config;
 
-import nl.zoostation.database.service.config.ServiceConfig;
+import nl.zoostation.database.app.config.ServiceConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

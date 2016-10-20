@@ -1,8 +1,7 @@
-package nl.zoostation.database.security.config;
+package nl.zoostation.database.app.config;
 
 import nl.zoostation.database.security.SecurityUserDetailsService;
 import nl.zoostation.database.service.IAccountService;
-import nl.zoostation.database.service.config.ServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

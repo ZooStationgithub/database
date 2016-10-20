@@ -16,6 +16,6 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
         </sec:authentication-provider>
     </sec:authentication-manager>
 
-    <context:component-scan base-package="nl.zoostation.database.security" />
+    <context:component-scan base-package="nl.zoostation.database.app.config" />
 
 </beans>

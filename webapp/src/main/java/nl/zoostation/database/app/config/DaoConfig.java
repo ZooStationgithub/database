@@ -1,5 +1,6 @@
-package nl.zoostation.database.dao.config;
+package nl.zoostation.database.app.config;
 
+import nl.zoostation.database.app.config.DatasourceConfig;
 import nl.zoostation.database.dao.IAccountDAO;
 import nl.zoostation.database.dao.IProfileDAO;
 import nl.zoostation.database.dao.impl.AccountDAO;
@@ -7,7 +8,6 @@ import nl.zoostation.database.dao.impl.ProfileDAO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

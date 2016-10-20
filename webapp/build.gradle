@@ -1,7 +1,6 @@
 group 'nl.zoostation'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
@@ -51,7 +50,7 @@ dependencies {
 }
 
 war {
-    archiveName = 'zoostationdatabase.war'
+    archiveName = 'zsd.war'
     duplicatesStrategy = 'WARN'
 }
 
@@ -74,4 +73,10 @@ idea {
         downloadJavadoc = true
         downloadSources = true
     }
+}
+
+if (project.hasProperty("env") && project.properties['env'] == 'prod') {
+    sourceSets.main.resources.srcDirs += "src/main/profiles/prod"
+} else {
+    sourceSets.main.resources.srcDirs += "src/main/profiles/dev"
 }

@@ -1,7 +1,8 @@
 package nl.zoostation.database.dao;
 
-import nl.zoostation.database.dao.config.DaoConfig;
-import nl.zoostation.database.dao.config.DatasourceConfig;
+import nl.zoostation.database.app.config.DaoConfig;
+import nl.zoostation.database.app.config.DatasourceConfig;
+import nl.zoostation.database.app.config.PropertiesConfig;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author valentinnastasi
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatasourceConfig.class, DaoConfig.class})
+@ContextConfiguration(classes = {PropertiesConfig.class, DatasourceConfig.class, DaoConfig.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class})
 @Transactional
 @Rollback
-public class BaseDAOTest {
+public abstract class BaseDAOTest {
 }

@@ -1,4 +1,4 @@
-package nl.zoostation.database.mail.config;
+package nl.zoostation.database.app.config;
 
 import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.mail.impl.MailService;
@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
@@ -15,7 +14,6 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
  * @author valentinnastasi
  */
 @Configuration
-@PropertySource("classpath:email.properties")
 public class MailConfig {
 
     @Value("${mail.server.host}") private String mailServerHost;
@@ -38,7 +36,7 @@ public class MailConfig {
     @Bean
     public FreeMarkerConfigurationFactoryBean freeMarkerConfiguration() {
         FreeMarkerConfigurationFactoryBean factoryBean = new FreeMarkerConfigurationFactoryBean();
-        factoryBean.setTemplateLoaderPath("/emailtemplates");
+        factoryBean.setTemplateLoaderPath("/templates");
         factoryBean.setDefaultEncoding("UTF-8");
         return factoryBean;
     }

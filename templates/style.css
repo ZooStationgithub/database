@@ -16,6 +16,7 @@ header {
 nav.search {
     border-right: 2px solid #eee;
     margin-right: -2px;
+    font-size: 80%;
 }
 
 .dev-list {
@@ -32,4 +33,23 @@ li.person {
 
 li.person table {
     margin-top: 10px;
+}
+
+.custom-tooltip::after {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 3px 3px 3px 0px;
+    color: #FFF;
+    font-size: 80%;
+    content: attr(title);
+    margin-top: -30px;
+    opacity: 0;
+    padding: 3px 7px;
+    position: absolute;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
 }

@@ -8,12 +8,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
+
+import java.util.Properties;
 
 /**
  * @author valentinnastasi
  */
 @Configuration
+@EnableAsync
 public class MailConfig {
 
     @Value("${mail.server.host}") private String mailServerHost;
@@ -30,13 +34,19 @@ public class MailConfig {
         javaMailSender.setPassword(mailServerPassword);
         javaMailSender.setDefaultEncoding("UTF-8");
         javaMailSender.setProtocol("smtp");
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        javaMailSender.setJavaMailProperties(properties);
+
         return javaMailSender;
     }
 
     @Bean
     public FreeMarkerConfigurationFactoryBean freeMarkerConfiguration() {
         FreeMarkerConfigurationFactoryBean factoryBean = new FreeMarkerConfigurationFactoryBean();
-        factoryBean.setTemplateLoaderPath("/templates");
+        factoryBean.setTemplateLoaderPath("classpath:/templates/");
         factoryBean.setDefaultEncoding("UTF-8");
         return factoryBean;
     }

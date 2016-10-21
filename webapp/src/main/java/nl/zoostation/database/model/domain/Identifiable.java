@@ -5,13 +5,12 @@ import java.util.Objects;
 
 /**
  * @author valentinnastasi
- * @created 18/10/2016 10:58
  */
 @MappedSuperclass
 public abstract class Identifiable implements PersistentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

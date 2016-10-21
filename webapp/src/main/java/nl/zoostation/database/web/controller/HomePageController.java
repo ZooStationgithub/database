@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * <p>Controller for home page.</p>
  *
  * @author valentinnastasi
- * @created 14/10/2016 10:02
  */
 @Controller
 public class HomePageController {

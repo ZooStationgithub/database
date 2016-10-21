@@ -6,6 +6,6 @@ package nl.zoostation.database.service.listeners;
 @FunctionalInterface
 public interface EventExecutor {
 
-    void execute();
+    void execute() throws Exception;
 
 }

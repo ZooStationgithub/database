@@ -14,14 +14,14 @@ public class TransactionEventListeners {
     private static final Logger logger = LogManager.getLogger(TransactionEventListeners.class);
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleAfterCommitEvent(AfterTransactionCommitEvent event) {
+    public void handleAfterCommitEvent(AfterTransactionCommitEvent event) throws Exception {
         logger.debug("Now handling AfterTransactionCommitEvent");
         event.getEventExecutor().execute();
     }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleAfterCommitAsyncEvent(AfterTransactionCommitAsyncEvent event) {
+    public void handleAfterCommitAsyncEvent(AfterTransactionCommitAsyncEvent event) throws Exception {
         logger.debug("Now handling AfterTransactionCommitAsyncEvent");
         event.getEventExecutor().execute();
     }

@@ -1,7 +1,10 @@
 package nl.zoostation.database.service;
 
 import nl.zoostation.database.model.domain.Account;
+import nl.zoostation.database.model.domain.AccountGroup;
+import nl.zoostation.database.model.form.AccountForm;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,7 +14,11 @@ public interface IAccountService {
 
     void create(Account account);
 
+    void create(AccountForm accountForm);
+
     void activate(String login);
+
+    List<AccountGroup> findGroups();
 
     Optional<Account> findByLogin(String login);
 

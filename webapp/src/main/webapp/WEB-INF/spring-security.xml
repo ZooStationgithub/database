@@ -8,6 +8,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 
     <sec:http auto-config="true">
         <sec:intercept-url pattern="/**" access="permitAll" /> <!-- For development only -->
+        <sec:intercept-url pattern="/account" access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN')" />
     </sec:http>
 
     <sec:authentication-manager>

@@ -62,6 +62,11 @@ public class EmailDescription {
             return this.emailDescription;
         }
 
+        public Builder setFrom(String from) {
+            this.emailDescription.from = from;
+            return this;
+        }
+
         public Builder addTo(String to) {
             this.emailDescription.toRecipients.add(to);
             return this;

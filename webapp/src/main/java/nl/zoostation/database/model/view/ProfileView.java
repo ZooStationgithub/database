@@ -1,10 +1,9 @@
 package nl.zoostation.database.model.view;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "profile_search_view")
-public class ProfileGridRow implements Serializable {
+public class ProfileView implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -54,7 +53,7 @@ public class ProfileGridRow implements Serializable {
     @Column(name = "experience")
     private Integer experience;
 
-    @Column(name = "roles")
+    @Column(name = "preferred_roles")
     private String roles;
 
     @Column(name = "work_history")
@@ -78,7 +77,10 @@ public class ProfileGridRow implements Serializable {
     @Column(name = "relocation_reason")
     private String relocationReason;
 
-    public ProfileGridRow() {
+    @Transient
+    private Map<String, String> additionalInfo = new HashMap<>();
+
+    public ProfileView() {
     }
 
     public Long getId() {
@@ -249,11 +251,20 @@ public class ProfileGridRow implements Serializable {
         this.relocationReason = relocationReason;
     }
 
+
+    public Map<String, String> getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(Map<String, String> additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProfileGridRow that = (ProfileGridRow) o;
+        ProfileView that = (ProfileView) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(zoostationNumber, that.zoostationNumber) &&
                 Objects.equals(rank, that.rank) &&
@@ -286,7 +297,7 @@ public class ProfileGridRow implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ProfileGridRow{");
+        final StringBuilder sb = new StringBuilder("ProfileView{");
         sb.append("id=").append(id);
         sb.append(", zoostationNumber='").append(zoostationNumber).append('\'');
         sb.append(", rank='").append(rank).append('\'');

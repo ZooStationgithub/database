@@ -5,7 +5,7 @@
 
     <p>Login: ${login}</p>
     <p>Password: ${password}</p>
-    <p>Activation link: http://localhost:8080/zsd/activate?u=${id}</p>
+    <p>Activation link: ${link}</p>
 
 </body>
 </html>

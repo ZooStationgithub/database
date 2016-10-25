@@ -2,7 +2,6 @@ package nl.zoostation.database.service.listeners;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -14,16 +13,15 @@ public class TransactionEventListeners {
     private static final Logger logger = LogManager.getLogger(TransactionEventListeners.class);
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleAfterCommitEvent(AfterTransactionCommitEvent event) throws Exception {
-        logger.debug("Now handling AfterTransactionCommitEvent");
-        event.getEventExecutor().execute();
+    public void handleAfterCommitEvent(AfterCommitEvent event) throws Exception {
+        logger.debug("Now handling AfterCommitEvent");
+        event.getTask().execute();
     }
 
-    @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleAfterCommitAsyncEvent(AfterTransactionCommitAsyncEvent event) throws Exception {
-        logger.debug("Now handling AfterTransactionCommitAsyncEvent");
-        event.getEventExecutor().execute();
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
+    public void handleAfterRollbackEvent(AfterRollbackEvent event) throws Exception {
+        logger.debug("Now handling AfterRollbackEvent");
+        event.getTask().execute();
     }
 
 }

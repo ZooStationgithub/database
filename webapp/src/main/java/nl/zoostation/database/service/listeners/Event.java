@@ -5,13 +5,13 @@ package nl.zoostation.database.service.listeners;
  */
 public abstract class Event {
 
-    private final EventExecutor eventExecutor;
+    private final Task task;
 
-    protected Event(EventExecutor eventExecutor) {
-        this.eventExecutor = eventExecutor;
+    public Event(Task task) {
+        this.task = task;
     }
 
-    public EventExecutor getEventExecutor() {
-        return eventExecutor;
+    public Task getTask() {
+        return task;
     }
 }

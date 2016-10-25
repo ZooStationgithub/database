@@ -1,4 +1,6 @@
-create or replace view profile_search_view as
+drop view if exists profile_search_view;
+
+create view profile_search_view as
 select 
 	p.id as id,
     p.zs_number as zs_number,
@@ -13,7 +15,7 @@ select
     p.visa_needed as visa_needed,
     cp.company_list as preferred_company_types,
     p.experience as experience,
-    r.role_list as roles,
+    r.role_list as preferred_roles,
     p.work_history as work_history,
     p.english_level as english_level,
     p.travel_time as travel_time,
@@ -24,7 +26,7 @@ select
 from profiles p
 	left join 
     (
-		select p.id as profile_id, group_concat(rt.name separator ', ') as rank_list
+		select p.id as profile_id, group_concat(rt.name separator '; ') as rank_list
         from profiles p
 			left join profile_ranks r on r.profile_id = p.id
             left join rank_types rt on rt.id = r.rank_type_id
@@ -34,7 +36,7 @@ from profiles p
     left join programming_languages spl on spl.id = p.second_pr_lng_id
 	left join 
 	(
-		select p.id as profile_id, group_concat(f.name separator ', ') as framework_list
+		select p.id as profile_id, group_concat(f.name separator '; ') as framework_list
 		from profiles p
 			left join known_frameworks kf on kf.profile_id = p.id
 			left join frameworks f on f.id = kf.framework_id
@@ -43,7 +45,7 @@ from profiles p
     left join countries oc on oc.id = p.origin_country_id
     left join
     (
-		select p.id as profile_id, group_concat(c.name separator ', ') as country_list
+		select p.id as profile_id, group_concat(c.name separator '; ') as country_list
         from profiles p
 			left join preferred_countries pc on pc.profile_id = p.id
             left join countries c on c.id = pc.country_id
@@ -52,7 +54,7 @@ from profiles p
     left join contract_types ct on ct.id = p.contract_type_id
     left join
     (
-		select p.id as profile_id, group_concat(c.name separator ', ') as company_list
+		select p.id as profile_id, group_concat(c.name separator '; ') as company_list
         from profiles p
 			left join preferred_company_types pc on pc.profile_id = p.id
             left join company_types c on c.id = pc.company_type_id
@@ -60,7 +62,7 @@ from profiles p
     ) as cp on p.id = cp.profile_id
     left join
     (
-		select p.id as profile_id, group_concat(r.name separator ', ') as role_list
+		select p.id as profile_id, group_concat(r.name separator '; ') as role_list
         from profiles p 
 			left join profile_roles pr on pr.profile_id = p.id
             left join role_types r on r.id = pr.role_type_id

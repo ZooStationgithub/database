@@ -18,7 +18,7 @@ public class AuthorizationController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String openLoginPage() {
-        return "login";
+        return "/login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

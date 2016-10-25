@@ -16,7 +16,7 @@
     <div class="container text-center">
         <a href='<spring:url value="/index"/>' class="btn btn-primary">
             <i class="glyphicon glyphicon-arrow-left"></i>
-            <spring:message code="page.account.backToSearch"/>
+            <spring:message code="common.keyword.backToSearch"/>
         </a>
     </div>
 </header>

@@ -18,8 +18,12 @@ public interface IAccountService {
 
     void activate(String login);
 
+    void activate(Long id);
+
     List<AccountGroup> findGroups();
 
     Optional<Account> findByLogin(String login);
+
+    void resendActivation(Long id);
 
 }

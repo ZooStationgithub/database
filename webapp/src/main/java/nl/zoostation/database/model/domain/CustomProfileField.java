@@ -1,8 +1,6 @@
 package nl.zoostation.database.model.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -18,6 +16,10 @@ public class CustomProfileField extends Identifiable {
 
     @Column(name = "field_value", length = 255)
     private String fieldValue;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     public CustomProfileField() {
     }
@@ -47,6 +49,15 @@ public class CustomProfileField extends Identifiable {
 
     public void setFieldValue(String fieldValue) {
         this.fieldValue = fieldValue;
+    }
+
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     @Override

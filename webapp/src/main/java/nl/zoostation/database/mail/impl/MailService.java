@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author valentinnastasi
@@ -26,9 +27,17 @@ public class MailService implements IMailService {
     }
 
     @Override
-    public void sendMail(EmailDescription emailDescription) throws Exception {
-        MimeMessagePreparator messagePreparator = createMessagePreparator(emailDescription);
-        mailSender.send(messagePreparator);
+    public void sendMail(EmailDescription... emailDescriptions) throws Exception {
+        Arrays.stream(emailDescriptions).forEach(emailDescription -> {
+            MimeMessagePreparator messagePreparator = createMessagePreparator(emailDescription);
+            mailSender.send(messagePreparator);
+        });
+    }
+
+    @Async
+    @Override
+    public void sendMailAsync(EmailDescription... emailDescriptions) throws Exception {
+        sendMail(emailDescriptions);
     }
 
     private MimeMessagePreparator createMessagePreparator(final EmailDescription emailDescription) {

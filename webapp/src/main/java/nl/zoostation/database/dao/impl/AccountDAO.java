@@ -12,8 +12,10 @@ import java.util.Optional;
 /**
  * @author valentinnastasi
  */
-public class AccountDAO extends HibernateGenericDAO<Account, Long> implements IAccountDAO {
+@Repository
+public class AccountDAO extends GenericDAO<Account, Long> implements IAccountDAO {
 
+    @Autowired
     public AccountDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }

@@ -5,6 +5,8 @@ package nl.zoostation.database.mail;
  */
 public interface IMailService {
 
-    void sendMail(EmailDescription emailDescription) throws Exception;
+    void sendMail(EmailDescription... emailDescriptions) throws Exception;
+
+    void sendMailAsync(EmailDescription... emailDescriptions) throws Exception;
 
 }

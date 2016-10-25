@@ -33,7 +33,7 @@ public class Profile extends Identifiable {
     private Integer testRating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "origin_country")
+    @JoinColumn(name = "origin_country_id")
     private Country originCountry;
 
     @Column(name = "visa_needed")
@@ -93,8 +93,7 @@ public class Profile extends Identifiable {
     @Cascade(CascadeType.ALL)
     private RoleType roleType;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     @Cascade(CascadeType.ALL)
     private Set<CustomProfileField> customFields = new HashSet<>();
 

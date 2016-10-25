@@ -37,7 +37,7 @@ public class MailConfig {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.enable", "true");
         javaMailSender.setJavaMailProperties(properties);
 
         return javaMailSender;

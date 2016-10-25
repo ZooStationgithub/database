@@ -6,13 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -53,6 +52,20 @@ public class AccountManagementController {
         logger.debug("Form validation succeeded");
         accountService.create(account);
         return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/account/activate", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void activateAccount(@RequestParam("u") Long id) {
+        logger.debug("Processing request '/account/activate GET' for account id {}", id);
+        accountService.activate(id);
+    }
+
+    @RequestMapping(value = "/account/activate/resend", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void resendActivationLink(@RequestParam("u") Long id) {
+        logger.debug("Processing request '/account/activate/resend POST' for account id {}", id);
+        accountService.resendActivation(id);
     }
 
 }

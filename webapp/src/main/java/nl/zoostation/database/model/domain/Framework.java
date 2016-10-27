@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 /**
  * @author valentinnastasi
- * @created 18/10/2016 11:50
  */
 @Entity
 @Table(name = "frameworks")
@@ -17,7 +16,7 @@ import javax.persistence.*;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Framework extends Named {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "programming_language_id")
     private ProgrammingLanguage programmingLanguage;
 

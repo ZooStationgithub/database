@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
  * @author valentinnastasi
- * @created 18/10/2016 11:54
  */
 @Entity
 @Table(name = "profiles")
@@ -85,12 +85,12 @@ public class Profile extends Identifiable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "profile_ranks", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "rank_type_id"))
-    @Cascade(CascadeType.ALL)
+    //@Cascade(CascadeType.ALL)
     private RankType rankType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "profile_roles", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "role_type_id"))
-    @Cascade(CascadeType.ALL)
+    //@Cascade(CascadeType.ALL)
     private RoleType roleType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
@@ -112,16 +112,16 @@ public class Profile extends Identifiable {
         this.zoostationNumber = zoostationNumber;
     }
 
-    public ProgrammingLanguage getMainProgrammingLanguage() {
-        return mainProgrammingLanguage;
+    public Optional<ProgrammingLanguage> getMainProgrammingLanguage() {
+        return Optional.ofNullable(mainProgrammingLanguage);
     }
 
     public void setMainProgrammingLanguage(ProgrammingLanguage mainProgrammingLanguage) {
         this.mainProgrammingLanguage = mainProgrammingLanguage;
     }
 
-    public ProgrammingLanguage getSecondProgrammingLanguage() {
-        return secondProgrammingLanguage;
+    public Optional<ProgrammingLanguage> getSecondProgrammingLanguage() {
+        return Optional.ofNullable(secondProgrammingLanguage);
     }
 
     public void setSecondProgrammingLanguage(ProgrammingLanguage secondProgrammingLanguage) {
@@ -136,8 +136,8 @@ public class Profile extends Identifiable {
         this.testRating = testRating;
     }
 
-    public Country getOriginCountry() {
-        return originCountry;
+    public Optional<Country> getOriginCountry() {
+        return Optional.ofNullable(originCountry);
     }
 
     public void setOriginCountry(Country originCountry) {
@@ -216,8 +216,8 @@ public class Profile extends Identifiable {
         this.relocationReason = relocationReason;
     }
 
-    public ContractType getContractType() {
-        return contractType;
+    public Optional<ContractType> getContractType() {
+        return Optional.ofNullable(contractType);
     }
 
     public void setContractType(ContractType contractType) {
@@ -251,16 +251,16 @@ public class Profile extends Identifiable {
         this.preferredCompanyTypes.addAll(preferredCompanyTypes);
     }
 
-    public RankType getRankType() {
-        return rankType;
+    public Optional<RankType> getRankType() {
+        return Optional.ofNullable(rankType);
     }
 
     public void setRankType(RankType rankType) {
         this.rankType = rankType;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public Optional<RoleType> getRoleType() {
+        return Optional.ofNullable(roleType);
     }
 
     public void setRoleType(RoleType roleType) {

@@ -9,10 +9,9 @@ import javax.persistence.Table;
 
 /**
  * @author valentinnastasi
- * @created 18/10/2016 11:24
  */
 @Entity
-@Table(name = "role_types")
+@Table(name = "rank_types")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class RankType extends Named {

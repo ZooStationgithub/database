@@ -5,6 +5,7 @@ import nl.zoostation.database.model.domain.PersistentEntity;
 import org.hibernate.SessionFactory;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,13 @@ abstract class GenericDAO<E extends PersistentEntity, K extends Serializable> ex
     @Override
     public List<E> findAll() {
         return getSession().createQuery("from " + getEntityType().getSimpleName(), getEntityType()).list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<E> findMany(Collection<K> ids) {
+        return getSession().createQuery("from " + getEntityType().getSimpleName() + " where id in (:idList)")
+                .setParameterList("idList", ids).list();
     }
 
     protected abstract Class<E> getEntityType();

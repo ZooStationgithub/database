@@ -3,6 +3,7 @@ package nl.zoostation.database.dao;
 import nl.zoostation.database.model.domain.PersistentEntity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +21,7 @@ public interface IGenericDAO<E extends PersistentEntity, K extends Serializable>
     Optional<E> findOne(K id);
 
     List<E> findAll();
+
+    List<E> findMany(Collection<K> ids);
 
 }

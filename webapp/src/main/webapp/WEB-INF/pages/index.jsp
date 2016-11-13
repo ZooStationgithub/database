@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +8,19 @@
     <title><spring:message code="page.index.title"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
+    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/bootstrap.min.js"/>' type="application/javascript"></script>
 </head>
 <body>
 
+<%@ include file="navbar.jsp" %>
+
 <header>
-    <h1 class="text-center"><spring:message code="page.index.title"/></h1>
+    <h1 class="text-center"></h1>
 </header>
 
 <nav class="search col-xs-2">
 
-    <a href="dev-registration.html" class="btn btn-xs btn-info">
-        <i class="glyphicon glyphicon-plus"></i>
-        <spring:message code="page.index.button.createDeveloper"/>
-    </a>
-    <a href='<spring:url value="/account"/>' class="btn btn-xs btn-warning">
-        <i class="glyphicon glyphicon-plus"></i>
-        <spring:message code="page.index.button.createAccount"/>
-    </a>
     <form role="search">
         <h2>
             Search

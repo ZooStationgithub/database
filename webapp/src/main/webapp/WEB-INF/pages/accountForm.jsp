@@ -8,6 +8,8 @@
     <title><spring:message code="page.accountForm.title"/></title>
     <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/bootstrap.min.js"/>' type="application/javascript"></script>
 </head>
 <body>
 

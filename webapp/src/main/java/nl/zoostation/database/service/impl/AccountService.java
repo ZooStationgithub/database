@@ -88,6 +88,13 @@ public class AccountService extends TransactionAwareService implements IAccountS
 
     @Transactional
     @Override
+    public void delete(Long id) {
+        Objects.requireNonNull(id);
+        accountDAO.delete(id);
+    }
+
+    @Transactional
+    @Override
     public void activate(String login) {
         logger.debug("Activating account with login '{}'", login);
         Objects.requireNonNull(login, "Parameter 'login' is required");

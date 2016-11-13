@@ -16,6 +16,8 @@ public interface IAccountService {
 
     void create(AccountForm accountForm);
 
+    void delete(Long id);
+
     void activate(String login);
 
     void activate(Long id);

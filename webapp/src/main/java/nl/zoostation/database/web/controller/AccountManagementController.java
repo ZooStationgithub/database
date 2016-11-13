@@ -83,6 +83,13 @@ public class AccountManagementController {
         return "redirect:/account/list";
     }
 
+    @RequestMapping(value = "/account/form/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteAccount(@PathVariable Long id) {
+        logger.debug("Processing request '/account/form DELETE' with id {}", id);
+        accountService.delete(id);
+    }
+
     @RequestMapping(value = "/account/activate", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void activateAccount(@RequestParam("u") Long id) {
@@ -90,9 +97,9 @@ public class AccountManagementController {
         accountService.activate(id);
     }
 
-    @RequestMapping(value = "/account/activate/resend", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/activate/resend/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void resendActivationLink(@RequestParam("u") Long id) {
+    public void resendActivationLink(@PathVariable Long id) {
         logger.debug("Processing request '/account/activate/resend POST' for account id {}", id);
         accountService.resendActivation(id);
     }

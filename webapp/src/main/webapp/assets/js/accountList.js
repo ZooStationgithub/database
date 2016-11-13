@@ -7,7 +7,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         scrollX: true,
-        ajax: '/zsd/account/grid',
+        ajax: '/account/grid',
         columns: [
             {
                 data: 'login',
@@ -62,11 +62,8 @@ $(document).ready(function () {
     $('#grid').one('click', 'a[target="resend-link"]', function(event) {
         var id = $(event.target).data('id');
         $.ajax({
-            url: '/zsd/account/activate/resend/' + id,
-            method: 'get',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            }
+            url: '/account/activate/resend/' + id,
+            method: 'get'
         }).done(function(response) {
             alert("Activation link resent"); // TODO create popup
         }).fail(function(response) {
@@ -77,11 +74,8 @@ $(document).ready(function () {
     $('#grid').one('click', 'a[target="delete"]', function(event) {
         var id = $(event.target).data('id');
         $.ajax({
-            url: '/zsd/account/form/' + id,
-            method: 'delete',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            }
+            url: '/account/form/' + id,
+            method: 'delete'
         }).done(function(response) {
             grid.draw();
         }).fail(function(response) {

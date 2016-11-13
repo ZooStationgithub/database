@@ -2,21 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <title><spring:message code="page.accountList.title"/></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
-    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/bootstrap.min.js"/>' type="application/javascript"></script>
+    <%@ include file="header.jsp" %>
     <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/moment.js"/>' type="application/javascript"></script>
-    <script>
-        var csrfToken = $("meta[name='_csrf']").attr("content");
-        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-    </script>
     <script src='<spring:url value="/assets/js/accountList.js"/>' type="application/javascript"></script>
 </head>
 <body>

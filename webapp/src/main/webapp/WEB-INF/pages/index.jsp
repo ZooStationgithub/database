@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +9,7 @@
     <title><spring:message code="page.index.title"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
+    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
 </head>
 <body>
 
@@ -14,9 +17,9 @@
     <h1 class="text-center"><spring:message code="page.index.title"/></h1>
 </header>
 
-<nav class="search col-xs-2">
+<nav class="search col-xs-12 col-sm-6 col-md-3">
 
-    <a href="dev-registration.html" class="btn btn-xs btn-info">
+    <a href='<spring:url value="/developer/edit"/>' class="btn btn-xs btn-info">
         <i class="glyphicon glyphicon-plus"></i>
         <spring:message code="page.index.button.createDeveloper"/>
     </a>
@@ -24,174 +27,136 @@
         <i class="glyphicon glyphicon-plus"></i>
         <spring:message code="page.index.button.createAccount"/>
     </a>
-    <form role="search">
+    
+    <form:form commandName="searchQuery" role="search" id="formSearch">
         <h2>
-            Search
-            <button type="submit" class="btn btn-primary pull-right">
+            <spring:message code="common.keyword.search"/>
+            <button id="btnSearch" class="btn btn-primary pull-right">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </h2>
 
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter ZSNumber" name="dev-search" id="dev-search">
+            <form:input path="filter.zsNumber" type="text" cssClass="form-control" id="dev-search" />
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="srch-grade">Grade</label>
+                   for="srch-grade"><spring:message code="form.developer.grade"/></label>
             <div>
-                <select id="srch-grade"
-                        class="form-control input-sm">
-                    <option>any</option>
-                    <option>junior</option>
-                    <option>middle</option>
-                    <option>senior</option>
-                </select>
+                <form:select path="filter.rankTypeId" id="srch-grade" cssClass="form-control input-sm">
+                    <form:option value="" />
+                    <form:options items="${rankTypes}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="srch-mpl">Main programming language</label>
+                   for="srch-mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
             <div>
-                <select id="srch-mpl"
-                        class="form-control input-sm">
-                    <option>---</option>
-                    <option>java SE</option>
-                    <option>java EE</option>
-                    <option>Native Android</option>
-                    <option>Native iOS</option>
-                    <option>Python</option>
-                    <option>PHP</option>
-                    <option>C#</option>
-                    <option>C++</option>
-                    <option>C</option>
-                    <option>HTML/CSS</option>
-                    <option>javascript</option>
-                </select>
+                <form:select path="filter.mainProgrammingLanguageId" id="srch-mpl" cssClass="form-control input-sm">
+                    <form:option value="" />
+                    <form:options items="${languages}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="srch-spl">Second programming language</label>
+                   for="srch-spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
             <div>
-                <select id="srch-spl"
-                        class="form-control input-sm">
-                    <option>---</option>
-                    <option>java SE</option>
-                    <option>java EE</option>
-                    <option>Native Android</option>
-                    <option>Native iOS</option>
-                    <option>Python</option>
-                    <option>PHP</option>
-                    <option>C#</option>
-                    <option>C++</option>
-                    <option>C</option>
-                    <option>HTML/CSS</option>
-                    <option>javascript</option>
-                </select>
+                <form:select path="filter.secondProgrammingLanguageId" id="srch-spl" cssClass="form-control input-sm">
+                    <form:option value="" />
+                    <form:options items="${languages}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="srch-frameworks">Frameworks</label>
+                   for="srch-frameworks"><spring:message code="form.developer.frameworks"/></label>
             <div>
-                <select id="srch-frameworks"
-                        class="form-control input-sm">
-                    <option>---</option>
-                    <option>Spring</option>
-                    <option>Play Framework</option>
-                    <option>Grails</option>
-                    <option>Vaadin</option>
-                    <option>GWT</option>
-                    <option>JSF</option>
-                </select>
+                <form:select path="filter.knownFrameworkIds" id="srch-frameworks" cssClass="form-control input-sm" multiple="true">
+                    <form:options items="${frameworks}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="rating-cd">Rating code doctor test, %</label>
+                   for="rating-cd"><spring:message code="form.developer.testRating"/></label>
             <div>
-                <input type="number"
-                       min="0"
-                       max="100"
-                       class="form-control input-sm"
-                       id="rating-cd">
+                <form:input path="filter.testRating" type="number"
+                            min="0"
+                            max="100"
+                            cssClass="form-control input-sm"
+                            id="rating-cd" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="country-origin">Country of origin</label>
+                   for="country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <select class="form-control input-sm"
-                        id="country-origin">
-                    <option>---</option>
-                    <option>country 1</option>
-                    <option>country 2</option>
-                    <option>country 3</option>
-                    <option>country 4</option>
-                </select>
+                <form:select path="filter.originCountryId" cssClass="form-control input-sm" id="country-origin">
+                    <form:option value="" />
+                    <form:options items="${countries}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="country-preferred">Preferred countries to work in by the developer</label>
+                   for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div>
-                <select class="form-control input-sm"
-                        id="country-preferred"
-                        multiple>
-                    <option>country 1</option>
-                    <option>country 2</option>
-                    <option>country 3</option>
-                    <option>country 4</option>
-                </select>
+                <form:select path="filter.preferredCountryIds" id="country-preferred" cssClass="form-control input-sm"
+                                multiple="true">
+                    <form:options items="${countries}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="permnanent-frelance">Looking for permanent or freelance contract</label>
+                   for="permnanent-frelance"><spring:message code="form.developer.contractType"/></label>
             <div>
-                <select class="form-control input-sm"
-                        id="permnanent-frelance">
-                    <option>---</option>
-                    <option>permanent</option>
-                    <option>freelance</option>
-                </select>
+                <form:select path="filter.contractTypeId" class="form-control input-sm" id="permnanent-frelance">
+                    <form:option value="" />
+                    <form:options items="${contractTypes}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-check">
             <label class="control-label"
-            >VISA needed</label>
+            ><spring:message code="form.developer.visaNeeded"/></label>
             <div class="radio">
                 <label>
-                    <input type="radio"
+                    <form:radiobutton path="filter.visaNeeded" value="" cssClass="form-check-input"/>
+                    <!--<input type="radio"
                            name="visa"
                            checked
-                           class="form-check-input">
-                    Any
+                           class="form-check-input">-->
+                    <spring:message code="common.keyword.any"/>
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio"
+                    <form:radiobutton path="filter.visaNeeded" value="${true}" cssClass="form-check-input"/> 
+                    <!--<input type="radio"
                            name="visa"
-                           class="form-check-input">
-                    Yes
+                           class="form-check-input">-->
+                    <spring:message code="common.keyword.yes"/>
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio"
+                    <form:radiobutton path="filter.visaNeeded" value="${false}" cssClass="form-check-input"/>
+                    <!--<input type="radio"
                            name="visa"
-                           class="form-check-input">
-                    No
+                           class="form-check-input">-->
+                    <spring:message code="common.keyword.no"/>
                 </label>
             </div>
         </div>
@@ -199,111 +164,101 @@
 
         <div class="form-group">
             <label class="control-label"
-                   for="company-type">Preferred company type</label>
+                   for="company-type"><spring:message code="form.developer.preferredCompanyTypes"/></label>
             <div>
-                <select class="form-control input-sm"
-                        id="company-type">
-                    <option>startup</option>
-                    <option>mid size</option>
-                    <option>corporate</option>
-                </select>
+                <form:select path="filter.preferredCompanyTypeIds" class="form-control input-sm" id="company-type">
+                    <form:option value="" />
+                    <form:options items="${companyTypes}" itemValue="id" itemLabel="name"/>
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="experience">Experience in developing, years</label>
+                   for="experience"><spring:message code="form.developer.experience"/></label>
             <div>
-                <input type="number"
-                       id="experience"
-                       min="0"
-                       class="form-control input-sm">
+                <form:input path="filter.experience" type="number"
+                            id="experience"
+                            min="0"
+                            class="form-control input-sm"/>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="role">Preferred role</label>
+                   for="role"><spring:message code="form.developer.preferredRole"/></label>
             <div>
-                <select class="form-control input-sm"
-                        id="role">
-                    <option>---</option>
-                    <option>developer</option>
-                    <option>team lead</option>
-                </select>
+                <form:select path="filter.roleTypeId" class="form-control input-sm" id="role">
+                    <form:option value="" />
+                    <form:options items="${roleTypes}" itemValue="id" itemLabel="name" />
+                </form:select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="worked-before">Companies worked before</label>
+                   for="worked-before"><spring:message code="form.developer.workHistory"/></label>
             <div>
-                            <textarea class="form-control  input-sm"
-                                      id="worked-before"
-                                      maxlength="500"
-                                      placeholder="max 500 characters"></textarea>
+                <form:textarea path="filter.workHistory" cssClass="form-control input-sm" id="worked-before"
+                               maxlength="500" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="english-level">English level</label>
+                   for="english-level"><spring:message code="form.developer.englishLevel"/></label>
             <div>
-                <input type="number"
-                       min="1"
-                       max="5"
-                       placeholder="level 1-5"
-                       class="form-control input-sm"
-                       id="english-level">
+                <form:input path="filter.englishLevel" type="number"
+                            min="1"
+                            max="5"
+                            placeholder="level 1-5"
+                            cssClass="form-control input-sm"
+                            id="english-level" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="travel">Willing to travel maximum xx minutes per day</label>
+                   for="travel"><spring:message code="form.developer.travelTime"/></label>
             <div>
-                <input type="number"
-                       class="form-control input-sm"
-                       id="travel">
+                <form:input path="filter.travelTime" type="number"
+                            cssClass="form-control input-sm"
+                            id="travel"/>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="place-live">Preferred place to live in Netherlands</label>
+                   for="place-live"><spring:message code="form.developer.preferredCity"/></label>
             <div>
-                            <textarea class="form-control input-sm"
-                                      id="place-live"></textarea>
+                <form:textarea path="filter.preferredCity" cssClass="form-control input-sm" id="place-live" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="availability">Available in # weeks (notice period)</label>
+                   for="availability"><spring:message code="form.developer.availability"/></label>
             <div>
-                <input type="number"
-                       class="form-control input-sm"
-                       id="availability">
+                <form:input path="filter.availability" type="number"
+                            cssClass="form-control input-sm" id="availability" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
-                   for="hours-week">Amount hours working per week</label>
+                   for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
             <div>
-                <input type="number"
-                       class="form-control input-sm"
-                       id="hours-week">
+                <form:input path="filter.hoursPerWeek" type="number"
+                            class="form-control input-sm" id="hours-week" />
             </div>
         </div>
-
-    </form>
+    </form:form>
 </nav>
 
 
-<div class="col-xs-10 wrapper dev-list">
+<div class="col-xs-12 col-sm-6 col-md-9 wrapper dev-list">
     <ul class="list-unstyled">
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -335,7 +290,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -367,7 +322,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -399,7 +354,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -431,7 +386,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -463,7 +418,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -495,7 +450,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -527,7 +482,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -559,7 +514,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -591,7 +546,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-6">
+        <li class="person col-sm-12 col-md-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -627,14 +582,3 @@
 </div>
 
 </body>
-
-<!--
-<html>
-<head>
-    <title>ZooStation database</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
-</html>
--->

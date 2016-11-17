@@ -2,6 +2,7 @@ package nl.zoostation.database.dao.impl;
 
 import nl.zoostation.database.dao.IProfileViewDAO;
 import nl.zoostation.database.model.domain.CustomProfileField;
+import nl.zoostation.database.model.grid.SearchQuery;
 import nl.zoostation.database.model.view.ProfileView;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

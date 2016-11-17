@@ -145,7 +145,7 @@
                    for="company-type"><spring:message code="form.developer.preferredCompanyTypes"/></label>
             <div class="col-xs-10">
                 <form:radiobuttons path="preferredCompanyTypeIds" items="${companyTypes}" itemLabel="name" itemValue="id"
-                                    cssClass="" id="company-type" />
+                                    cssClass="form-check-input" id="company-type" />
             </div>
         </div>
 

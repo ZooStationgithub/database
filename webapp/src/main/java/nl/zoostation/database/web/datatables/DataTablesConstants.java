@@ -27,7 +27,7 @@ public interface DataTablesConstants {
 
         String COLUMN_SEARCHABLE_PATTERN = ".+\\[searchable\\]";
 
-        String COLUMN_ORDERBALE_PATTERN = ".+\\[orderable\\]";
+        String COLUMN_ORDERABLE_PATTERN = ".+\\[orderable\\]";
 
         String COLUMN_FILTER_PATTERN = ".+\\[search\\]\\[value\\]";
 

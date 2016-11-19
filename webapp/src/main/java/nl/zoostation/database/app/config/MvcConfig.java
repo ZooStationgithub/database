@@ -35,13 +35,17 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
-        converters.add(new MappingJackson2HttpMessageConverter(objectMapper));
+        converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new DataTablesRequestResolver());
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().findAndRegisterModules();
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package nl.zoostation.database.model.domain;
 
+import nl.zoostation.database.model.grid.ProfileGridRow;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
@@ -16,6 +17,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "profiles")
+@SqlResultSetMapping(name = "ProfileGridRow",
+        classes = @ConstructorResult(targetClass = ProfileGridRow.class,
+                columns = {
+                        @ColumnResult(name = "id", type = Long.class)
+                }
+        )
+)
 public class Profile extends Identifiable {
 
     @Column(name = "zs_number", length = 32)

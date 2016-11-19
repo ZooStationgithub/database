@@ -2,8 +2,8 @@ package nl.zoostation.database.web.controller;
 
 import nl.zoostation.database.model.form.AccountForm;
 import nl.zoostation.database.model.grid.AccountGridRow;
-import nl.zoostation.database.model.grid.GridViewInputSpec;
-import nl.zoostation.database.model.grid.GridViewOutputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
 import nl.zoostation.database.service.IAccountService;
 import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;

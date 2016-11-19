@@ -2,7 +2,7 @@ package nl.zoostation.database.dao.impl;
 
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.grid.AccountGridRow;
-import nl.zoostation.database.model.grid.GridViewInputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;

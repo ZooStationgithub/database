@@ -1,6 +1,6 @@
 package nl.zoostation.database.dao;
 
-import nl.zoostation.database.model.grid.GridViewInputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 
 import java.util.List;
 

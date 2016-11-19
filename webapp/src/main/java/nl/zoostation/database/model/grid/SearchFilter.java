@@ -1,32 +1,87 @@
 package nl.zoostation.database.model.grid;
 
+import nl.zoostation.database.model.grid.annotations.From;
+import nl.zoostation.database.model.grid.annotations.Select;
+import nl.zoostation.database.model.grid.annotations.Where;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author valentinnastasi
  */
+@Select(
+        columns = "DISTINCT profile.id AS id",
+        count = "COUNT(DISTINCT profile.id)"
+)
+@From(
+        "profiles profile " +
+        "LEFT JOIN preferred_company_types company_type ON profile.id = company_type.profile_id " +
+        "LEFT JOIN known_frameworks framework ON profile.id = framework.profile_id " +
+        "LEFT JOIN preferred_countries country ON profile.id = country.profile_id " +
+        "LEFT JOIN profile_ranks rank ON profile.id = rank.profile_id " +
+        "LEFT JOIN profile_roles role ON profile.id = role.profile_id"
+)
 public class SearchFilter {
 
+    @Where("LOWER(profile.zs_number) LIKE '%'||LOWER(:${field})||'%'")
     private String zsNumber;
+
+    @Where("profile.main_pr_lng_id = :${field}")
     private Long mainProgrammingLanguageId;
+
+    @Where("profile.second_pr_lng_id = :${field}")
     private Long secondProgrammingLanguageId;
+
+    @Where("profile.test_rating = :${field}")
     private Integer testRating;
+
+    @Where("profile.origin_country_id = :${field}")
     private Long originCountryId;
+
+    @Where("profile.visa_needed = :${field}")
     private Boolean visaNeeded;
+
+    @Where("profile.experience = :${field}")
     private Integer experience;
+
+    // TODO Is it really needed?
     private String workHistory;
+
+    @Where("profile.english_level = :${field}")
     private Integer englishLevel;
+
+    @Where("profile.travel_time = :${field}")
     private Integer travelTime;
+
+    @Where("LOWER(profile.preferred_city) LIKE '%'||LOWER(:${field})||'%'")
     private String preferredCity;
+
+    @Where("profile.availability = :${field}")
     private Integer availability;
+
+    @Where("profile.hours_per_week = :${field}")
     private Integer hoursPerWeek;
+
+    // TODO Is it really needed?
     private String relocationReason;
+
+    @Where("profile.contract_type_id = :${field}")
     private Long contractTypeId;
+
+    @Where("framework.framework_id IN (:${field})")
     private List<Long> knownFrameworkIds;
+
+    @Where("country.country_id IN (:${field})")
     private List<Long> preferredCountryIds;
+
+    @Where("company_type.company_type_id IN (:${field})")
     private List<Long> preferredCompanyTypeIds;
+
+    @Where("role.role_type_id IN (:${field})")
     private Long roleTypeId;
+
+    @Where("rank.rank_type_id IN (:${field})")
     private Long rankTypeId;
 
     public SearchFilter() {
@@ -44,7 +99,6 @@ public class SearchFilter {
      * roles table - {roles}
      */
 
-    @Path("profile.zs_number")
     public String getZsNumber() {
         return zsNumber;
     }
@@ -53,7 +107,6 @@ public class SearchFilter {
         this.zsNumber = zsNumber;
     }
 
-    @Path("profile.main_pr_lng_id")
     public Long getMainProgrammingLanguageId() {
         return mainProgrammingLanguageId;
     }
@@ -62,7 +115,6 @@ public class SearchFilter {
         this.mainProgrammingLanguageId = mainProgrammingLanguageId;
     }
 
-    @Path("profile.second_pr_lng_id")
     public Long getSecondProgrammingLanguageId() {
         return secondProgrammingLanguageId;
     }
@@ -71,7 +123,6 @@ public class SearchFilter {
         this.secondProgrammingLanguageId = secondProgrammingLanguageId;
     }
 
-    @Path("profile.test_rating")
     public Integer getTestRating() {
         return testRating;
     }
@@ -80,7 +131,6 @@ public class SearchFilter {
         this.testRating = testRating;
     }
 
-    @Path("profile.origin_country_id")
     public Long getOriginCountryId() {
         return originCountryId;
     }
@@ -89,7 +139,6 @@ public class SearchFilter {
         this.originCountryId = originCountryId;
     }
 
-    @Path("profile.visa_needed")
     public Boolean getVisaNeeded() {
         return visaNeeded;
     }
@@ -98,7 +147,6 @@ public class SearchFilter {
         this.visaNeeded = visaNeeded;
     }
 
-    @Path("profile.experience")
     public Integer getExperience() {
         return experience;
     }
@@ -107,7 +155,6 @@ public class SearchFilter {
         this.experience = experience;
     }
 
-    @Path(value = "profile.work_history", exactMatch = false)
     public String getWorkHistory() {
         return workHistory;
     }
@@ -116,7 +163,6 @@ public class SearchFilter {
         this.workHistory = workHistory;
     }
 
-    @Path("profile.english_level")
     public Integer getEnglishLevel() {
         return englishLevel;
     }
@@ -125,7 +171,6 @@ public class SearchFilter {
         this.englishLevel = englishLevel;
     }
 
-    @Path("profile.travel_time")
     public Integer getTravelTime() {
         return travelTime;
     }
@@ -134,7 +179,6 @@ public class SearchFilter {
         this.travelTime = travelTime;
     }
 
-    @Path(value = "profile.preferred_city", exactMatch = false)
     public String getPreferredCity() {
         return preferredCity;
     }
@@ -143,7 +187,6 @@ public class SearchFilter {
         this.preferredCity = preferredCity;
     }
 
-    @Path("profile.availability")
     public Integer getAvailability() {
         return availability;
     }
@@ -152,7 +195,6 @@ public class SearchFilter {
         this.availability = availability;
     }
 
-    @Path("profile.hours_per_week")
     public Integer getHoursPerWeek() {
         return hoursPerWeek;
     }
@@ -161,7 +203,6 @@ public class SearchFilter {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    @Path(value = "profile.relocation_reason", exactMatch = false)
     public String getRelocationReason() {
         return relocationReason;
     }
@@ -170,7 +211,6 @@ public class SearchFilter {
         this.relocationReason = relocationReason;
     }
 
-    @Path("profile.contract_type_id")
     public Long getContractTypeId() {
         return contractTypeId;
     }
@@ -179,7 +219,6 @@ public class SearchFilter {
         this.contractTypeId = contractTypeId;
     }
 
-    @Path(value = "frameworks.framework_id", collection = true)
     public List<Long> getKnownFrameworkIds() {
         return knownFrameworkIds;
     }
@@ -188,7 +227,6 @@ public class SearchFilter {
         this.knownFrameworkIds = knownFrameworkIds;
     }
 
-    @Path(value = "countries.country_id", collection = true)
     public List<Long> getPreferredCountryIds() {
         return preferredCountryIds;
     }
@@ -197,7 +235,6 @@ public class SearchFilter {
         this.preferredCountryIds = preferredCountryIds;
     }
 
-    @Path(value = "companies.company_id", collection = true)
     public List<Long> getPreferredCompanyTypeIds() {
         return preferredCompanyTypeIds;
     }
@@ -206,7 +243,6 @@ public class SearchFilter {
         this.preferredCompanyTypeIds = preferredCompanyTypeIds;
     }
 
-    @Path("roles.role_id")
     public Long getRoleTypeId() {
         return roleTypeId;
     }
@@ -215,7 +251,6 @@ public class SearchFilter {
         this.roleTypeId = roleTypeId;
     }
 
-    @Path("ranks.rank_id")
     public Long getRankTypeId() {
         return rankTypeId;
     }

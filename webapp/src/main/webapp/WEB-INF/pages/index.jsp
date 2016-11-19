@@ -1,13 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title><spring:message code="page.index.title"/></title>
     <%@ include file="header.jsp" %>
+    <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/jquery.serialize-object.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/index.js"/>' type="application/javascript"></script>
 </head>
 <body>
 
@@ -19,7 +22,7 @@
 
 <nav class="search col-xs-12 col-sm-6 col-md-3">
 
-    <form:form commandName="searchQuery" role="search" id="formSearch">
+    <form role="search" id="formSearch">
         <h2>
             <spring:message code="common.keyword.search"/>
             <button id="btnSearch" class="btn btn-primary pull-right">
@@ -28,17 +31,24 @@
         </h2>
 
         <div class="form-group">
-            <form:input path="filter.zsNumber" type="text" cssClass="form-control" id="dev-search" />
+            <label class="control-label" for="zsNumber"><spring:message code="form.developer.zsNumber"/></label>
+            <div>
+                <input type="text" name="zsNumber" value="${sessionScope.searchFilter.zsNumber}"
+                       id="zsNumber" class="form-control"/>
+            </div>
         </div>
 
         <div class="form-group">
             <label class="control-label"
                    for="srch-grade"><spring:message code="form.developer.grade"/></label>
             <div>
-                <form:select path="filter.rankTypeId" id="srch-grade" cssClass="form-control input-sm">
-                    <form:option value="" />
-                    <form:options items="${rankTypes}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="rankTypeId" id="srch-grade" class="form-control input-sm">
+                    <option value=""></option>
+                    <c:forEach items="${rankTypes}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.rankTypeId eq item.id}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
@@ -46,10 +56,13 @@
             <label class="control-label"
                    for="srch-mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
             <div>
-                <form:select path="filter.mainProgrammingLanguageId" id="srch-mpl" cssClass="form-control input-sm">
-                    <form:option value="" />
-                    <form:options items="${languages}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="mainProgrammingLanguageId" id="srch-mpl" class="form-control input-sm">
+                    <option value=""></option>
+                    <c:forEach items="${languages}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.mainProgrammingLanguageId eq item.id}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
@@ -57,196 +70,200 @@
             <label class="control-label"
                    for="srch-spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
             <div>
-                <form:select path="filter.secondProgrammingLanguageId" id="srch-spl" cssClass="form-control input-sm">
-                    <form:option value="" />
-                    <form:options items="${languages}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="secondProgrammingLanguageId" id="srch-spl" class="form-control input-sm">
+                    <option value=""></option>
+                    <c:forEach items="${languages}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.secondProgrammingLanguageId eq item.id}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="srch-frameworks"><spring:message code="form.developer.frameworks"/></label>
+            <label class="control-label" for="srch-frameworks"><spring:message code="form.developer.frameworks"/></label>
             <div>
-                <form:select path="filter.knownFrameworkIds" id="srch-frameworks" cssClass="form-control input-sm" multiple="true">
-                    <form:options items="${frameworks}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="knownFrameworkIds" multiple id="srch-frameworks" class="form-control input-sm">
+                    <c:forEach items="${frameworks}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.knownFrameworkIds.contains(item.id)}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="rating-cd"><spring:message code="form.developer.testRating"/></label>
+            <label class="control-label" for="rating-cd"><spring:message code="form.developer.testRating"/></label>
             <div>
-                <form:input path="filter.testRating" type="number"
-                            min="0"
-                            max="100"
-                            cssClass="form-control input-sm"
-                            id="rating-cd" />
+                <input type="number" name="testRating" value="${sessionScope.searchFilter.testRating}"
+                       min="0" max="100" id="rating-cd" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="country-origin"><spring:message code="form.developer.originCountry"/></label>
+            <label class="control-label" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <form:select path="filter.originCountryId" cssClass="form-control input-sm" id="country-origin">
-                    <form:option value="" />
-                    <form:options items="${countries}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="originCountryId" id="country-origin" class="form-control input-sm">
+                    <option value=""></option>
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
+            <label class="control-label" for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div>
-                <form:select path="filter.preferredCountryIds" id="country-preferred" cssClass="form-control input-sm"
-                                multiple="true">
-                    <form:options items="${countries}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <select name="preferredCountryIds" multiple id="country-preferred" class="form-control input-sm">
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.preferredCountryIds.contains(item.id)}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="permnanent-frelance"><spring:message code="form.developer.contractType"/></label>
+            <label class="control-label">
+                <spring:message code="form.developer.contractType"/>
+            </label>
             <div>
-                <form:select path="filter.contractTypeId" class="form-control input-sm" id="permnanent-frelance">
-                    <form:option value="" />
-                    <form:options items="${contractTypes}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <c:forEach items="contractTypes" var="item">
+                    <c:set var="selected" value="${sessionScope.searchFilter.contractTypeId eq item.id}"/>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="contractTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                                ${item.name}
+                        </label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
         <div class="form-check">
-            <label class="control-label"
-            ><spring:message code="form.developer.visaNeeded"/></label>
-            <div class="radio">
-                <label>
-                    <form:radiobutton path="filter.visaNeeded" value="" cssClass="form-check-input"/>
-                    <!--<input type="radio"
-                           name="visa"
-                           checked
-                           class="form-check-input">-->
-                    <spring:message code="common.keyword.any"/>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <form:radiobutton path="filter.visaNeeded" value="${true}" cssClass="form-check-input"/>
-                    <!--<input type="radio"
-                           name="visa"
-                           class="form-check-input">-->
-                    <spring:message code="common.keyword.yes"/>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <form:radiobutton path="filter.visaNeeded" value="${false}" cssClass="form-check-input"/>
-                    <!--<input type="radio"
-                           name="visa"
-                           class="form-check-input">-->
-                    <spring:message code="common.keyword.no"/>
-                </label>
-            </div>
-        </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label"
-                   for="company-type"><spring:message code="form.developer.preferredCompanyTypes"/></label>
+            <label class="control-label"><spring:message code="form.developer.visaNeeded"/></label>
             <div>
-                <form:select path="filter.preferredCompanyTypeIds" class="form-control input-sm" id="company-type">
-                    <form:option value="" />
-                    <form:options items="${companyTypes}" itemValue="id" itemLabel="name"/>
-                </form:select>
+                <c:set var="isSet" value="${sessionScope.searchFilter.visaNeeded != null}"/>
+                <c:set var="selected" value="${sessionScope.searchFilter.visaNeeded}" />
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="visaNeeded" value="${true}" <c:if test="${isSet and selected}">checked</c:if>>
+                        <spring:message code="common.keyword.yes"/>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="visaNeeded" value="${false}" <c:if test="${isSet and not selected}">checked</c:if>>
+                        <spring:message code="common.keyword.no"/>
+                    </label>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="experience"><spring:message code="form.developer.experience"/></label>
+            <label class="control-label">
+                <spring:message code="form.developer.preferredCompanyTypes"/>
+            </label>
             <div>
-                <form:input path="filter.experience" type="number"
-                            id="experience"
-                            min="0"
-                            class="form-control input-sm"/>
+                <c:forEach items="${companyTypes}" var="item">
+                    <c:set var="selected" value="${sessionScope.searchFilter.preferredCompanyTypeIds.contains(item.id)}"/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="preferredCompanyTypeIds" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                                   ${item.name}
+                        </label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="role"><spring:message code="form.developer.preferredRole"/></label>
+            <label class="control-label" for="experience"><spring:message code="form.developer.experience"/></label>
             <div>
-                <form:select path="filter.roleTypeId" class="form-control input-sm" id="role">
-                    <form:option value="" />
-                    <form:options items="${roleTypes}" itemValue="id" itemLabel="name" />
-                </form:select>
+                <input type="number" name="experience" min="0" value="${sessionScope.searchFilter.experience}"
+                       id="experience" class="form-control input-sm" />
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label"><spring:message code="form.developer.preferredRole"/></label>
+            <div>
+                <c:forEach items="roleTypes" var="item">
+                    <c:set var="selected" value="${sessionScope.searchFilter.roleTypeId eq item.id}"/>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="roleTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                            ${item.name}
+                        </label>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <%--
         <div class="form-group">
             <label class="control-label"
                    for="worked-before"><spring:message code="form.developer.workHistory"/></label>
             <div>
-                <form:textarea path="filter.workHistory" cssClass="form-control input-sm" id="worked-before"
+                <form:textarea path="workHistory" cssClass="form-control input-sm" id="worked-before"
                                maxlength="500" />
             </div>
         </div>
+        --%>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="english-level"><spring:message code="form.developer.englishLevel"/></label>
+            <label class="control-label" for="english-level"><spring:message code="form.developer.englishLevel"/></label>
             <div>
-                <form:input path="filter.englishLevel" type="number"
-                            min="1"
-                            max="5"
-                            placeholder="level 1-5"
-                            cssClass="form-control input-sm"
-                            id="english-level" />
+                <input type="number" name="englishLevel" min="1" max="5" value="${sessionScope.searchFilter.englishLevel}"
+                       id="english-level" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="travel"><spring:message code="form.developer.travelTime"/></label>
+            <label class="control-label" for="travel"><spring:message code="form.developer.travelTime"/></label>
             <div>
-                <form:input path="filter.travelTime" type="number"
-                            cssClass="form-control input-sm"
-                            id="travel"/>
+                <input type="number" name="travelTime" min="0" value="${sessionScope.searchFilter.travelTime}"
+                       id="travel" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="place-live"><spring:message code="form.developer.preferredCity"/></label>
+            <label class="control-label" for="place-live"><spring:message code="form.developer.preferredCity"/></label>
             <div>
-                <form:textarea path="filter.preferredCity" cssClass="form-control input-sm" id="place-live" />
+                <textarea name="preferredCity" maxlength="500" id="place-live" class="form-control input-sm">
+                    ${sessionScope.searchFilter.preferredCity}
+                </textarea>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="availability"><spring:message code="form.developer.availability"/></label>
+            <label class="control-label" for="availability"><spring:message code="form.developer.availability"/></label>
             <div>
-                <form:input path="filter.availability" type="number"
-                            cssClass="form-control input-sm" id="availability" />
+                <input type="number" name="availability" min="0" value="${sessionScope.searchFilter.availability}"
+                       id="availability" class="form-control input-sm">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"
-                   for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
+            <label class="control-label" for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
             <div>
-                <form:input path="filter.hoursPerWeek" type="number"
-                            class="form-control input-sm" id="hours-week" />
+                <input type="number" name="hoursPerWeek" min="0" value="${sessionScope.searchFilter.hoursPerWeek}"
+                       id="hours-week" class="form-control input-sm" />
             </div>
         </div>
-    </form:form>
+    </form>
 </nav>
 
+<div class="col-xs-12 col-sm-6 col-md-9 wrapper dev-list">
+    <table id="stubGrid" style="display: none"></table>
+    <div class="col-xs-12">
+        <ul id="cardList" class="list-unstyled" style="display: none"></ul>
+    </div>
+</div>
 
+<%--
 <div class="col-xs-12 col-sm-6 col-md-9 wrapper dev-list">
     <ul class="list-unstyled">
         <li class="person col-sm-12 col-md-6">
@@ -571,7 +588,7 @@
         </li>
     </ul>
 </div>
-
+--%>
 </body>
 
 <!--

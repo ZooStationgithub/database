@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class SearchQueryContainer {
 
-    private SearchQuery searchQuery;
     private List<ProgrammingLanguage> programmingLanguages;
     private List<Country> countries;
     private List<Framework> frameworks;
@@ -27,14 +26,6 @@ public class SearchQueryContainer {
         roleTypes = new ArrayList<>();
         rankTypes = new ArrayList<>();
         contractTypes = new ArrayList<>();
-    }
-
-    public SearchQuery getSearchQuery() {
-        return searchQuery;
-    }
-
-    public void setSearchQuery(SearchQuery searchQuery) {
-        this.searchQuery = searchQuery;
     }
 
     public List<ProgrammingLanguage> getProgrammingLanguages() {

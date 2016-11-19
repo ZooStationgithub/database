@@ -1,4 +1,4 @@
-package nl.zoostation.database.model.grid;
+package nl.zoostation.database.model.grid.annotations;
 
 import java.lang.annotation.*;
 

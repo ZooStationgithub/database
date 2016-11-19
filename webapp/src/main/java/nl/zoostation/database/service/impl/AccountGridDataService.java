@@ -2,8 +2,8 @@ package nl.zoostation.database.service.impl;
 
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.grid.AccountGridRow;
-import nl.zoostation.database.model.grid.GridViewInputSpec;
-import nl.zoostation.database.model.grid.GridViewOutputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
+import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
 import nl.zoostation.database.service.IGridDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

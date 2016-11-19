@@ -1,18 +1,28 @@
 package nl.zoostation.database.web.controller;
 
-import nl.zoostation.database.model.grid.SearchQuery;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.zoostation.database.model.grid.AccountGridRow;
+import nl.zoostation.database.model.grid.ProfileGridRow;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
+import nl.zoostation.database.model.grid.SearchFilter;
 import nl.zoostation.database.model.grid.SearchQueryContainer;
+import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
 import nl.zoostation.database.service.IProfileSearchService;
+import nl.zoostation.database.web.datatables.DataTablesRequest;
+import nl.zoostation.database.web.datatables.DataTablesResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Optional;
+
+import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
 
 /**
  * <p>Controller for home page.</p>
@@ -20,25 +30,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
  * @author valentinnastasi
  */
 @Controller
-@SessionAttributes("searchQuery")
 public class HomePageController {
 
     private static final Logger logger = LogManager.getLogger(HomePageController.class);
 
+    private final ObjectMapper objectMapper;
     private final IProfileSearchService profileSearchService;
 
     @Autowired
-    public HomePageController(IProfileSearchService profileSearchService) {
+    public HomePageController(ObjectMapper objectMapper, IProfileSearchService profileSearchService) {
+        this.objectMapper = objectMapper;
         this.profileSearchService = profileSearchService;
     }
 
-    @ModelAttribute("searchQuery")
-    public SearchQuery createSearchQuery() {
-        return new SearchQuery();
-    }
-
     @RequestMapping({"/", "/home", "/index"})
-    public String openHomePage(Model model) {
+    public String openHomePage(HttpSession httpSession, Model model) {
         logger.debug("Opening home page");
         SearchQueryContainer searchQueryContainer = profileSearchService.prepareForm();
         model.addAttribute("countries", searchQueryContainer.getCountries());
@@ -48,13 +54,38 @@ public class HomePageController {
         model.addAttribute("contractTypes", searchQueryContainer.getContractTypes());
         model.addAttribute("rankTypes", searchQueryContainer.getRankTypes());
         model.addAttribute("roleTypes", searchQueryContainer.getRoleTypes());
+
+        if (httpSession.getAttribute(SEARCH_FILTER) == null) {
+            httpSession.setAttribute(SEARCH_FILTER, new SearchFilter());
+        }
+
         return "/index";
     }
 
-    @RequestMapping("/index/refresh")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void refreshList(@ModelAttribute("searchQuery") SearchQuery searchQuery) {
-        logger.debug("Handling request '/index/refresh GET'");
+    @RequestMapping(value = "/profile/grid", method = RequestMethod.GET)
+    @ResponseBody
+    public DataTablesResponse getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
+        logger.debug("Handling request '/profile/grid GET'");
+
+        SearchFilter searchFilter = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
+        httpSession.setAttribute(SEARCH_FILTER, searchFilter);
+
+        GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
+        gridViewInputSpec.getExtras().put(SEARCH_FILTER, searchFilter);
+
+        GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = profileSearchService.getGridData(gridViewInputSpec);
+
+        DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>(request.getDrawCounter(), gridViewOutputSpec.getTotalRecords(),
+                gridViewOutputSpec.getFilteredRecords(), gridViewOutputSpec.getRecords());
+
+        return response;
+    }
+
+    private SearchFilter deserializeSearchFilter(String json) throws IOException {
+        if (StringUtils.isEmpty(json)) {
+            return new SearchFilter();
+        }
+        return Optional.ofNullable(objectMapper.readValue(json, SearchFilter.class)).orElse(new SearchFilter());
     }
 
 }

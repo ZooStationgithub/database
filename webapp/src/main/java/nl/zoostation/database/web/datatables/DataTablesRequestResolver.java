@@ -70,7 +70,7 @@ public class DataTablesRequestResolver implements HandlerMethodArgumentResolver 
                     Optional<String> searchable = extractStringParameter(value.stream(), COLUMN_SEARCHABLE_PATTERN);
                     columnDefinition.setSearchable(Boolean.valueOf(searchable.orElse("false")));
 
-                    Optional<String> orderable = extractStringParameter(value.stream(), COLUMN_ORDERBALE_PATTERN);
+                    Optional<String> orderable = extractStringParameter(value.stream(), COLUMN_ORDERABLE_PATTERN);
                     columnDefinition.setOrderable(Boolean.valueOf(orderable.orElse("false")));
 
                     Optional<String> filterValue = extractStringParameter(value.stream(), COLUMN_FILTER_PATTERN);

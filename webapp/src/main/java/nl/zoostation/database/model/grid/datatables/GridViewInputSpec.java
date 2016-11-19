@@ -1,4 +1,4 @@
-package nl.zoostation.database.model.grid;
+package nl.zoostation.database.model.grid.datatables;
 
 import java.util.Collection;
 import java.util.HashMap;

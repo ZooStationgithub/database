@@ -4,24 +4,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title><spring:message code="page.developer.details.title"/></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
-    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
+    <%@ include file="header.jsp" %>
     <script src='<spring:url value="/assets/js/developerDetails.js"/>' type="application/javascript"></script>
 </head>
 <body>
 
+<%@ include file="navbar.jsp" %>
+
 <header>
-    <h1 class="text-center"><spring:message code="page.developer.details.header"/></h1>
-    <div class="container text-center">
-        <a href='<spring:url value="/index"/>' class="btn btn-primary">
-            <i class="glyphicon glyphicon-arrow-left"></i>
-            <spring:message code="common.keyword.backToSearch"/>
-        </a>
-    </div>
+    <h1 class="text-center"></h1>
 </header>
+
 <div class="wrapper container">
 
     <table class="table table-striped table-hover">

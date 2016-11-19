@@ -4,7 +4,7 @@
 $(document).ready(function () {
     $('#btnMoreInfo').one('click', function(event) {
         $.ajax({
-            url: '/zsd/developer/info',
+            url: '/developer/info',
             method: 'GET',
             data: {
                 'u': $(event.target).data('id')

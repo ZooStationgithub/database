@@ -2,32 +2,23 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title><spring:message code="page.index.title"/></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
-    <script src='<spring:url value="/assets/js/lib/jquery-3.1.1.min.js"/>' type="application/javascript"></script>
+    <%@ include file="header.jsp" %>
 </head>
 <body>
 
+<%@ include file="navbar.jsp" %>
+
 <header>
-    <h1 class="text-center"><spring:message code="page.index.title"/></h1>
+    <h1 class="text-center"></h1>
 </header>
 
 <nav class="search col-xs-12 col-sm-6 col-md-3">
 
-    <a href='<spring:url value="/developer/edit"/>' class="btn btn-xs btn-info">
-        <i class="glyphicon glyphicon-plus"></i>
-        <spring:message code="page.index.button.createDeveloper"/>
-    </a>
-    <a href='<spring:url value="/account"/>' class="btn btn-xs btn-warning">
-        <i class="glyphicon glyphicon-plus"></i>
-        <spring:message code="page.index.button.createAccount"/>
-    </a>
-    
     <form:form commandName="searchQuery" role="search" id="formSearch">
         <h2>
             <spring:message code="common.keyword.search"/>
@@ -143,7 +134,7 @@
             </div>
             <div class="radio">
                 <label>
-                    <form:radiobutton path="filter.visaNeeded" value="${true}" cssClass="form-check-input"/> 
+                    <form:radiobutton path="filter.visaNeeded" value="${true}" cssClass="form-check-input"/>
                     <!--<input type="radio"
                            name="visa"
                            class="form-check-input">-->
@@ -386,7 +377,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -418,7 +409,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -450,7 +441,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -482,7 +473,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -514,7 +505,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -546,7 +537,7 @@
 
             </table>
         </li>
-        <li class="person col-sm-12 col-md-6">
+        <li class="person col-sm-6">
             <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </a>
@@ -582,3 +573,14 @@
 </div>
 
 </body>
+
+<!--
+<html>
+<head>
+    <title>ZooStation database</title>
+</head>
+<body>
+    <h1>Hello World!</h1>
+</body>
+</html>
+-->

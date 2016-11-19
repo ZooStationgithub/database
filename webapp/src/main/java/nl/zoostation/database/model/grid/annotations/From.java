@@ -7,13 +7,9 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Path {
+@Target(ElementType.TYPE)
+public @interface From {
 
     String value();
-
-    boolean exactMatch() default true;
-
-    boolean collection() default false;
 
 }

@@ -4,25 +4,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title><spring:message code="page.account.title"/></title>
-    <link rel="stylesheet" href='<spring:url value="/assets/css/style.css"/>'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title><spring:message code="page.accountForm.title"/></title>
+    <%@ include file="header.jsp" %>
 </head>
 <body>
 
+<%@ include file="navbar.jsp" %>
+
 <header>
-    <h1 class="text-center"><spring:message code="page.account.title"/></h1>
-    <div class="container text-center">
-        <a href='<spring:url value="/index"/>' class="btn btn-primary">
-            <i class="glyphicon glyphicon-arrow-left"></i>
-            <spring:message code="common.keyword.backToSearch"/>
-        </a>
-    </div>
+    <h1 class="text-center"></h1>
 </header>
 
 <div class="wrapper container">
-    <form:form commandName="account" action="account" method="post" >
+    <form:form commandName="account" action="${pageContext.servletContext.contextPath}/account/form" method="post" >
 
         <div class="form-group row">
             <label class="control-label col-xs-2"

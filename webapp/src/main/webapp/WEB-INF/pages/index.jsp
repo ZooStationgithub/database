@@ -7,9 +7,11 @@
 <head>
     <title><spring:message code="page.index.title"/></title>
     <%@ include file="header.jsp" %>
+    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
+    <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/jquery.serialize-object.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/jquery.tokeninput.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/index.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -30,6 +32,7 @@
             </button>
         </h2>
 
+        <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
         <div class="form-group">
             <label class="control-label" for="zsNumber"><spring:message code="form.developer.zsNumber"/></label>
             <div>
@@ -37,6 +40,7 @@
                        id="zsNumber" class="form-control"/>
             </div>
         </div>
+        </sec:authorize>
 
         <div class="form-group">
             <label class="control-label"
@@ -103,13 +107,14 @@
         <div class="form-group">
             <label class="control-label" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <select name="originCountryId" id="country-origin" class="form-control input-sm">
-                    <option value=""></option>
-                    <c:forEach items="${countries}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>
-                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
-                    </c:forEach>
-                </select>
+                <%--<select name="originCountryId" id="country-origin" class="form-control input-sm">--%>
+                    <%--<option value=""></option>--%>
+                    <%--<c:forEach items="${countries}" var="item">--%>
+                        <%--<c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>--%>
+                        <%--<option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>--%>
+                    <%--</c:forEach>--%>
+                <%--</select>--%>
+                <input type="text" name="originCountryId" id="country-origin">
             </div>
         </div>
 
@@ -130,8 +135,8 @@
                 <spring:message code="form.developer.contractType"/>
             </label>
             <div>
-                <c:forEach items="contractTypes" var="item">
-                    <c:set var="selected" value="${sessionScope.searchFilter.contractTypeId eq item.id}"/>
+                <c:forEach items="${contractTypes}" var="item">
+                    <c:set var="selected" value="${sessionScope.searchFilter.contractTypeId == item.id}"/>
                     <div class="radio">
                         <label>
                             <input type="radio" name="contractTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
@@ -190,7 +195,7 @@
         <div class="form-group">
             <label class="control-label"><spring:message code="form.developer.preferredRole"/></label>
             <div>
-                <c:forEach items="roleTypes" var="item">
+                <c:forEach items="${roleTypes}" var="item">
                     <c:set var="selected" value="${sessionScope.searchFilter.roleTypeId eq item.id}"/>
                     <div class="radio">
                         <label>
@@ -261,343 +266,40 @@
     <div class="col-xs-12">
         <ul id="cardList" class="list-unstyled" style="display: none"></ul>
     </div>
+    <div id="cardItemTemplate" style="display: none">
+        <li class="person col-sm-12 col-md-6">
+            <button class="btn btn-info custom-tooltip" title="Read more" target="view-details" data-id="{{:id}}">
+                <i class="glyphicon glyphicon-eye-open"></i>
+            </button>
+            <button class="btn btn-success custom-tooltip" title="Edit" target="edit" data-id="{{:id}}">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </button>
+
+            <table class="table table-striped">
+                <tr>
+                    <th><spring:message code="form.developer.grade"/></th>
+                    <td>{{:rank}}</td>
+                </tr>
+                <tr>
+                    <th><spring:message code="form.developer.mainProgrammingLanguage"/></th>
+                    <td>{{:mainProgrammingLanguage}}</td>
+                </tr>
+                <tr>
+                    <th><spring:message code="form.developer.secondProgrammingLanguage"/></th>
+                    <td>{{:secondProgrammingLanguage}}</td>
+                </tr>
+                <tr>
+                    <th><spring:message code="form.developer.testRating"/></th>
+                    <td>{{:testRating}}%</td>
+                </tr>
+                <tr>
+                    <th><spring:message code="form.developer.originCountry"/></th>
+                    <td>{{:originCountry}}</td>
+                </tr>
+            </table>
+        </li>
+    </div>
 </div>
 
-<%--
-<div class="col-xs-12 col-sm-6 col-md-9 wrapper dev-list">
-    <ul class="list-unstyled">
-        <li class="person col-sm-12 col-md-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-12 col-md-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-12 col-md-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-12 col-md-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-        <li class="person col-sm-6">
-            <a href="developer-detailed.html" class="btn btn-info custom-tooltip" title="Read more">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
-            <button class="btn btn-success custom-tooltip" title="Edit">
-                <i class="glyphicon glyphicon-pencil"></i>
-            </button>
-
-            <table class="table table-striped">
-                <tr>
-                    <th>Grade</th>
-                    <td>junior</td>
-                </tr>
-                <tr>
-                    <th>Main programming language</th>
-                    <td>jave SE</td>
-                </tr>
-                <tr>
-                    <th>Second programming language</th>
-                    <td>Android Native</td>
-                </tr>
-                <tr>
-                    <th>Rating code doctor test, %</th>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <th>Country of origin</th>
-                    <td>Moldova</td>
-                </tr>
-
-            </table>
-        </li>
-    </ul>
-</div>
---%>
-</body>
-
-<!--
-<html>
-<head>
-    <title>ZooStation database</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
 </body>
 </html>
--->

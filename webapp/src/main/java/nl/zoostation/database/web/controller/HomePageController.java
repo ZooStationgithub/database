@@ -1,12 +1,12 @@
 package nl.zoostation.database.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.zoostation.database.model.grid.AccountGridRow;
 import nl.zoostation.database.model.grid.ProfileGridRow;
-import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.SearchFilter;
 import nl.zoostation.database.model.grid.SearchQueryContainer;
+import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
+import nl.zoostation.database.model.input.SearchToken;
 import nl.zoostation.database.service.IProfileSearchService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
@@ -16,10 +16,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
@@ -79,6 +84,12 @@ public class HomePageController {
                 gridViewOutputSpec.getFilteredRecords(), gridViewOutputSpec.getRecords());
 
         return response;
+    }
+
+    @RequestMapping(value = "/profile/country/tokens", method = RequestMethod.GET)
+    @ResponseBody
+    public List<? extends SearchToken> getCountryTokens(@RequestParam("q") String searchTerm) {
+        return profileSearchService.findTokens(searchTerm, Collections.emptyMap());
     }
 
     private SearchFilter deserializeSearchFilter(String json) throws IOException {

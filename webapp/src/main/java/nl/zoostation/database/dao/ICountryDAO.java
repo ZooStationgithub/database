@@ -5,5 +5,6 @@ import nl.zoostation.database.model.domain.Country;
 /**
  * @author valentinnastasi
  */
-public interface ICountryDAO extends IGenericDAO<Country, Long> {
+public interface ICountryDAO extends IGenericDAO<Country, Long>, ISearchTokenDAO {
+
 }

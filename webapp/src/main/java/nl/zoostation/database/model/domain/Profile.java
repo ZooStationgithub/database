@@ -20,7 +20,12 @@ import java.util.Set;
 @SqlResultSetMapping(name = "ProfileGridRow",
         classes = @ConstructorResult(targetClass = ProfileGridRow.class,
                 columns = {
-                        @ColumnResult(name = "id", type = Long.class)
+                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "rank", type = String.class),
+                        @ColumnResult(name = "mainProgrammingLanguage", type = String.class),
+                        @ColumnResult(name = "secondProgrammingLanguage", type = String.class),
+                        @ColumnResult(name = "testRating", type = Integer.class),
+                        @ColumnResult(name = "originCountry", type = String.class)
                 }
         )
 )

@@ -159,12 +159,22 @@
 
     </table>
 
+
     <div class="text-center">
+        <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_COMPANY')">
         <button id="btnMoreInfo" class="btn btn-warning" data-id="${profile.id}">
             <i class="glyphicon glyphicon-envelope"></i>
             <spring:message code="page.developer.details.moreInfo"/>
         </button>
+        </sec:authorize>
+        <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
+            <button id="btnEdit" class="btn btn-default" data-id="${profile.id}">
+                <i class="glyphicon glyphicon-pencil"></i>
+                <spring:message code="common.keyword.edit"/>
+            </button>
+        </sec:authorize>
     </div>
+
 </div>
 
 </body>

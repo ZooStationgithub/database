@@ -6,6 +6,7 @@ $(document).ready(function () {
     var grid = $('#grid').DataTable({
         processing: true,
         serverSide: true,
+        filter: false,
         scrollX: true,
         ajax: '/account/grid',
         columns: [
@@ -32,16 +33,19 @@ $(document).ready(function () {
                 type: 'html',
                 className: 'middle',
                 render: function(cell, type, row) {
-                    var icon = (cell == 1) ? 'glyphicon-ok' : 'glyphicon-remove';
+                    var icon = (cell == 1) ? 'glyphicon-ok text-success' : 'glyphicon-remove text-danger';
                     return '<i class="glyphicon ' + icon + '">' + '</i>';
                 }
             },
             {
                 data: null,
                 type: 'html',
+                searchable: false,
+                orderable: false,
                 render: function(cell, type, row) {
                     if (!row.online && !row.activated) {
-                        return '<a target="resend-link" href="javascript:void(0)"><i class="glyphicon glyphicon-send" data-id="' + row.id + '"></i></a>';
+                        return '<a target="resend-link" href="javascript:void(0)" title="' + messages['page.accountList.tooltip.link']
+                            + '"><i class="glyphicon glyphicon-send" data-id="' + row.id + '"></i></a>';
                     }
                     return '';
                 }
@@ -49,17 +53,20 @@ $(document).ready(function () {
             {
                 data: null,
                 type: 'html',
+                searchable: false,
+                orderable: false,
                 render: function(cell, type, row) {
                     if (row.online) {
                         return '';
                     }
-                    return '<a target="delete" href="javascript:void(0)"><i class="glyphicon glyphicon-trash" data-id="' + row.id + '"></i></a>'
+                    return '<a target="delete" href="javascript:void(0)" title="' + messages['page.accountList.tooltip.delete']
+                        + '"><i class="glyphicon glyphicon-trash text-danger" data-id="' + row.id + '"></i></a>'
                 }
             }
         ]
     });
 
-    $('#grid').one('click', 'a[target="resend-link"]', function(event) {
+    $('#grid').on('click', 'a[target="resend-link"]', function(event) {
         var id = $(event.target).data('id');
         $.ajax({
             url: '/account/activate/resend/' + id,
@@ -71,7 +78,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#grid').one('click', 'a[target="delete"]', function(event) {
+    $('#grid').on('click', 'a[target="delete"]', function(event) {
         var id = $(event.target).data('id');
         $.ajax({
             url: '/account/form/' + id,

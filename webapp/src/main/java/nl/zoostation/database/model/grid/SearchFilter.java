@@ -11,7 +11,9 @@ import java.util.List;
  * @author valentinnastasi
  */
 @Select(
-        columns = "DISTINCT profile.id AS id",
+        columns = "DISTINCT profile.id AS id, rank_type.name AS rank, mpl.name AS mainProgrammingLanguage, " +
+                "spl.name AS secondProgrammingLanguage, profile.test_rating AS testRating, " +
+                "c.name AS originCountry",
         count = "COUNT(DISTINCT profile.id)"
 )
 @From(
@@ -20,7 +22,11 @@ import java.util.List;
         "LEFT JOIN known_frameworks framework ON profile.id = framework.profile_id " +
         "LEFT JOIN preferred_countries country ON profile.id = country.profile_id " +
         "LEFT JOIN profile_ranks rank ON profile.id = rank.profile_id " +
-        "LEFT JOIN profile_roles role ON profile.id = role.profile_id"
+        "LEFT JOIN profile_roles role ON profile.id = role.profile_id " +
+                "LEFT JOIN rank_types rank_type ON rank.rank_type_id = rank_type.id " +
+                "LEFT JOIN countries c ON profile.origin_country_id = c.id " +
+                "LEFT JOIN programming_languages mpl ON profile.main_pr_lng_id = mpl.id " +
+                "LEFT JOIN programming_languages spl ON profile.second_pr_lng_id = spl.id "
 )
 public class SearchFilter {
 

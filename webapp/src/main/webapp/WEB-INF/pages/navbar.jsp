@@ -22,7 +22,7 @@
                     <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
                         <li>
                             <a href='<spring:url value="/developer/edit"/>'>
-                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="glyphicon glyphicon-wrench"></span>
                                 <spring:message code="navbar.newDeveloper"/>
                             </a>
                         </li>
@@ -30,7 +30,7 @@
                     <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN')">
                         <li>
                             <a href='<spring:url value="/account/list"/>'>
-                                <span class="glyphicon glyphicon-key"></span>
+                                <span class="glyphicon glyphicon-th-list"></span>
                                 <spring:message code="navbar.accounts"/>
                             </a>
                         </li>

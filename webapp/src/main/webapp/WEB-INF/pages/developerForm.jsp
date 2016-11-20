@@ -213,10 +213,12 @@
             <spring:message code="common.keyword.save"/>
         </button>
         <c:if test="${profile.id != null}">
+            <sec:authorize access="hasRole('ROLE_SU', 'ROLE_ADMIN')">
         <button id="btnDelete" class="btn btn-danger" data-id="${profile.id}">
             <i class="glyphicon glyphicon-remove"></i>
             <spring:message code="common.keyword.delete"/>
         </button>
+            </sec:authorize>
         </c:if>
     </div>
 

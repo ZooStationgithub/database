@@ -4,13 +4,15 @@ import nl.zoostation.database.dao.*;
 import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.ProfileForm;
 import nl.zoostation.database.model.form.ProfileFormContainer;
+import nl.zoostation.database.model.input.SearchToken;
 import nl.zoostation.database.service.IProfileFormService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.taglibs.standard.extra.spath.Token;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -67,10 +69,29 @@ public class ProfileFormService implements IProfileFormService {
         profileFormContainer.setProgrammingLanguages(programmingLanguageDAO.findAll());
         profileFormContainer.setFrameworks(frameworkDAO.findAll());
         profileFormContainer.setContractTypes(contractTypeDAO.findAll());
-        profileFormContainer.setCountries(countryDAO.findAll());
 
         if (profileId.isPresent()) {
-            profileFormContainer.setProfileForm(prePopulateForm(profileId.get()));
+            ProfileForm profileForm = prePopulateForm(profileId.get());
+            profileFormContainer.setProfileForm(profileForm);
+
+            if (profileForm.getOriginCountryId() != null) {
+                countryDAO.findOne(profileForm.getOriginCountryId()).ifPresent(c -> {
+                    SearchToken searchToken = new SearchToken(c.getId(), c.getName());
+                    profileFormContainer.setSelectedOriginCountry(Collections.singletonList(searchToken));
+                });
+            } else {
+                profileFormContainer.setSelectedOriginCountry(Collections.emptyList());
+            }
+
+            if (CollectionUtils.isNotEmpty(profileForm.getPreferredCountryIds())) {
+                List<SearchToken> tokens = countryDAO.findMany(profileForm.getPreferredCountryIds()).stream()
+                        .map(c -> new SearchToken(c.getId(), c.getName()))
+                        .collect(toList());
+                profileFormContainer.setSelectedPreferredCountries(tokens);
+            } else {
+                profileFormContainer.setSelectedPreferredCountries(Collections.emptyList());
+            }
+
         } else {
             profileFormContainer.setProfileForm(new ProfileForm());
         }

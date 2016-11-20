@@ -1,9 +1,10 @@
 package nl.zoostation.database.web.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.zoostation.database.model.form.ProfileForm;
 import nl.zoostation.database.model.form.ProfileFormContainer;
 import nl.zoostation.database.service.IProfileFormService;
-import nl.zoostation.database.service.impl.ProfileFormService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +24,28 @@ public class ProfileManagementController {
     private static final Logger logger = LogManager.getLogger(ProfileManagementController.class);
 
     private final IProfileFormService profileFormService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public ProfileManagementController(IProfileFormService profileFormService) {
+    public ProfileManagementController(ObjectMapper objectMapper, IProfileFormService profileFormService) {
         this.profileFormService = profileFormService;
+        this.objectMapper = objectMapper;
     }
 
     @RequestMapping(value = "/developer/edit", method = RequestMethod.GET)
-    public String openEditPage(@RequestParam("u") Optional<Long> id, Model model) {
+    public String openEditPage(@RequestParam("u") Optional<Long> id, Model model) throws JsonProcessingException {
         logger.debug("Handling request '/developer/edit GET' with id {}", id);
         ProfileFormContainer profileFormContainer = profileFormService.prepareForm(id);
         model.addAttribute("profile", profileFormContainer.getProfileForm());
-        model.addAttribute("countries", profileFormContainer.getCountries());
         model.addAttribute("languages", profileFormContainer.getProgrammingLanguages());
         model.addAttribute("frameworks", profileFormContainer.getFrameworks());
         model.addAttribute("companyTypes", profileFormContainer.getCompanyTypes());
         model.addAttribute("contractTypes", profileFormContainer.getContractTypes());
         model.addAttribute("rankTypes", profileFormContainer.getRankTypes());
         model.addAttribute("roleTypes", profileFormContainer.getRoleTypes());
+        model.addAttribute("selectedOriginCountry", serialize(profileFormContainer.getSelectedOriginCountry()));
+        model.addAttribute("selectedPreferredCountries", serialize(profileFormContainer.getSelectedPreferredCountries()));
+
         return "/developerForm";
     }
 
@@ -56,6 +61,14 @@ public class ProfileManagementController {
     public void delete(@RequestParam("u") Long id) {
         logger.debug("Handling request '/developer/delete DELETE' with id {}", id);
         profileFormService.delete(id);
+    }
+
+    private String serialize(Object o) throws JsonProcessingException {
+        if (o == null) {
+            return "";
+        }
+
+        return objectMapper.writeValueAsString(o);
     }
 
 }

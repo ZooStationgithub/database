@@ -72,3 +72,8 @@ li.person table {
 {
     font-size: 87px;
 }
+
+ul.token-input-list
+{
+    width: auto !important;
+}

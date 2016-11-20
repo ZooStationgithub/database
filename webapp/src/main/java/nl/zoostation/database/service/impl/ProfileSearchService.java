@@ -1,17 +1,19 @@
 package nl.zoostation.database.service.impl;
 
 import nl.zoostation.database.dao.*;
+import nl.zoostation.database.model.domain.Country;
 import nl.zoostation.database.model.grid.*;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
 import nl.zoostation.database.model.input.SearchToken;
 import nl.zoostation.database.service.IProfileSearchService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author valentinnastasi
@@ -50,7 +52,7 @@ public class ProfileSearchService implements IProfileSearchService {
 
     @Transactional(readOnly = true)
     @Override
-    public SearchQueryContainer prepareForm() {
+    public SearchQueryContainer prepareForm(SearchFilter searchFilter) {
         SearchQueryContainer searchQueryContainer = new SearchQueryContainer();
         searchQueryContainer.setRoleTypes(roleTypeDAO.findAll());
         searchQueryContainer.setRankTypes(rankTypeDAO.findAll());
@@ -58,7 +60,25 @@ public class ProfileSearchService implements IProfileSearchService {
         searchQueryContainer.setFrameworks(frameworkDAO.findAll());
         searchQueryContainer.setCompanyTypes(companyTypeDAO.findAll());
         searchQueryContainer.setContractTypes(contractTypeDAO.findAll());
-        searchQueryContainer.setCountries(countryDAO.findAll());
+
+        if (searchFilter.getOriginCountryId() != null) {
+            countryDAO.findOne(searchFilter.getOriginCountryId()).ifPresent((c) -> {
+                SearchToken searchToken = new SearchToken(c.getId(), c.getName());
+                searchQueryContainer.setSelectedOriginCountry(Collections.singletonList(searchToken));
+            });
+        } else {
+            searchQueryContainer.setSelectedOriginCountry(Collections.emptyList());
+        }
+
+        if (CollectionUtils.isNotEmpty(searchFilter.getPreferredCountryIds())) {
+            List<SearchToken> searchTokens = countryDAO.findMany(searchFilter.getPreferredCountryIds()).stream()
+                    .map(c -> new SearchToken(c.getId(), c.getName()))
+                    .collect(toList());
+            searchQueryContainer.setSelectedPreferredCountries(searchTokens);
+        } else {
+            searchQueryContainer.setSelectedPreferredCountries(Collections.emptyList());
+        }
+
         return searchQueryContainer;
     }
 

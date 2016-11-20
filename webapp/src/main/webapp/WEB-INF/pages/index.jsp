@@ -8,6 +8,7 @@
     <title><spring:message code="page.index.title"/></title>
     <%@ include file="header.jsp" %>
     <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
+    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input-mac.css"/>' />
     <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
@@ -24,13 +25,13 @@
 
 <nav class="search col-xs-12 col-sm-6 col-md-3">
 
-    <form role="search" id="formSearch">
         <h2>
             <spring:message code="common.keyword.search"/>
             <button id="btnSearch" class="btn btn-primary pull-right">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </h2>
+    <form role="search" id="formSearch">
 
         <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
         <div class="form-group">
@@ -107,26 +108,16 @@
         <div class="form-group">
             <label class="control-label" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <%--<select name="originCountryId" id="country-origin" class="form-control input-sm">--%>
-                    <%--<option value=""></option>--%>
-                    <%--<c:forEach items="${countries}" var="item">--%>
-                        <%--<c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>--%>
-                        <%--<option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>--%>
-                    <%--</c:forEach>--%>
-                <%--</select>--%>
-                <input type="text" name="originCountryId" id="country-origin">
+                <input type="text" name="originCountryId" id="country-origin" class="form-control input-sm"
+                data-selected='${selectedOriginCountry}'>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label" for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div>
-                <select name="preferredCountryIds" multiple id="country-preferred" class="form-control input-sm">
-                    <c:forEach items="${countries}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.preferredCountryIds.contains(item.id)}"/>
-                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
-                    </c:forEach>
-                </select>
+                <input type="text" name="preferredCountryIds" id="country-preferred" class="form-control input-sm"
+                data-selected='${selectedPreferredCountries}'>
             </div>
         </div>
 

@@ -2,6 +2,7 @@ package nl.zoostation.database.service;
 
 import nl.zoostation.database.dao.ISearchTokenDAO;
 import nl.zoostation.database.model.grid.ProfileGridRow;
+import nl.zoostation.database.model.grid.SearchFilter;
 import nl.zoostation.database.model.grid.SearchQueryContainer;
 
 /**
@@ -9,6 +10,6 @@ import nl.zoostation.database.model.grid.SearchQueryContainer;
  */
 public interface IProfileSearchService extends IGridDataService<ProfileGridRow>, ISearchTokenService {
 
-    SearchQueryContainer prepareForm();
+    SearchQueryContainer prepareForm(SearchFilter searchFilter);
 
 }

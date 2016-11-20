@@ -5,19 +5,41 @@ $(document).ready(function () {
 
     var $tokenOriginCountry = $('input#country-origin').tokenInput('/profile/country/tokens', {
         searchDelay: 500,
-        minChars: 3
+        minChars: 3,
+        tokenLimit: 1,
+        prePopulate: $('input#country-origin').data('selected')
+    });
+
+    var $tokenPreferredCountries = $('input#country-preferred').tokenInput('/profile/country/tokens', {
+        searchDelay: 500,
+        minChars: 3,
+        tokenLimit: null,
+        prePopulate: $('input#country-preferred').data('selected')
     });
 
     var $cardList = $('#cardList');
 
     var serializeForm = function () {
         var o = {};
-        $('#formSearch').find('input, select, textarea')
-            .filter(function (i, e) {
-                var $e = $(e);
-                return $e.attr('id') != 'country-origin';
-            }).each(function (i, e) {
+        $('#formSearch').find('input, select, textarea').each(function (i, e) {
             var $e = $(e);
+
+            if ($.isEmptyObject($e.attr('name'))) {
+                return;
+            }
+
+            if ($e.attr('id') == 'country-origin') {
+                var tokens = $tokenOriginCountry.tokenInput('get');
+                o['originCountryId'] = $.isEmptyObject(tokens) ? '' : tokens[0].id;
+                return;
+            }
+
+            if ($e.attr('id') == 'country-preferred') {
+                var tokens = $tokenPreferredCountries.tokenInput('get');
+                o['preferredCountryIds'] = $.isEmptyObject(tokens) ? [] : tokens.map(function(a) {return a.id});
+                return;
+            }
+
             var type = $(e).attr('type');
             var key = $e.attr('name');
             var value = $e.val();
@@ -41,11 +63,6 @@ $(document).ready(function () {
                 o[key] = value;
             }
         });
-
-        var tokens = $tokenOriginCountry.tokenInput('get');
-        if (!$.isEmptyObject(tokens)) {
-            o['originCountryId'] = tokens[0].id;
-        }
 
         return o;
     };
@@ -82,8 +99,8 @@ $(document).ready(function () {
         }
     });
 
-    $cardList.on('click', 'button[target="view-details"]', function(event) {
-        setTimeout(function() {
+    $cardList.on('click', 'button[target="view-details"]', function (event) {
+        setTimeout(function () {
             var id = event.target.dataset['id'];
             if (id == undefined) {
                 id = event.target.parentNode.dataset['id'];
@@ -92,14 +109,18 @@ $(document).ready(function () {
         }, 0);
     });
 
-    $cardList.on('click', 'button[target="edit"]', function(event) {
-        setTimeout(function() {
+    $cardList.on('click', 'button[target="edit"]', function (event) {
+        setTimeout(function () {
             var id = event.target.dataset['id'];
             if (id == undefined) {
                 id = event.target.parentNode.dataset['id'];
             }
             window.location.href = contextPath + '/developer/edit?u=' + id;
         }, 0);
+    });
+
+    $('#btnSearch').off('click').on('click', function(event) {
+        grid.draw();
     });
 
 });

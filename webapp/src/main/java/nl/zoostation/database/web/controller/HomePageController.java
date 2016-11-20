@@ -1,5 +1,6 @@
 package nl.zoostation.database.web.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.model.grid.SearchFilter;
@@ -49,20 +50,23 @@ public class HomePageController {
     }
 
     @RequestMapping({"/", "/home", "/index"})
-    public String openHomePage(HttpSession httpSession, Model model) {
+    public String openHomePage(HttpSession httpSession, Model model) throws JsonProcessingException {
         logger.debug("Opening home page");
-        SearchQueryContainer searchQueryContainer = profileSearchService.prepareForm();
-        model.addAttribute("countries", searchQueryContainer.getCountries());
+
+        if (httpSession.getAttribute(SEARCH_FILTER) == null) {
+            httpSession.setAttribute(SEARCH_FILTER, new SearchFilter());
+        }
+
+        SearchQueryContainer searchQueryContainer = profileSearchService.prepareForm((SearchFilter) httpSession.getAttribute(SEARCH_FILTER));
+        //model.addAttribute("countries", searchQueryContainer.getCountries());
         model.addAttribute("languages", searchQueryContainer.getProgrammingLanguages());
         model.addAttribute("frameworks", searchQueryContainer.getFrameworks());
         model.addAttribute("companyTypes", searchQueryContainer.getCompanyTypes());
         model.addAttribute("contractTypes", searchQueryContainer.getContractTypes());
         model.addAttribute("rankTypes", searchQueryContainer.getRankTypes());
         model.addAttribute("roleTypes", searchQueryContainer.getRoleTypes());
-
-        if (httpSession.getAttribute(SEARCH_FILTER) == null) {
-            httpSession.setAttribute(SEARCH_FILTER, new SearchFilter());
-        }
+        model.addAttribute("selectedOriginCountry", serialize(searchQueryContainer.getSelectedOriginCountry()));
+        model.addAttribute("selectedPreferredCountries", serialize(searchQueryContainer.getSelectedPreferredCountries()));
 
         return "/index";
     }
@@ -97,6 +101,14 @@ public class HomePageController {
             return new SearchFilter();
         }
         return Optional.ofNullable(objectMapper.readValue(json, SearchFilter.class)).orElse(new SearchFilter());
+    }
+
+    private String serialize(Object o) throws JsonProcessingException {
+        if (o == null) {
+            return "";
+        }
+
+        return objectMapper.writeValueAsString(o);
     }
 
 }

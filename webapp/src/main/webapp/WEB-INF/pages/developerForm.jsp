@@ -11,6 +11,9 @@
         </c:choose>
     </title>
     <%@ include file="header.jsp" %>
+    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
+    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input-mac.css"/>' />
+    <script src='<spring:url value="/assets/js/lib/jquery.tokeninput.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/developerForm.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -22,190 +25,228 @@
 </header>
 
 <div class="wrapper container">
-    <form:form commandName="profile">
+    <form id="formProfile">
 
-        <form:hidden path="id" />
+        <input type="hidden" name="id" value="${profile.id}" />
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="zsnumber"><spring:message code="form.developer.zsNumber"/></label>
-            <div class="col-xs-10">
-                <form:input path="zsNumber" readonly="true" id="zsnumber" cssClass="form-control" />
+            <label class="control-label col-xs-3" for="zsnumber"><spring:message code="form.developer.zsNumber"/></label>
+            <div class="col-xs-9">
+                <input type="text" name="zsNumber" readonly="readonly" id="zsnumber" class="form-control"
+                        value="${profile.zsNumber}" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="grade"><spring:message code="form.developer.grade"/></label>
-            <div class="col-xs-10">
-                <form:select path="rankTypeId" cssClass="form-control" id="grade">
-                    <form:option value="${null}">&#160;</form:option>
-                    <form:options items="${rankTypes}" itemLabel="name" itemValue="id" />
-                </form:select>
+            <label class="control-label col-xs-3" for="grade"><spring:message code="form.developer.grade"/></label>
+            <div class="col-xs-9">
+                <select name="rankTypeId" class="form-control" id="grade">
+                    <option value="${null}"></option>
+                    <c:forEach items="${rankTypes}" var="item">
+                        <c:set var="selected" value="${item.id == profile.rankTypeId}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
-            <div class="col-xs-10">
-                <form:select path="mainProgrammingLanguageId" cssClass="form-control" id="mpl">
-                    <form:option value="${null}">&#160;</form:option>
-                    <form:options items="${languages}" itemLabel="name" itemValue="id" />
-                </form:select>
+            <label class="control-label col-xs-3" for="mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
+            <div class="col-xs-9">
+                <select name="mainProgrammingLanguageId" class="form-control" id="mpl">
+                    <option value="${null}"></option>
+                    <c:forEach items="${languages}" var="item">
+                        <c:set var="selected" value="${item.id == profile.mainProgrammingLanguageId}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
-            <div class="col-xs-10">
-                <form:select path="secondProgrammingLanguageId" cssClass="form-control" id="spl">
-                    <form:option value="${null}">&#160;</form:option>
-                    <form:options items="${languages}" itemLabel="name" itemValue="id" />
-                </form:select>
+            <label class="control-label col-xs-3" for="spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
+            <div class="col-xs-9">
+                <select name="secondProgrammingLanguageId" class="form-control" id="spl">
+                    <option value="${null}"></option>
+                    <c:forEach items="${languages}" var="item">
+                        <c:set var="selected" value="${item.id == profile.secondProgrammingLanguageId}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="frameworks"><spring:message code="form.developer.frameworks"/></label>
-            <div class="col-xs-10">
-                <form:select path="knownFrameworkIds" cssClass="form-control" id="frameworks" multiple="true">
-                    <form:options items="${frameworks}" itemLabel="name" itemValue="id" />
-                </form:select>
+            <label class="control-label col-xs-3" for="frameworks"><spring:message code="form.developer.frameworks"/></label>
+            <div class="col-xs-9">
+                <select name="knownFrameworkIds" class="form-control" id="frameworks" multiple>
+                    <c:forEach items="${frameworks}" var="item">
+                        <c:set var="selected" value="${profile.knownFrameworkIds.contains(item.id)}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="rating-cd"><spring:message code="form.developer.testRating"/>, %</label>
-            <div class="col-xs-10">
-                <form:input path="testRating" type="number" min="0" max="100" cssClass="form-control" id="rating-cd"/>
+            <label class="control-label col-xs-3" for="rating-cd"><spring:message code="form.developer.testRating"/>, %</label>
+            <div class="col-xs-9">
+                <input type="number" name="testRating" min="0" max="100" class="form-control" id="rating-cd"
+                            value="${profile.testRating}" />
+                </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-xs-3" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
+            <div class="col-xs-9">
+                <input type="text" name="originCountryId" id="country-origin" class="form-control input-sm"
+                       data-selected='${selectedOriginCountry}' />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="country-origin"><spring:message code="form.developer.originCountry"/></label>
-            <div class="col-xs-10">
-                <form:select path="originCountryId" cssClass="form-control" id="country-origin">
-                    <form:option value="${null}">&#160;</form:option>
-                    <form:options items="${countries}" itemLabel="name" itemValue="id" />
-                </form:select>
+            <label class="control-label col-xs-3" for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
+            <div class="col-xs-9">
+                <input type="text" name="preferredCountryIds" id="country-preferred" class="form-control input-sm"
+                       data-selected='${selectedPreferredCountries}'>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
-            <div class="col-xs-10">
-                <form:select path="preferredCountryIds" items="${countries}" itemLabel="name" itemValue="id"
-                                cssClass="form-control" id="country-preferred" multiple="true" />
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="permnanent-frelance"><spring:message code="form.developer.contractType"/></label>
-            <div class="col-xs-10">
-                <form:radiobuttons path="contractTypeId" items="${contractTypes}" itemLabel="name" itemValue="id"
-                                    cssClass="" id="permnanent-frelance" />
+            <label class="control-label col-xs-3"><spring:message code="form.developer.contractType"/></label>
+            <div class="col-xs-9">
+                <c:forEach items="${contractTypes}" var="item">
+                    <c:set var="selected" value="${profile.contractTypeId == item.id}"/>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="contractTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                                ${item.name}
+                        </label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
         <div class="form-check row">
-            <label class="control-label col-xs-2"
-                   for="visa"><spring:message code="form.developer.visaNeeded"/></label>
-            <div class="col-xs-10">
-                <form:checkbox path="visaNeeded" cssClass="form-check-input" id="visa" />
+            <label class="control-label col-xs-3"><spring:message code="form.developer.visaNeeded"/></label>
+            <div class="col-xs-9">
+                <c:set var="isSet" value="${profile.visaNeeded != null}"/>
+                <c:set var="selected" value="${profile.visaNeeded}" />
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="visaNeeded" value="${true}" <c:if test="${isSet and selected}">checked</c:if>>
+                        <spring:message code="common.keyword.yes"/>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="visaNeeded" value="${false}" <c:if test="${isSet and not selected}">checked</c:if>>
+                        <spring:message code="common.keyword.no"/>
+                    </label>
+                </div>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="company-type"><spring:message code="form.developer.preferredCompanyTypes"/></label>
-            <div class="col-xs-10">
-                <form:radiobuttons path="preferredCompanyTypeIds" items="${companyTypes}" itemLabel="name" itemValue="id"
-                                    cssClass="form-check-input" id="company-type" />
+            <label class="control-label col-xs-3"><spring:message code="form.developer.preferredCompanyTypes"/></label>
+            <div class="col-xs-9">
+                <c:forEach items="${companyTypes}" var="item">
+                    <c:set var="selected" value="${profile.preferredCompanyTypeIds.contains(item.id)}"/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="preferredCompanyTypeIds" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                                ${item.name}
+                        </label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="experience"><spring:message code="form.developer.experience"/>, years</label>
-            <div class="col-xs-10">
-                <form:input path="experience" type="number" min="0" cssClass="form-control" id="experience" />
+            <label class="control-label col-xs-3" for="experience"><spring:message code="form.developer.experience"/>, years</label>
+            <div class="col-xs-9">
+                <input type="number" name="experience" min="0" value="${profile.experience}"
+                       id="experience" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="role"><spring:message code="form.developer.preferredRole"/></label>
-            <div class="col-xs-10">
-                <form:radiobuttons path="roleTypeId" items="${roleTypes}" itemLabel="name" itemValue="id"
-                                       cssClass="" id="role" />
+            <label class="control-label col-xs-3"><spring:message code="form.developer.preferredRole"/></label>
+            <div class="col-xs-9">
+                <div>
+                    <c:forEach items="${roleTypes}" var="item">
+                        <c:set var="selected" value="${profile.roleTypeId eq item.id}"/>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="roleTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
+                                    ${item.name}
+                            </label>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="worked-before"><spring:message code="form.developer.workHistory"/></label>
-            <div class="col-xs-10">
-                <form:textarea path="workHistory" maxlength="500" cssClass="form-control" id="worked-before" />
+            <label class="control-label col-xs-3" for="worked-before"><spring:message code="form.developer.workHistory"/></label>
+            <div class="col-xs-9">
+                <textarea name="workHistory" maxlength="500" class="form-control" id="worked-before">
+                    ${profile.workHistory}
+                </textarea>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="english-level"><spring:message code="form.developer.englishLevel"/></label>
-            <div class="col-xs-10">
-                <form:input path="englishLevel" type="number" min="1" max="5"
-                            cssClass="form-control" id="english-level" />
+            <label class="control-label col-xs-3" for="english-level"><spring:message code="form.developer.englishLevel"/></label>
+            <div class="col-xs-9">
+                <input type="number" name="englishLevel" min="1" max="5" value="${profile.englishLevel}"
+                       id="english-level" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="travel"><spring:message code="form.developer.travelTime"/></label>
-            <div class="col-xs-10">
-                <form:input path="travelTime" type="number" cssClass="form-control" id="travel" />
+            <label class="control-label col-xs-3" for="travel"><spring:message code="form.developer.travelTime"/></label>
+            <div class="col-xs-9">
+                <input type="number" name="travelTime" min="0" value="${profile.travelTime}"
+                       id="travel" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="place-live"><spring:message code="form.developer.preferredCity"/></label>
-            <div class="col-xs-10">
-                <form:input path="preferredCity" cssClass="form-control" id="place-live" />
+            <label class="control-label col-xs-3" for="place-live"><spring:message code="form.developer.preferredCity"/></label>
+            <div class="col-xs-9">
+                <textarea name="preferredCity" maxlength="500" id="place-live" class="form-control input-sm">
+                    ${profile.preferredCity}
+                </textarea>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="availability"><spring:message code="form.developer.availability"/></label>
-            <div class="col-xs-10">
-                <form:input path="availability" type="number" cssClass="form-control" id="availability" />
+            <label class="control-label col-xs-3" for="availability"><spring:message code="form.developer.availability"/></label>
+            <div class="col-xs-9">
+                <input type="number" name="availability" min="0" value="${profile.availability}"
+                       id="availability" class="form-control input-sm">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
-            <div class="col-xs-10">
-                <form:input path="hoursPerWeek" type="number" cssClass="form-control" id="hours-week" />
+            <label class="control-label col-xs-3" for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
+            <div class="col-xs-9">
+                <input type="number" name="hoursPerWeek" min="0" value="${profile.hoursPerWeek}"
+                       id="hours-week" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-xs-2"
-                   for="reasons"><spring:message code="form.developer.relocationReason"/> </label>
-            <div class="col-xs-10">
-                <form:textarea path="relocationReason" maxlength="500" cssClass="form-control" id="reasons" />
+            <label class="control-label col-xs-3" for="reasons"><spring:message code="form.developer.relocationReason"/> </label>
+            <div class="col-xs-9">
+                <textarea name="relocationReason" maxlength="500" class="form-control" id="reasons">
+                    ${profile.relocationReason}
+                </textarea>
             </div>
         </div>
 
-    </form:form>
+    </form>
 
     <div class="text-center">
         <button id="btnSave" class="btn  btn-primary">
@@ -213,7 +254,7 @@
             <spring:message code="common.keyword.save"/>
         </button>
         <c:if test="${profile.id != null}">
-            <sec:authorize access="hasRole('ROLE_SU', 'ROLE_ADMIN')">
+            <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN')">
         <button id="btnDelete" class="btn btn-danger" data-id="${profile.id}">
             <i class="glyphicon glyphicon-remove"></i>
             <spring:message code="common.keyword.delete"/>

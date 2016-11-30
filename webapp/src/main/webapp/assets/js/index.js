@@ -3,68 +3,69 @@
  */
 $(document).ready(function () {
 
-    var $tokenOriginCountry = $('input#country-origin').tokenInput('/profile/country/tokens', {
+    var $tokenOriginCountry = $('input#srch-country-origin').tokenInput('/profile/country/tokens', {
         searchDelay: 500,
         minChars: 3,
         tokenLimit: 1,
-        prePopulate: $('input#country-origin').data('selected')
+        prePopulate: $('input#srch-country-origin').data('selected')
     });
 
-    var $tokenPreferredCountries = $('input#country-preferred').tokenInput('/profile/country/tokens', {
+    var $tokenPreferredCountries = $('input#srch-country-preferred').tokenInput('/profile/country/tokens', {
         searchDelay: 500,
         minChars: 3,
         tokenLimit: null,
-        prePopulate: $('input#country-preferred').data('selected')
+        prePopulate: $('input#srch-country-preferred').data('selected')
     });
 
     var $cardList = $('#cardList');
 
     var serializeForm = function () {
-        var o = {};
-        $('#formSearch').find('input, select, textarea').each(function (i, e) {
-            var $e = $(e);
+        var formObject = {};
 
-            if ($.isEmptyObject($e.attr('name'))) {
-                return;
-            }
+        formObject.zsNumber = $('#srch-zsNumber').val().trim();
 
-            if ($e.attr('id') == 'country-origin') {
-                var tokens = $tokenOriginCountry.tokenInput('get');
-                o['originCountryId'] = $.isEmptyObject(tokens) ? '' : tokens[0].id;
-                return;
-            }
+        formObject.rankTypeId = $('#srch-grade').val();
 
-            if ($e.attr('id') == 'country-preferred') {
-                var tokens = $tokenPreferredCountries.tokenInput('get');
-                o['preferredCountryIds'] = $.isEmptyObject(tokens) ? [] : tokens.map(function(a) {return a.id});
-                return;
-            }
+        formObject.mainProgrammingLanguageId = $('#srch-mpl').val();
 
-            var type = $(e).attr('type');
-            var key = $e.attr('name');
-            var value = $e.val();
+        formObject.secondProgrammingLanguageId = $('#srch-spl').val();
 
-            if (type == 'radio' || type == 'checkbox') {
-                if (!$e.is(':checked')) {
-                    return;
-                }
+        formObject.knownFrameworkIds = $.merge([], $('#srch-frameworks').val());
 
-                if (key in o) {
-                    if (!(o[key] instanceof Array)) {
-                        var temp = o[key];
-                        o[key] = [];
-                        o[key].push(temp);
-                    }
-                    o[key].push(value);
-                } else {
-                    o[key] = value;
-                }
-            } else {
-                o[key] = value;
-            }
+        formObject.testRating = $('#srch-rating-cd').val();
+
+        var tokens = $tokenOriginCountry.tokenInput('get');
+        formObject.originCountryId = $.isEmptyObject(tokens) ? null : tokens[0].id;
+
+        formObject.preferredCountryIds = $.merge([], $tokenPreferredCountries.tokenInput('get').map(function(item) { return item.id }));
+
+        var selectors = $('input[name="contractTypeId"]:checked');
+        formObject.contractTypeId = selectors.length > 0 ? selectors.val() : null;
+
+        selectors = $('input[name="visaNeeded"]:checked');
+        formObject.visaNeeded = selectors.length > 0 ? selectors.val() : null;
+
+        formObject.preferredCompanyTypeIds = [];
+        $('input[name="preferredCompanyTypeIds"]:checked').each(function (i, e) {
+            formObject.preferredCompanyTypeIds.push($(this).val());
         });
 
-        return o;
+        formObject.experience = $('#srch-experience').val();
+
+        selectors = $('input[name="roleTypeId"]:checked');
+        formObject.roleTypeId = selectors.length > 0 ? selectors.val() : null;
+
+        formObject.englishLevel = $('#srch-english-level').val();
+
+        formObject.travelTime = $('#srch-travel').val();
+
+        formObject.preferredCity = $('#srch-place-live').val().trim();
+
+        formObject.availability = $('#srch-availability').val();
+
+        formObject.hoursPerWeek = $('#srch-hours-week').val();
+
+        return formObject;
     };
 
     var template = $.templates($('#cardItemTemplate').html());

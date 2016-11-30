@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,9 @@ public class ProfileManagementController {
         return "/developerForm";
     }
 
-    @RequestMapping(value = "/developer/edit", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void save(@ModelAttribute("profile") ProfileForm profileForm) {
+    @RequestMapping(value = "/developer/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void save(@RequestBody ProfileForm profileForm) {
         logger.debug("Handling request '/developer/edit POST' with profile form {}", profileForm);
         profileFormService.saveProfile(profileForm);
     }

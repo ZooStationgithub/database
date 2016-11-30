@@ -82,8 +82,5 @@ idea {
     }
 }
 
-if (project.hasProperty("env") && project.properties['env'] == 'prod') {
-    sourceSets.main.resources.srcDirs += "src/main/profiles/prod"
-} else {
-    sourceSets.main.resources.srcDirs += "src/main/profiles/dev"
-}
+def env = project.hasProperty("env") ? project.properties['env'] : 'dev'
+sourceSets.main.resources.srcDirs += "src/main/profiles/" + env

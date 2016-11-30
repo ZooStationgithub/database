@@ -19,6 +19,6 @@ $(document).ready(function () {
 
     $('#btnEdit').one('click', function() {
         var id = event.target.dataset['id'];
-        window.location.href = contextPath + '/developer/edit?u' + id;
+        window.location.href = contextPath + '/developer/edit?u=' + id;
     });
 });

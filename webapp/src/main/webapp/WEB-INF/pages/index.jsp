@@ -35,10 +35,10 @@
 
         <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
         <div class="form-group">
-            <label class="control-label" for="zsNumber"><spring:message code="form.developer.zsNumber"/></label>
+            <label class="control-label" for="srch-zsNumber"><spring:message code="form.developer.zsNumber"/></label>
             <div>
                 <input type="text" name="zsNumber" value="${sessionScope.searchFilter.zsNumber}"
-                       id="zsNumber" class="form-control"/>
+                       id="srch-zsNumber" class="form-control"/>
             </div>
         </div>
         </sec:authorize>
@@ -98,25 +98,25 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="rating-cd"><spring:message code="form.developer.testRating"/></label>
+            <label class="control-label" for="srch-rating-cd"><spring:message code="form.developer.testRating"/></label>
             <div>
                 <input type="number" name="testRating" value="${sessionScope.searchFilter.testRating}"
-                       min="0" max="100" id="rating-cd" class="form-control input-sm" />
+                       min="0" max="100" id="srch-rating-cd" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
+            <label class="control-label" for="srch-country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <input type="text" name="originCountryId" id="country-origin" class="form-control input-sm"
+                <input type="text" name="originCountryId" id="srch-country-origin" class="form-control input-sm"
                 data-selected='${selectedOriginCountry}'>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
+            <label class="control-label" for="srch-country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div>
-                <input type="text" name="preferredCountryIds" id="country-preferred" class="form-control input-sm"
+                <input type="text" name="preferredCountryIds" id="srch-country-preferred" class="form-control input-sm"
                 data-selected='${selectedPreferredCountries}'>
             </div>
         </div>
@@ -176,10 +176,10 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="experience"><spring:message code="form.developer.experience"/></label>
+            <label class="control-label" for="srch-experience"><spring:message code="form.developer.experience"/></label>
             <div>
                 <input type="number" name="experience" min="0" value="${sessionScope.searchFilter.experience}"
-                       id="experience" class="form-control input-sm" />
+                       id="srch-experience" class="form-control input-sm" />
             </div>
         </div>
 
@@ -198,55 +198,44 @@
             </div>
         </div>
 
-        <%--
         <div class="form-group">
-            <label class="control-label"
-                   for="worked-before"><spring:message code="form.developer.workHistory"/></label>
-            <div>
-                <form:textarea path="workHistory" cssClass="form-control input-sm" id="worked-before"
-                               maxlength="500" />
-            </div>
-        </div>
-        --%>
-
-        <div class="form-group">
-            <label class="control-label" for="english-level"><spring:message code="form.developer.englishLevel"/></label>
+            <label class="control-label" for="srch-english-level"><spring:message code="form.developer.englishLevel"/></label>
             <div>
                 <input type="number" name="englishLevel" min="1" max="5" value="${sessionScope.searchFilter.englishLevel}"
-                       id="english-level" class="form-control input-sm" />
+                       id="srch-english-level" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="travel"><spring:message code="form.developer.travelTime"/></label>
+            <label class="control-label" for="srch-travel"><spring:message code="form.developer.travelTime"/></label>
             <div>
                 <input type="number" name="travelTime" min="0" value="${sessionScope.searchFilter.travelTime}"
-                       id="travel" class="form-control input-sm" />
+                       id="srch-travel" class="form-control input-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="place-live"><spring:message code="form.developer.preferredCity"/></label>
+            <label class="control-label" for="srch-place-live"><spring:message code="form.developer.preferredCity"/></label>
             <div>
-                <textarea name="preferredCity" maxlength="500" id="place-live" class="form-control input-sm">
+                <textarea name="preferredCity" maxlength="500" id="srch-place-live" class="form-control input-sm">
                     ${sessionScope.searchFilter.preferredCity}
                 </textarea>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="availability"><spring:message code="form.developer.availability"/></label>
+            <label class="control-label" for="srch-availability"><spring:message code="form.developer.availability"/></label>
             <div>
                 <input type="number" name="availability" min="0" value="${sessionScope.searchFilter.availability}"
-                       id="availability" class="form-control input-sm">
+                       id="srch-availability" class="form-control input-sm">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label" for="hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
+            <label class="control-label" for="srch-hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
             <div>
                 <input type="number" name="hoursPerWeek" min="0" value="${sessionScope.searchFilter.hoursPerWeek}"
-                       id="hours-week" class="form-control input-sm" />
+                       id="srch-hours-week" class="form-control input-sm" />
             </div>
         </div>
     </form>
@@ -281,7 +270,7 @@
                 </tr>
                 <tr>
                     <th><spring:message code="form.developer.testRating"/></th>
-                    <td>{{:testRating}}%</td>
+                    <td>{{if (testRating != null)}} {{:testRating}} % {{/if}}</td>
                 </tr>
                 <tr>
                     <th><spring:message code="form.developer.originCountry"/></th>

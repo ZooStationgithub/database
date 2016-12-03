@@ -1,5 +1,8 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 group 'nl.zoostation'
-version '1.0-SNAPSHOT'
+version '0.1-SNAPSHOT'
 
 apply plugin: 'war'
 apply plugin: 'idea'
@@ -7,6 +10,9 @@ apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+def env = project.hasProperty("env") ? project.properties['env'] : 'dev'
+sourceSets.main.resources.srcDirs += "src/main/profiles/" + env
 
 repositories {
     mavenLocal()
@@ -57,7 +63,7 @@ dependencies {
 }
 
 war {
-    archiveName = 'zsd.war'
+    archiveName = 'zsdb-' + env + '-' + version + '-' + LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyyMMddHHmmss')) + '.war'
     duplicatesStrategy = 'WARN'
 }
 
@@ -82,5 +88,3 @@ idea {
     }
 }
 
-def env = project.hasProperty("env") ? project.properties['env'] : 'dev'
-sourceSets.main.resources.srcDirs += "src/main/profiles/" + env

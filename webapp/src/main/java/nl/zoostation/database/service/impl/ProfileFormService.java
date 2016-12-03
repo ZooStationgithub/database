@@ -137,9 +137,15 @@ public class ProfileFormService implements IProfileFormService {
         profile.setTestRating(profileForm.getTestRating());
         profile.setWorkHistory(profileForm.getWorkHistory());
 
-        // TODO add custom fields saving
+        Profile savedProfile = profileDAO.save(profile);
+        savedProfile.getCustomFields().clear();
 
-        profileDAO.save(profile);
+        profileForm.getCustomFields().forEach((key, value) -> {
+            CustomProfileField customProfileField = new CustomProfileField(key, value);
+            customProfileField.setProfile(savedProfile);
+            savedProfile.getCustomFields().add(customProfileField);
+        });
+
     }
 
     @Transactional

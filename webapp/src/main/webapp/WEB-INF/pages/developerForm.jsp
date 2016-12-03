@@ -14,6 +14,7 @@
     <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
     <link rel="stylesheet" href='<spring:url value="/assets/css/token-input-mac.css"/>' />
     <script src='<spring:url value="/assets/js/lib/jquery.tokeninput.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/developerForm.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -248,6 +249,28 @@
 
     </form>
 
+    <div class="form-group row">
+        <label class="control-label col-xs-3">
+            <button id="btnMoreFields" class="btn btn-sm btn-primary"><spring:message code="page.developer.form.customField.add"/></button>
+        </label>
+    </div>
+
+    <div id="containerMore">
+        <c:forEach items="${profile.customFields}" var="item">
+            <div class="form-group row" data-type="fieldGroup">
+                <div class="col-xs-3">
+                    <input type="text" data-type="fieldName" class="form-control input-sm" value="${item.key}" />
+                </div>
+                <div class="col-xs-9 row">
+                    <input type="text" data-type="fieldValue" class="form-control input-sm" value="${item.value}" />
+                    <button class="btn btn-xs btn-danger" data-type="deleteField">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
     <div class="text-center">
         <button id="btnSave" class="btn  btn-primary">
             <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -265,6 +288,20 @@
 
     <br/>
     <br/>
+
+    <div id="customFieldTemplate" style="display: none">
+        <div class="form-group row" data-type="fieldGroup">
+            <div class="col-xs-3">
+                <input type="text" data-type="fieldName" class="form-control input-sm" />
+            </div>
+            <div class="col-xs-9">
+                <input type="text" data-type="fieldValue" class="form-control input-sm" />
+                <button class="btn btn-xs btn-danger" data-type="deleteField">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
 </div>
 

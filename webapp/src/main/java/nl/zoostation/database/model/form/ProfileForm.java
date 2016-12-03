@@ -1,6 +1,7 @@
 package nl.zoostation.database.model.form;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ public class ProfileForm {
         knownFrameworkIds = new ArrayList<>();
         preferredCompanyTypeIds = new ArrayList<>();
         preferredCountryIds = new ArrayList<>();
+        customFields = new HashMap<>();
     }
 
     public Long getId() {

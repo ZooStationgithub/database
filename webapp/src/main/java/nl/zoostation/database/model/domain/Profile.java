@@ -106,7 +106,7 @@ public class Profile extends Identifiable {
     //@Cascade(CascadeType.ALL)
     private RoleType roleType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile", orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     private Set<CustomProfileField> customFields = new HashSet<>();
 

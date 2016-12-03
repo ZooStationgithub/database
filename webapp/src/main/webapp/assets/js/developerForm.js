@@ -3,31 +3,7 @@
  */
 $(document).ready(function() {
 
-    var FormObject = function() {
-        return {
-            'zsNumber' : null,
-            'rankTypeId' : null,
-            'mainProgrammingLanguageId' : null,
-            'secondProgrammingLanguageId' : null,
-            'knownFrameworkIds' : [],
-            'testRating' : null,
-            'originCountryId' : null,
-            'preferredCountryIds' : [],
-            'contractTypeId' : null,
-            'visaNeeded' : null,
-            'preferredCompanyTypeIds' : [],
-            'experience' : null,
-            'roleTypeId' : null,
-            'workHistory' : null,
-            'englishLevel' : null,
-            'travelTime' : null,
-            'preferredCity' : null,
-            'availability' : null,
-            'hoursPerWeek' : null,
-            'relocationReason' : null,
-            'customFields' : {}
-        }
-    };
+    var template = $.templates($('#customFieldTemplate').html());
 
     var $tokenOriginCountry = $('input#country-origin').tokenInput('/profile/country/tokens', {
         searchDelay: 500,
@@ -42,6 +18,19 @@ $(document).ready(function() {
         tokenLimit: null,
         prePopulate: $('input#country-preferred').data('selected')
     });
+
+    var collectCustomFields = function() {
+        var customFields = {};
+        $('#containerMore').find('div[data-type="fieldGroup"]').each(function(i, e) {
+            var $this = $(this);
+            var key = $this.find('input[data-type="fieldName"]').val().trim();
+            var value = $this.find('input[data-type="fieldValue"]').val().trim();
+            if (key && value) {
+                customFields[key] = value;
+            }
+        });
+        return customFields;
+    };
 
     var serializeForm = function () {
         var formObject = {};
@@ -93,6 +82,8 @@ $(document).ready(function() {
 
         formObject.relocationReason = $('#reasons').val().trim();
 
+        formObject.customFields = collectCustomFields();
+
         return formObject;
     };
 
@@ -121,6 +112,14 @@ $(document).ready(function() {
         }).fail(function(data) {
             alert("Failure :(");
         });
+    });
+
+    $('#btnMoreFields').on('click', function() {
+        $('#containerMore').append(template.render());
+    });
+
+    $('#containerMore').on('click', 'button[data-type="deleteField"]', function(e) {
+         $(this).closest('div[data-type="fieldGroup"]').remove();
     });
 
 });

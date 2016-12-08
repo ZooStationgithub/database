@@ -63,7 +63,9 @@ dependencies {
 }
 
 war {
-    archiveName = 'zsdb-' + env + '-' + version + '-' + LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyyMMddHHmmss')) + '.war'
+    def templateName = "zsdb%s.war"
+    archiveName = env.equals('dev') ? String.format(templateName, "")
+            : String.format(templateName, '-' + env + '-' + version + '-' + LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyyMMddHHmmss')))
     duplicatesStrategy = 'WARN'
 }
 

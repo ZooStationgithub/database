@@ -1,0 +1,64 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title><spring:message code="page.admin.title"/></title>
+    <%@ include file="../header.jsp" %>
+    <link rel="stylesheet" href='<spring:url value="/assets/css/dataTables.bootstrap.css"/>'>
+    <script type="application/javascript">
+        var messages = {
+            'page.accountList.tooltip.delete' : "<spring:message code='page.accountList.tooltip.delete' javaScriptEscape='true'/>",
+            'page.accountList.tooltip.link' : "<spring:message code='page.accountList.tooltip.link' javaScriptEscape='true'/>"
+        };
+    </script>
+    <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/moment.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/account/accountGrid.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/account/accountForm.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/account/accountTab.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
+</head>
+<body>
+
+<%@ include file="../navbar.jsp" %>
+
+<header>
+    <h1 class="text-center"></h1>
+</header>
+
+<div class="wrapper container">
+
+    <div class="row mbl">
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+
+                <ul id="adminTabBar" class="nav nav-tabs responsive">
+                    <li>
+                        <a href="#accounts" data-toggle="tab" role="tab" data-tab-index="0">
+                            <spring:message code="page.admin.tab.accounts"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#programming-languages" data-toggle="tab" role="tab" data-tab-index="1">
+                            <spring:message code="page.admin.tab.languages" />
+                        </a>
+                    </li>
+                </ul>
+
+                <div id="adminTabContent" class="tab-content">
+                    <div id="accounts" class="tab-pane fade" role="tabpanel">
+                        <h1>This is account tab</h1>
+                    </div>
+                    <div id="programming-languages" class="tab-pane fade" role="tabpanel">
+                        <h1>This is programming languages tab</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

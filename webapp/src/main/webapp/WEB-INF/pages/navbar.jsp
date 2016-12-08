@@ -35,6 +35,14 @@
                             </a>
                         </li>
                     </sec:authorize>
+                    <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN')">
+                        <li>
+                            <a href='<spring:url value="/admin"/>'>
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                                <spring:message code="navbar.admin"/>
+                            </a>
+                        </li>
+                    </sec:authorize>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

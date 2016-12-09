@@ -17,6 +17,9 @@
     <script src='<spring:url value="/assets/js/admin/account/accountGrid.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/account/accountForm.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/account/accountTab.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/pl/plGrid.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/pl/plForm.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/pl/plTab.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
 </head>
 <body>

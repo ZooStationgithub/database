@@ -5,6 +5,7 @@ AdminConsolePage = function() {
     var thisObj = this;
     thisObj.tabMap = {
         0: new AccountTab(thisObj),
+        1: new ProgrammingLanguageTab(thisObj)
     };
     thisObj.init();
 };

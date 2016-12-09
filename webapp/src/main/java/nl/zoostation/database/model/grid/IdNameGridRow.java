@@ -1,21 +1,17 @@
-package nl.zoostation.database.model.form;
-
-import org.hibernate.validator.constraints.NotBlank;
+package nl.zoostation.database.model.grid;
 
 /**
  * @author valentinnastasi
  */
-public class IdNameForm {
+public class IdNameGridRow {
 
     private Long id;
-
-    @NotBlank
     private String name;
 
-    public IdNameForm() {
+    public IdNameGridRow() {
     }
 
-    public IdNameForm(Long id, String name) {
+    public IdNameGridRow(Long id, String name) {
         this.id = id;
         this.name = name;
     }

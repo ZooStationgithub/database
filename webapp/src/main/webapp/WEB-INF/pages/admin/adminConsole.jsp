@@ -20,6 +20,9 @@
     <script src='<spring:url value="/assets/js/admin/pl/plGrid.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/pl/plForm.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/pl/plTab.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/framework/frameworkGrid.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/framework/frameworkForm.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/framework/frameworkTab.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -47,6 +50,11 @@
                             <spring:message code="page.admin.tab.languages" />
                         </a>
                     </li>
+                    <li>
+                        <a href="#frameworks" data-toggle="tab" role="tab" data-tab-index="2">
+                            <spring:message code="page.admin.tab.frameworks" />
+                        </a>
+                    </li>
                 </ul>
 
                 <div id="adminTabContent" class="tab-content">
@@ -55,6 +63,9 @@
                     </div>
                     <div id="programming-languages" class="tab-pane fade" role="tabpanel">
                         <h1>This is programming languages tab</h1>
+                    </div>
+                    <div id="frameworks" class="tab-pane fade" role="tabpanel">
+                        <h1>This is frameworks tab</h1>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "contract_types")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ContractType extends Named {
 
     public ContractType() {

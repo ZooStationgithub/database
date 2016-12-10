@@ -9,7 +9,8 @@ AdminConsolePage = function() {
         2: new FrameworkTab(thisObj),
         3: new ContractTypeTab(thisObj),
         4: new CompanyTypeTab(thisObj),
-        5: new RoleTypeTab(thisObj)
+        5: new RoleTypeTab(thisObj),
+        6: new RankTypeTab(thisObj)
     };
     thisObj.init();
 };

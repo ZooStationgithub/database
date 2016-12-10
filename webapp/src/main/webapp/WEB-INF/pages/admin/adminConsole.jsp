@@ -32,6 +32,9 @@
     <script src='<spring:url value="/assets/js/admin/role/roleGrid.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/role/roleForm.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/role/roleTab.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/rank/rankGrid.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/rank/rankForm.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/rank/rankTab.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -79,6 +82,11 @@
                             <spring:message code="page.admin.tab.role" />
                         </a>
                     </li>
+                    <li>
+                        <a href="#rank-types" data-toggle="tab" role="tab" data-tab-index="6">
+                            <spring:message code="page.admin.tab.rank" />
+                        </a>
+                    </li>
                 </ul>
 
                 <div id="adminTabContent" class="tab-content">
@@ -99,6 +107,9 @@
                     </div>
                     <div id="role-types" class="tab-pane fade" role="tabpanel">
                         <h1>This is role-types tab</h1>
+                    </div>
+                    <div id="rank-types" class="tab-pane fade" role="tabpanel">
+                        <h1>This is rank-types tab</h1>
                     </div>
                 </div>
             </div>

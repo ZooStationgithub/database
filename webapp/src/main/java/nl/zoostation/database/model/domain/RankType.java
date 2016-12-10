@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rank_types")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RankType extends Named {
 
     public RankType() {

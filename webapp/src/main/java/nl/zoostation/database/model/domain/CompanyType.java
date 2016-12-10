@@ -1,5 +1,9 @@
 package nl.zoostation.database.model.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,6 +13,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "company_types")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CompanyType extends Named {
 
     public CompanyType() {

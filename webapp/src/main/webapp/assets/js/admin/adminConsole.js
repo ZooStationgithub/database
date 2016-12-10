@@ -7,7 +7,8 @@ AdminConsolePage = function() {
         0: new AccountTab(thisObj),
         1: new ProgrammingLanguageTab(thisObj),
         2: new FrameworkTab(thisObj),
-        3: new ContractTypeTab(thisObj)
+        3: new ContractTypeTab(thisObj),
+        4: new CompanyTypeTab(thisObj)
     };
     thisObj.init();
 };

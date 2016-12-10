@@ -26,6 +26,9 @@
     <script src='<spring:url value="/assets/js/admin/contract/contractGrid.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/contract/contractForm.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/contract/contractTab.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/company/companyGrid.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/company/companyForm.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/admin/company/companyTab.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -63,6 +66,11 @@
                             <spring:message code="page.admin.tab.contract" />
                         </a>
                     </li>
+                    <li>
+                        <a href="#company-types" data-toggle="tab" role="tab" data-tab-index="4">
+                            <spring:message code="page.admin.tab.company" />
+                        </a>
+                    </li>
                 </ul>
 
                 <div id="adminTabContent" class="tab-content">
@@ -77,6 +85,9 @@
                     </div>
                     <div id="contract-types" class="tab-pane fade" role="tabpanel">
                         <h1>This is contract-types tab</h1>
+                    </div>
+                    <div id="company-types" class="tab-pane fade" role="tabpanel">
+                        <h1>This is company-types tab</h1>
                     </div>
                 </div>
             </div>

@@ -65,8 +65,7 @@ public class HomePageController {
         model.addAttribute("contractTypes", searchQueryContainer.getContractTypes());
         model.addAttribute("rankTypes", searchQueryContainer.getRankTypes());
         model.addAttribute("roleTypes", searchQueryContainer.getRoleTypes());
-        model.addAttribute("selectedOriginCountry", serialize(searchQueryContainer.getSelectedOriginCountry()));
-        model.addAttribute("selectedPreferredCountries", serialize(searchQueryContainer.getSelectedPreferredCountries()));
+        model.addAttribute("countries", searchQueryContainer.getCountries());
 
         return "/index";
     }

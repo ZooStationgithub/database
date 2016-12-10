@@ -17,8 +17,12 @@ RoleTypeTab.prototype = function() {
         $.ajax({
             url : '/admin/data/role/tab'
         }).done(function(responseHtml) {
-            $('#role-types').empty().append(responseHtml);
+            var $role = $('#role-types');
+            $role.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $role.trigger('resize');
+            }, 1000);
         });
     };
 

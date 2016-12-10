@@ -80,6 +80,7 @@ ContractTypeGrid.prototype = function () {
         $('#btnNewContractType').on('click', handlers(thisObj).clickNew);
         $(gridSelector).on('click', 'a[data-action="edit"]', handlers(thisObj).clickEdit);
         $(gridSelector).on('click', 'a[data-action="delete"]', handlers(thisObj).clickDelete);
+        $(gridSelector).trigger('resize');
     };
 
     var refresh = function (thisObj) {

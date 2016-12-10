@@ -7,12 +7,11 @@
 <head>
     <title><spring:message code="page.index.title"/></title>
     <%@ include file="header.jsp" %>
-    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
-    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input-mac.css"/>' />
+    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>' />
     <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/jquery.tokeninput.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/index.js"/>' type="application/javascript"></script>
 </head>
 <body>
@@ -48,7 +47,7 @@
                    for="srch-grade"><spring:message code="form.developer.grade"/></label>
             <div>
                 <select name="rankTypeId" id="srch-grade" class="form-control input-sm">
-                    <option value=""></option>
+                    <option value="">&nbsp;</option>
                     <c:forEach items="${rankTypes}" var="item">
                         <c:set var="selected" value="${sessionScope.searchFilter.rankTypeId eq item.id}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -62,7 +61,7 @@
                    for="srch-mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
             <div>
                 <select name="mainProgrammingLanguageId" id="srch-mpl" class="form-control input-sm">
-                    <option value=""></option>
+                    <option value="">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
                         <c:set var="selected" value="${sessionScope.searchFilter.mainProgrammingLanguageId eq item.id}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -76,7 +75,7 @@
                    for="srch-spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
             <div>
                 <select name="secondProgrammingLanguageId" id="srch-spl" class="form-control input-sm">
-                    <option value=""></option>
+                    <option value="">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
                         <c:set var="selected" value="${sessionScope.searchFilter.secondProgrammingLanguageId eq item.id}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -88,7 +87,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-frameworks"><spring:message code="form.developer.frameworks"/></label>
             <div>
-                <select name="knownFrameworkIds" multiple id="srch-frameworks" class="form-control input-sm">
+                <select name="knownFrameworkIds" multiple="multiple" id="srch-frameworks" class="form-control input-sm">
                     <c:forEach items="${frameworks}" var="item">
                         <c:set var="selected" value="${sessionScope.searchFilter.knownFrameworkIds.contains(item.id)}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -108,16 +107,25 @@
         <div class="form-group">
             <label class="control-label" for="srch-country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div>
-                <input type="text" name="originCountryId" id="srch-country-origin" class="form-control input-sm"
-                data-selected='${selectedOriginCountry}'>
+                <select name="originCountryId" id="srch-country-origin" class="form-control">
+                    <option value="">&nbsp;</option>
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label" for="srch-country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div>
-                <input type="text" name="preferredCountryIds" id="srch-country-preferred" class="form-control input-sm"
-                data-selected='${selectedPreferredCountries}'>
+                <select name="preferredCountryIds" id="srch-country-preferred" class="form-control" multiple="multiple">
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${sessionScope.searchFilter.preferredCountryIds.contains(item.id)}"/>
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 

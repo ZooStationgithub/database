@@ -1,7 +1,6 @@
 package nl.zoostation.database.model.form;
 
 import nl.zoostation.database.model.domain.*;
-import nl.zoostation.database.model.input.SearchToken;
 
 import java.util.List;
 
@@ -18,8 +17,6 @@ public class ProfileFormContainer {
     private List<RoleType> roleTypes;
     private List<RankType> rankTypes;
     private List<ContractType> contractTypes;
-    private List<SearchToken> selectedOriginCountry;
-    private List<SearchToken> selectedPreferredCountries;
 
     public ProfileFormContainer() {
     }
@@ -88,19 +85,4 @@ public class ProfileFormContainer {
         this.contractTypes = contractTypes;
     }
 
-    public List<SearchToken> getSelectedOriginCountry() {
-        return selectedOriginCountry;
-    }
-
-    public void setSelectedOriginCountry(List<SearchToken> selectedOriginCountry) {
-        this.selectedOriginCountry = selectedOriginCountry;
-    }
-
-    public List<SearchToken> getSelectedPreferredCountries() {
-        return selectedPreferredCountries;
-    }
-
-    public void setSelectedPreferredCountries(List<SearchToken> selectedPreferredCountries) {
-        this.selectedPreferredCountries = selectedPreferredCountries;
-    }
 }

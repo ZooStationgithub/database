@@ -17,8 +17,12 @@ FrameworkTab.prototype = function() {
         $.ajax({
             url : '/admin/data/framework/tab'
         }).done(function(responseHtml) {
-            $('#frameworks').empty().append(responseHtml);
+            var $frameworks = $('#frameworks');
+            $frameworks.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $frameworks.trigger('resize');
+            }, 1000);
         });
     };
 

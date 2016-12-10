@@ -17,8 +17,12 @@ RankTypeTab.prototype = function() {
         $.ajax({
             url : '/admin/data/rank/tab'
         }).done(function(responseHtml) {
-            $('#rank-types').empty().append(responseHtml);
+            var $rank = $('#rank-types');
+            $rank.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $rank.trigger('resize');
+            }, 1000);
         });
     };
 

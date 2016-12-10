@@ -17,8 +17,12 @@ AccountTab.prototype = function() {
         $.ajax({
             url : '/admin/account/tab'
         }).done(function(responseHtml) {
-            $('#accounts').empty().append(responseHtml);
+            var $accounts = $('#accounts');
+            $accounts.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $accounts.trigger('resize');
+            }, 1000);
         });
     };
 

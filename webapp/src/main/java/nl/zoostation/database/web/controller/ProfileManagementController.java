@@ -44,8 +44,7 @@ public class ProfileManagementController {
         model.addAttribute("contractTypes", profileFormContainer.getContractTypes());
         model.addAttribute("rankTypes", profileFormContainer.getRankTypes());
         model.addAttribute("roleTypes", profileFormContainer.getRoleTypes());
-        model.addAttribute("selectedOriginCountry", serialize(profileFormContainer.getSelectedOriginCountry()));
-        model.addAttribute("selectedPreferredCountries", serialize(profileFormContainer.getSelectedPreferredCountries()));
+        model.addAttribute("countries", profileFormContainer.getCountries());
 
         return "/developerForm";
     }

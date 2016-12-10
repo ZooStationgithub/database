@@ -3,19 +3,12 @@
  */
 $(document).ready(function () {
 
-    var $tokenOriginCountry = $('input#srch-country-origin').tokenInput('/profile/country/tokens', {
-        searchDelay: 500,
-        minChars: 3,
-        tokenLimit: 1,
-        prePopulate: $('input#srch-country-origin').data('selected')
-    });
-
-    var $tokenPreferredCountries = $('input#srch-country-preferred').tokenInput('/profile/country/tokens', {
-        searchDelay: 500,
-        minChars: 3,
-        tokenLimit: null,
-        prePopulate: $('input#srch-country-preferred').data('selected')
-    });
+    $('#srch-grade').select2();
+    $('#srch-mpl').select2();
+    $('#srch-spl').select2();
+    $('#srch-frameworks').select2();
+    $('#srch-country-origin').select2();
+    $('#srch-country-preferred').select2();
 
     var $cardList = $('#cardList');
 
@@ -30,14 +23,13 @@ $(document).ready(function () {
 
         formObject.secondProgrammingLanguageId = $('#srch-spl').val();
 
-        formObject.knownFrameworkIds = $.merge([], $('#srch-frameworks').val());
+        formObject.knownFrameworkIds = $('#srch-frameworks').val() || [];
 
         formObject.testRating = $('#srch-rating-cd').val();
 
-        var tokens = $tokenOriginCountry.tokenInput('get');
-        formObject.originCountryId = $.isEmptyObject(tokens) ? null : tokens[0].id;
+        formObject.originCountryId = $('#srch-country-origin').val();
 
-        formObject.preferredCountryIds = $.merge([], $tokenPreferredCountries.tokenInput('get').map(function(item) { return item.id }));
+        formObject.preferredCountryIds = $('#srch-country-preferred').val();
 
         var selectors = $('input[name="contractTypeId"]:checked');
         formObject.contractTypeId = selectors.length > 0 ? selectors.val() : null;

@@ -17,8 +17,12 @@ CompanyTypeTab.prototype = function() {
         $.ajax({
             url : '/admin/data/company/tab'
         }).done(function(responseHtml) {
-            $('#company-types').empty().append(responseHtml);
+            var $company = $('#company-types');
+            $company.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $company.trigger('resize');
+            }, 1000);
         });
     };
 

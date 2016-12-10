@@ -5,19 +5,12 @@ $(document).ready(function() {
 
     var template = $.templates($('#customFieldTemplate').html());
 
-    var $tokenOriginCountry = $('input#country-origin').tokenInput('/profile/country/tokens', {
-        searchDelay: 500,
-        minChars: 3,
-        tokenLimit: 1,
-        prePopulate: $('input#country-origin').data('selected'),
-    });
-
-    var $tokenPreferredCountries = $('input#country-preferred').tokenInput('/profile/country/tokens', {
-        searchDelay: 500,
-        minChars: 3,
-        tokenLimit: null,
-        prePopulate: $('input#country-preferred').data('selected')
-    });
+    $('select#grade').select2();
+    $('select#mpl').select2();
+    $('select#spl').select2();
+    $('select#frameworks').select2();
+    $('select#country-origin').select2();
+    $('select#country-preferred').select2();
 
     var collectCustomFields = function() {
         var customFields = {};
@@ -43,14 +36,13 @@ $(document).ready(function() {
 
         formObject.secondProgrammingLanguageId = $('#spl').val();
 
-        formObject.knownFrameworkIds = $.merge([], $('#frameworks').val());
+        formObject.knownFrameworkIds = $('#frameworks').val() || [];
 
         formObject.testRating = $('#rating-cd').val();
 
-        var tokens = $tokenOriginCountry.tokenInput('get');
-        formObject.originCountryId = $.isEmptyObject(tokens) ? null : tokens[0].id;
+        formObject.originCountryId = $('#country-origin').val();
 
-        formObject.preferredCountryIds = $.merge([], $tokenPreferredCountries.tokenInput('get').map(function(item) { return item.id }));
+        formObject.preferredCountryIds = $('#country-preferred').val() || [];
 
         var selectors = $('input[name="contractTypeId"]:checked');
         formObject.contractTypeId = selectors.length > 0 ? selectors.val() : null;

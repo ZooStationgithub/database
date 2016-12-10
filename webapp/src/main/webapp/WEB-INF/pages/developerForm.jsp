@@ -11,9 +11,8 @@
         </c:choose>
     </title>
     <%@ include file="header.jsp" %>
-    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input.css"/>' />
-    <link rel="stylesheet" href='<spring:url value="/assets/css/token-input-mac.css"/>' />
-    <script src='<spring:url value="/assets/js/lib/jquery.tokeninput.js"/>' type="application/javascript"></script>
+    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>' />
+    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/developerForm.js"/>' type="application/javascript"></script>
 </head>
@@ -42,7 +41,7 @@
             <label class="control-label col-xs-3" for="grade"><spring:message code="form.developer.grade"/></label>
             <div class="col-xs-9">
                 <select name="rankTypeId" class="form-control" id="grade">
-                    <option value="${null}"></option>
+                    <option value="${null}">&nbsp;</option>
                     <c:forEach items="${rankTypes}" var="item">
                         <c:set var="selected" value="${item.id == profile.rankTypeId}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -55,7 +54,7 @@
             <label class="control-label col-xs-3" for="mpl"><spring:message code="form.developer.mainProgrammingLanguage"/></label>
             <div class="col-xs-9">
                 <select name="mainProgrammingLanguageId" class="form-control" id="mpl">
-                    <option value="${null}"></option>
+                    <option value="${null}">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
                         <c:set var="selected" value="${item.id == profile.mainProgrammingLanguageId}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -68,7 +67,7 @@
             <label class="control-label col-xs-3" for="spl"><spring:message code="form.developer.secondProgrammingLanguage"/></label>
             <div class="col-xs-9">
                 <select name="secondProgrammingLanguageId" class="form-control" id="spl">
-                    <option value="${null}"></option>
+                    <option value="${null}">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
                         <c:set var="selected" value="${item.id == profile.secondProgrammingLanguageId}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -80,7 +79,7 @@
         <div class="form-group row">
             <label class="control-label col-xs-3" for="frameworks"><spring:message code="form.developer.frameworks"/></label>
             <div class="col-xs-9">
-                <select name="knownFrameworkIds" class="form-control" id="frameworks" multiple>
+                <select name="knownFrameworkIds" class="form-control" id="frameworks" multiple="multiple">
                     <c:forEach items="${frameworks}" var="item">
                         <c:set var="selected" value="${profile.knownFrameworkIds.contains(item.id)}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
@@ -100,16 +99,25 @@
         <div class="form-group row">
             <label class="control-label col-xs-3" for="country-origin"><spring:message code="form.developer.originCountry"/></label>
             <div class="col-xs-9">
-                <input type="text" name="originCountryId" id="country-origin" class="form-control input-sm"
-                       data-selected='${selectedOriginCountry}' />
+                <select name="originCountryId" class="form-control" id="country-origin">
+                    <option value="${null}">&nbsp;</option>
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${item.id == profile.originCountryId}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="control-label col-xs-3" for="country-preferred"><spring:message code="form.developer.preferredCountries"/></label>
             <div class="col-xs-9">
-                <input type="text" name="preferredCountryIds" id="country-preferred" class="form-control input-sm"
-                       data-selected='${selectedPreferredCountries}'>
+                <select name="preferredCountryIds" id="country-preferred" class="form-control input-sm" multiple="multiple">
+                    <c:forEach items="${countries}" var="item">
+                        <c:set var="selected" value="${profile.preferredCountryIds.contains(item.id)}" />
+                        <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
 

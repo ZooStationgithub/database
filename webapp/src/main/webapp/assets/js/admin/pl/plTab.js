@@ -17,8 +17,12 @@ ProgrammingLanguageTab.prototype = function() {
         $.ajax({
             url : '/admin/data/pl/tab'
         }).done(function(responseHtml) {
-            $('#programming-languages').empty().append(responseHtml);
+            var $pl = $('#programming-languages');
+            $pl.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $pl.trigger('resize');
+            }, 1000);
         });
     };
 

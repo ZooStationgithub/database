@@ -17,8 +17,12 @@ ContractTypeTab.prototype = function() {
         $.ajax({
             url : '/admin/data/contract/tab'
         }).done(function(responseHtml) {
-            $('#contract-types').empty().append(responseHtml);
+            var $contract = $('#contract-types');
+            $contract.empty().append(responseHtml);
             thisObj.grid.init();
+            setTimeout(function () {
+                $contract.trigger('resize');
+            }, 1000);
         });
     };
 

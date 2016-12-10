@@ -112,6 +112,7 @@ AccountGrid.prototype = function () {
         $('#btnNewAccount').on('click', handlers(thisObj).clickNew);
         $(gridSelector).on('click', 'a[data-action="resend-link"]', handlers(thisObj).clickResendLink);
         $(gridSelector).on('click', 'a[data-action="delete"]', handlers(thisObj).clickDelete);
+        $(gridSelector).trigger('resize');
     };
 
     var refresh = function (thisObj) {

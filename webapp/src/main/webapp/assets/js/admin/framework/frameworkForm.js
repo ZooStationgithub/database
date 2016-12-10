@@ -18,6 +18,8 @@ FrameworkForm.prototype = function() {
     };
 
     var init = function(thisObj) {
+        $(panelSelector).find('form #pl-id').select2();
+
         $(panelSelector).find('form').submit(function(event) {
 
             $.ajax({

@@ -5,6 +5,7 @@
     <title><spring:message code="page.admin.title"/></title>
     <%@ include file="../header.jsp" %>
     <link rel="stylesheet" href='<spring:url value="/assets/css/dataTables.bootstrap.css"/>'>
+    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>'>
     <script type="application/javascript">
         var messages = {
             'page.accountList.tooltip.delete' : "<spring:message code='page.accountList.tooltip.delete' javaScriptEscape='true'/>",
@@ -13,6 +14,7 @@
     </script>
     <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
+    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/lib/moment.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/account/accountGrid.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/account/accountForm.js"/>' type="application/javascript"></script>

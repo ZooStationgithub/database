@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "role_types")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleType extends Named {
 
     public RoleType() {

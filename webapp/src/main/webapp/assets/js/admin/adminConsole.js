@@ -8,7 +8,8 @@ AdminConsolePage = function() {
         1: new ProgrammingLanguageTab(thisObj),
         2: new FrameworkTab(thisObj),
         3: new ContractTypeTab(thisObj),
-        4: new CompanyTypeTab(thisObj)
+        4: new CompanyTypeTab(thisObj),
+        5: new RoleTypeTab(thisObj)
     };
     thisObj.init();
 };

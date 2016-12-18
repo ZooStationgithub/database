@@ -15,7 +15,8 @@ $(document).ready(function () {
     var serializeForm = function () {
         var formObject = {};
 
-        formObject.zsNumber = $('#srch-zsNumber').val().trim();
+        var $srchZsNumber = $('#srch-zsNumber');
+        formObject.zsNumber = $srchZsNumber.val() != undefined ? $srchZsNumber.val().trim() : null;
 
         formObject.rankTypeId = $('#srch-grade').val();
 

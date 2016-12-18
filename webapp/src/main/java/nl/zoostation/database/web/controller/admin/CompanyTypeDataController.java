@@ -1,16 +1,15 @@
 package nl.zoostation.database.web.controller.admin;
 
-import nl.zoostation.database.model.form.IdNameForm;
+import nl.zoostation.database.model.form.IdNameFormObject;
+import nl.zoostation.database.model.form.SimpleFormWrapper;
 import nl.zoostation.database.model.grid.IdNameGridRow;
-import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
-import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
-import nl.zoostation.database.service.ICompanyTypeService;
+import nl.zoostation.database.service.IFormService;
+import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,61 +23,65 @@ import java.util.Optional;
  */
 @Controller
 @RequestMapping("/admin/data/company")
-public class CompanyTypeDataController {
-
-    private final ICompanyTypeService companyTypeService;
+public class CompanyTypeDataController extends AbstractAdminTabController<IdNameGridRow, IdNameFormObject, SimpleFormWrapper<IdNameFormObject>> {
 
     @Autowired
-    public CompanyTypeDataController(ICompanyTypeService companyTypeService) {
-        this.companyTypeService = companyTypeService;
+    protected CompanyTypeDataController(
+            IGridDataService<IdNameGridRow> companyTypeGridDataService,
+            IFormService<?, Long, IdNameFormObject, SimpleFormWrapper<IdNameFormObject>> companyTypeFormService) {
+        super(companyTypeGridDataService, companyTypeFormService);
     }
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
     public String openTab() {
-        return "/admin/company/companyTab";
+        return super.openTab();
     }
 
     @RequestMapping(value = "/grid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DataTablesResponse<IdNameGridRow> getGridData(DataTablesRequest request) {
-        GridViewInputSpec gridViewInputSpec = new GridViewInputSpec(request.getPageStart(), request.getPageLength(), request.getGlobalFilter(),
-                request.getOrderColumn(), request.getOrderDirection(), request.getFilterableColumns());
-        GridViewOutputSpec<IdNameGridRow> outputSpec = companyTypeService.getGridData(gridViewInputSpec);
-        DataTablesResponse<IdNameGridRow> response = new DataTablesResponse<>(request.getDrawCounter(), outputSpec.getTotalRecords(),
-                outputSpec.getFilteredRecords(), outputSpec.getRecords());
-
-        return response;
+    public DataTablesResponse<IdNameGridRow> getGridData(DataTablesRequest dataTablesRequest) {
+        return super.getGridData(dataTablesRequest);
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String openForm(
             @RequestParam("id") Optional<Long> id,
             Model model) {
-
-        IdNameForm form = companyTypeService.prepareForm(id);
-        model.addAttribute("companyType", form);
-
-        return "/admin/company/companyForm";
+        return super.openForm(id, model);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Object save(
-            @ModelAttribute("companyType") @Valid IdNameForm form,
-            BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return "/admin/company/companyForm";
-        }
-
-        companyTypeService.save(form);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+            @ModelAttribute("companyType") @Valid IdNameFormObject form,
+            BindingResult bindingResult,
+            Model model) {
+        return super.save(form, bindingResult, model);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
-        companyTypeService.delete(id);
+        super.delete(id);
     }
-    
+
+    @Override
+    protected String getTabViewName() {
+        return "/admin/company/companyTab";
+    }
+
+    @Override
+    protected String getFormViewName() {
+        return "/admin/company/companyForm";
+    }
+
+    @Override
+    protected String getFormModelName() {
+        return "companyType";
+    }
+
+    @Override
+    protected void populateModel(Model model, SimpleFormWrapper<IdNameFormObject> formWrapper) {
+    }
+
+
 }

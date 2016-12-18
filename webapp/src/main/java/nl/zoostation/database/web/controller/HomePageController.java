@@ -2,12 +2,11 @@ package nl.zoostation.database.web.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.zoostation.database.model.form.ProfileSearchFormObject;
+import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
 import nl.zoostation.database.model.grid.ProfileGridRow;
-import nl.zoostation.database.model.grid.SearchFilter;
-import nl.zoostation.database.model.grid.SearchQueryContainer;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
-import nl.zoostation.database.model.input.SearchToken;
 import nl.zoostation.database.service.IProfileSearchService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
@@ -19,13 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
@@ -44,7 +41,9 @@ public class HomePageController {
     private final IProfileSearchService profileSearchService;
 
     @Autowired
-    public HomePageController(ObjectMapper objectMapper, IProfileSearchService profileSearchService) {
+    public HomePageController(
+            ObjectMapper objectMapper,
+            IProfileSearchService profileSearchService) {
         this.objectMapper = objectMapper;
         this.profileSearchService = profileSearchService;
     }
@@ -53,19 +52,18 @@ public class HomePageController {
     public String openHomePage(HttpSession httpSession, Model model) throws JsonProcessingException {
         logger.debug("Opening home page");
 
-        if (httpSession.getAttribute(SEARCH_FILTER) == null) {
-            httpSession.setAttribute(SEARCH_FILTER, new SearchFilter());
+        ProfileSearchFormWrapper formWrapper = profileSearchService.prepareForm();
+        if (Objects.isNull(httpSession.getAttribute(SEARCH_FILTER))) {
+            httpSession.setAttribute(SEARCH_FILTER, formWrapper.getForm());
         }
 
-        SearchQueryContainer searchQueryContainer = profileSearchService.prepareForm((SearchFilter) httpSession.getAttribute(SEARCH_FILTER));
-        //model.addAttribute("countries", searchQueryContainer.getCountries());
-        model.addAttribute("languages", searchQueryContainer.getProgrammingLanguages());
-        model.addAttribute("frameworks", searchQueryContainer.getFrameworks());
-        model.addAttribute("companyTypes", searchQueryContainer.getCompanyTypes());
-        model.addAttribute("contractTypes", searchQueryContainer.getContractTypes());
-        model.addAttribute("rankTypes", searchQueryContainer.getRankTypes());
-        model.addAttribute("roleTypes", searchQueryContainer.getRoleTypes());
-        model.addAttribute("countries", searchQueryContainer.getCountries());
+        model.addAttribute("languages", formWrapper.getProgrammingLanguages());
+        model.addAttribute("frameworks", formWrapper.getFrameworks());
+        model.addAttribute("companyTypes", formWrapper.getCompanyTypes());
+        model.addAttribute("contractTypes", formWrapper.getContractTypes());
+        model.addAttribute("rankTypes", formWrapper.getRankTypes());
+        model.addAttribute("roleTypes", formWrapper.getRoleTypes());
+        model.addAttribute("countries", formWrapper.getCountries());
 
         return "/index";
     }
@@ -75,39 +73,28 @@ public class HomePageController {
     public DataTablesResponse getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
         logger.debug("Handling request '/profile/grid GET'");
 
-        SearchFilter searchFilter = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
-        httpSession.setAttribute(SEARCH_FILTER, searchFilter);
+        ProfileSearchFormObject formObject = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
+        httpSession.setAttribute(SEARCH_FILTER, formObject);
 
         GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
-        gridViewInputSpec.getExtras().put(SEARCH_FILTER, searchFilter);
+        gridViewInputSpec.getExtras().put(SEARCH_FILTER, formObject);
 
         GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = profileSearchService.getGridData(gridViewInputSpec);
-
-        DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>(request.getDrawCounter(), gridViewOutputSpec.getTotalRecords(),
-                gridViewOutputSpec.getFilteredRecords(), gridViewOutputSpec.getRecords());
+        DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>();
+        response.setDrawCounter(request.getDrawCounter());
+        response.setRecords(gridViewOutputSpec.getRecords());
+        response.setTotalRecords(gridViewOutputSpec.getTotalRecords());
+        response.setFilteredRecords(gridViewOutputSpec.getFilteredRecords());
 
         return response;
     }
 
-    @RequestMapping(value = "/profile/country/tokens", method = RequestMethod.GET)
-    @ResponseBody
-    public List<? extends SearchToken> getCountryTokens(@RequestParam("q") String searchTerm) {
-        return profileSearchService.findTokens(searchTerm, Collections.emptyMap());
-    }
-
-    private SearchFilter deserializeSearchFilter(String json) throws IOException {
+    private ProfileSearchFormObject deserializeSearchFilter(String json) throws IOException {
         if (StringUtils.isEmpty(json)) {
-            return new SearchFilter();
+            return new ProfileSearchFormObject();
         }
-        return Optional.ofNullable(objectMapper.readValue(json, SearchFilter.class)).orElse(new SearchFilter());
-    }
-
-    private String serialize(Object o) throws JsonProcessingException {
-        if (o == null) {
-            return "";
-        }
-
-        return objectMapper.writeValueAsString(o);
+        return Optional.ofNullable(objectMapper.readValue(json, ProfileSearchFormObject.class))
+                .orElse(new ProfileSearchFormObject());
     }
 
 }

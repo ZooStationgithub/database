@@ -1,8 +1,7 @@
 package nl.zoostation.database.app.config;
 
 import nl.zoostation.database.security.SecurityUserDetailsService;
-import nl.zoostation.database.service.IAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import nl.zoostation.database.service.IAccountManagementService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -18,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(@Autowired IAccountService accountService) {
-        return new SecurityUserDetailsService(accountService);
+    public UserDetailsService userDetailsService(IAccountManagementService accountManagementService) {
+        return new SecurityUserDetailsService(accountManagementService);
     }
 
     @Bean

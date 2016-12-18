@@ -5,9 +5,7 @@ import nl.zoostation.database.model.grid.AccountGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.List;
 /**
  * @author val
  */
-@Repository
-@SuppressWarnings({"JpaQlInspection", "unchecked"})
 public class AccountGridDataDAO extends SessionAwareDAO implements IGridDataDAO<AccountGridRow> {
 
     private static final String SU_USER = "su";
@@ -34,7 +30,6 @@ public class AccountGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
             "from Account a " +
             "where a.login not in (:forbiddenUsers)";
 
-    @Autowired
     public AccountGridDataDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }

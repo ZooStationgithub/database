@@ -3,7 +3,7 @@ package nl.zoostation.database.model.grid;
 /**
  * @author valentinnastasi
  */
-public class ProfileGridRow {
+public class ProfileGridRow implements IGridRow<Long> {
 
     private Long id;
     private String rank;
@@ -21,6 +21,7 @@ public class ProfileGridRow {
         this.originCountry = originCountry;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

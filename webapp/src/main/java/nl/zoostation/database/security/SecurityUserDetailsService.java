@@ -1,17 +1,14 @@
 package nl.zoostation.database.security;
 
 import nl.zoostation.database.model.domain.Account;
-import nl.zoostation.database.service.IAccountService;
+import nl.zoostation.database.service.IAccountManagementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,17 +21,17 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     private static final Logger logger = LogManager.getLogger(SecurityUserDetailsService.class);
 
-    private final IAccountService accountService;
+    private final IAccountManagementService accountManagementService;
 
-    public SecurityUserDetailsService(IAccountService accountService) {
-        this.accountService = accountService;
+    public SecurityUserDetailsService(IAccountManagementService accountManagementService) {
+        this.accountManagementService = accountManagementService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         logger.debug("Loading user credentials for login '{}'", login);
 
-        Optional<Account> account = accountService.findByLogin(login);
+        Optional<Account> account = accountManagementService.findByLogin(login);
         if (account.isPresent()) {
             Account accountUnwrapped = account.get();
             return new org.springframework.security.core.userdetails.User(

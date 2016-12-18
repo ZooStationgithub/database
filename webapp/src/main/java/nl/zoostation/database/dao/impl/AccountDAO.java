@@ -3,46 +3,26 @@ package nl.zoostation.database.dao.impl;
 import nl.zoostation.database.dao.IAccountDAO;
 import nl.zoostation.database.model.domain.Account;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.Optional;
+
+import static nl.zoostation.database.app.Constants.Parameters.LOGIN;
 
 /**
  * @author valentinnastasi
  */
-@Repository
-public class AccountDAO extends GenericDAO<Account, Long> implements IAccountDAO {
+public class AccountDAO extends SimpleGenericEntityDAO<Account, Long> implements IAccountDAO {
 
-    @Autowired
+    private static final String QUERY_BY_LOGIN =
+            "from {0} where login = :{1}";
+
     public AccountDAO(SessionFactory sessionFactory) {
-        super(sessionFactory);
+        super(sessionFactory, Account.class, Long.class);
     }
 
-    @Override
-    protected Class<Account> getEntityType() {
-        return Account.class;
-    }
-
-    @SuppressWarnings("unchecked")
     @Override
     public Optional<Account> findByLogin(String login) {
-        return getSession().createQuery("from Account where login = :login").setParameter("login", login).uniqueResultOptional();
-    }
-
-    @Override
-    public void activate(String login) {
-        Optional<Account> account = findByLogin(login);
-        if (!account.isPresent()) {
-            throw new IllegalStateException("Account with login '" + login + "' doesn't exist");
-        }
-        if (account.get().getActivationDate().isPresent()) {
-            throw new IllegalStateException("Account with login '" + login + "' is already activated");
-        }
-
-        Account accountUnwrapped = account.get();
-        accountUnwrapped.setActivationDate(Instant.now());
-        save(accountUnwrapped);
+        return getSession().createQuery(interpolate(QUERY_BY_LOGIN, Account.class.getSimpleName(), LOGIN), Account.class)
+                .setParameter(LOGIN, login).uniqueResultOptional();
     }
 }

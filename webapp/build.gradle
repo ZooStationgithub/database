@@ -60,11 +60,13 @@ dependencies {
     // Testing
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.3.RELEASE'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.3.0'
+
 }
 
 war {
     def templateName = "zsdb%s.war"
-    archiveName = env.equals('dev') ? String.format(templateName, "")
+    archiveName = (env == 'dev') ? String.format(templateName, "")
             : String.format(templateName, '-' + env + '-' + version + '-' + LocalDateTime.now().format(DateTimeFormatter.ofPattern('yyyyMMddHHmmss')))
     duplicatesStrategy = 'WARN'
 }

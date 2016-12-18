@@ -1,21 +1,17 @@
 package nl.zoostation.database.dao.impl;
 
-import nl.zoostation.database.dao.IProfileDAO;
+import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.Profile;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author valentinnastasi
  */
-@Repository
-public class ProfileDAO extends GenericDAO<Profile, Long> implements IProfileDAO {
+public class ProfileDAO extends SimpleGenericEntityDAO<Profile, Long> implements IGenericEntityDAO<Profile, Long> {
 
-    @Autowired
     public ProfileDAO(SessionFactory sessionFactory) {
-        super(sessionFactory);
+        super(sessionFactory, Profile.class, Long.class);
     }
 
     @Override
@@ -26,11 +22,6 @@ public class ProfileDAO extends GenericDAO<Profile, Long> implements IProfileDAO
         entity.getPreferredCompanyTypes().clear();
         entity.getPreferredCountries().clear();
         super.delete(entity);
-    }
-
-    @Override
-    protected Class<Profile> getEntityType() {
-        return Profile.class;
     }
 
 }

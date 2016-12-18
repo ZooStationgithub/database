@@ -18,7 +18,7 @@ AccountGrid.prototype = function () {
             clickResendLink: function (event) {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: '/admin//account/activate/resend/' + id,
+                    url: '/admin/account/activate/resend/' + id,
                     method: 'get'
                 }).done(function(response) {
                     refresh(thisObj);
@@ -27,7 +27,7 @@ AccountGrid.prototype = function () {
             clickDelete: function (event) {
                 var id = $(this).data('id');
                 $.ajax({
-                    url: '/admin//account/' + id,
+                    url: '/admin/account/' + id,
                     method: 'delete'
                 }).done(function(response) {
                     refresh(thisObj);
@@ -97,7 +97,7 @@ AccountGrid.prototype = function () {
     };
 
     var definition = {
-        ajax: '/admin//account/grid',
+        ajax: '/admin/account/grid',
         processing: true,
         serverSide: true,
         filter: false,

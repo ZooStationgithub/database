@@ -36,7 +36,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-zsNumber"><spring:message code="form.developer.zsNumber"/></label>
             <div>
-                <input type="text" name="zsNumber" value="${sessionScope.searchFilter.zsNumber}"
+                <input type="text" name="zsNumber" value="${sessionScope.profileSearchCriteria.zsNumber}"
                        id="srch-zsNumber" class="form-control"/>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <select name="rankTypeId" id="srch-grade" class="form-control input-sm">
                     <option value="">&nbsp;</option>
                     <c:forEach items="${rankTypes}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.rankTypeId eq item.id}" />
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.rankTypeId eq item.id}" />
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -63,7 +63,7 @@
                 <select name="mainProgrammingLanguageId" id="srch-mpl" class="form-control input-sm">
                     <option value="">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.mainProgrammingLanguageId eq item.id}"/>
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.mainProgrammingLanguageId eq item.id}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -77,7 +77,7 @@
                 <select name="secondProgrammingLanguageId" id="srch-spl" class="form-control input-sm">
                     <option value="">&nbsp;</option>
                     <c:forEach items="${languages}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.secondProgrammingLanguageId eq item.id}"/>
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.secondProgrammingLanguageId eq item.id}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -89,7 +89,7 @@
             <div>
                 <select name="knownFrameworkIds" multiple="multiple" id="srch-frameworks" class="form-control input-sm">
                     <c:forEach items="${frameworks}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.knownFrameworkIds.contains(item.id)}"/>
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.knownFrameworkIds.contains(item.id)}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -99,7 +99,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-rating-cd"><spring:message code="form.developer.testRating"/></label>
             <div>
-                <input type="number" name="testRating" value="${sessionScope.searchFilter.testRating}"
+                <input type="number" name="testRating" value="${sessionScope.profileSearchCriteria.testRating}"
                        min="0" max="100" id="srch-rating-cd" class="form-control input-sm" />
             </div>
         </div>
@@ -110,7 +110,7 @@
                 <select name="originCountryId" id="srch-country-origin" class="form-control">
                     <option value="">&nbsp;</option>
                     <c:forEach items="${countries}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.originCountryId eq item.id}"/>
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.originCountryId eq item.id}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -122,7 +122,7 @@
             <div>
                 <select name="preferredCountryIds" id="srch-country-preferred" class="form-control" multiple="multiple">
                     <c:forEach items="${countries}" var="item">
-                        <c:set var="selected" value="${sessionScope.searchFilter.preferredCountryIds.contains(item.id)}"/>
+                        <c:set var="selected" value="${sessionScope.profileSearchCriteria.preferredCountryIds.contains(item.id)}"/>
                         <option value="${item.id}" <c:if test="${selected}">selected</c:if>>${item.name}</option>
                     </c:forEach>
                 </select>
@@ -135,7 +135,7 @@
             </label>
             <div>
                 <c:forEach items="${contractTypes}" var="item">
-                    <c:set var="selected" value="${sessionScope.searchFilter.contractTypeId == item.id}"/>
+                    <c:set var="selected" value="${sessionScope.profileSearchCriteria.contractTypeId == item.id}"/>
                     <div class="radio">
                         <label>
                             <input type="radio" name="contractTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
@@ -149,8 +149,8 @@
         <div class="form-check">
             <label class="control-label"><spring:message code="form.developer.visaNeeded"/></label>
             <div>
-                <c:set var="isSet" value="${sessionScope.searchFilter.visaNeeded != null}"/>
-                <c:set var="selected" value="${sessionScope.searchFilter.visaNeeded}" />
+                <c:set var="isSet" value="${sessionScope.profileSearchCriteria.visaNeeded != null}"/>
+                <c:set var="selected" value="${sessionScope.profileSearchCriteria.visaNeeded}" />
                 <div class="radio">
                     <label>
                         <input type="radio" name="visaNeeded" value="${true}" <c:if test="${isSet and selected}">checked</c:if>>
@@ -172,7 +172,7 @@
             </label>
             <div>
                 <c:forEach items="${companyTypes}" var="item">
-                    <c:set var="selected" value="${sessionScope.searchFilter.preferredCompanyTypeIds.contains(item.id)}"/>
+                    <c:set var="selected" value="${sessionScope.profileSearchCriteria.preferredCompanyTypeIds.contains(item.id)}"/>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="preferredCompanyTypeIds" value="${item.id}" <c:if test="${selected}">checked</c:if>>
@@ -186,7 +186,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-experience"><spring:message code="form.developer.experience"/></label>
             <div>
-                <input type="number" name="experience" min="0" value="${sessionScope.searchFilter.experience}"
+                <input type="number" name="experience" min="0" value="${sessionScope.profileSearchCriteria.experience}"
                        id="srch-experience" class="form-control input-sm" />
             </div>
         </div>
@@ -195,7 +195,7 @@
             <label class="control-label"><spring:message code="form.developer.preferredRole"/></label>
             <div>
                 <c:forEach items="${roleTypes}" var="item">
-                    <c:set var="selected" value="${sessionScope.searchFilter.roleTypeId eq item.id}"/>
+                    <c:set var="selected" value="${sessionScope.profileSearchCriteria.roleTypeId eq item.id}"/>
                     <div class="radio">
                         <label>
                             <input type="radio" name="roleTypeId" value="${item.id}" <c:if test="${selected}">checked</c:if>>
@@ -209,7 +209,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-english-level"><spring:message code="form.developer.englishLevel"/></label>
             <div>
-                <input type="number" name="englishLevel" min="1" max="5" value="${sessionScope.searchFilter.englishLevel}"
+                <input type="number" name="englishLevel" min="1" max="5" value="${sessionScope.profileSearchCriteria.englishLevel}"
                        id="srch-english-level" class="form-control input-sm" />
             </div>
         </div>
@@ -217,7 +217,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-travel"><spring:message code="form.developer.travelTime"/></label>
             <div>
-                <input type="number" name="travelTime" min="0" value="${sessionScope.searchFilter.travelTime}"
+                <input type="number" name="travelTime" min="0" value="${sessionScope.profileSearchCriteria.travelTime}"
                        id="srch-travel" class="form-control input-sm" />
             </div>
         </div>
@@ -226,7 +226,7 @@
             <label class="control-label" for="srch-place-live"><spring:message code="form.developer.preferredCity"/></label>
             <div>
                 <textarea name="preferredCity" maxlength="500" id="srch-place-live" class="form-control input-sm">
-                    ${sessionScope.searchFilter.preferredCity}
+                    ${sessionScope.profileSearchCriteria.preferredCity}
                 </textarea>
             </div>
         </div>
@@ -234,7 +234,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-availability"><spring:message code="form.developer.availability"/></label>
             <div>
-                <input type="number" name="availability" min="0" value="${sessionScope.searchFilter.availability}"
+                <input type="number" name="availability" min="0" value="${sessionScope.profileSearchCriteria.availability}"
                        id="srch-availability" class="form-control input-sm">
             </div>
         </div>
@@ -242,7 +242,7 @@
         <div class="form-group">
             <label class="control-label" for="srch-hours-week"><spring:message code="form.developer.hoursPerWeek"/></label>
             <div>
-                <input type="number" name="hoursPerWeek" min="0" value="${sessionScope.searchFilter.hoursPerWeek}"
+                <input type="number" name="hoursPerWeek" min="0" value="${sessionScope.profileSearchCriteria.hoursPerWeek}"
                        id="srch-hours-week" class="form-control input-sm" />
             </div>
         </div>

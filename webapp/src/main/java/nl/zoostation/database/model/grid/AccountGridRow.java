@@ -5,7 +5,7 @@ import java.time.Instant;
 /**
  * @author val
  */
-public class AccountGridRow {
+public class AccountGridRow implements IGridRow<Long> {
 
     private Long id;
     private String login;
@@ -26,6 +26,7 @@ public class AccountGridRow {
         this.online = online;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

@@ -1,15 +1,12 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.dao.*;
+import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.*;
-import nl.zoostation.database.model.form.ProfileForm;
-import nl.zoostation.database.model.form.ProfileFormContainer;
-import nl.zoostation.database.service.IProfileFormService;
+import nl.zoostation.database.model.form.ProfileFormObject;
+import nl.zoostation.database.model.form.ProfileFormWrapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -20,31 +17,27 @@ import static java.util.stream.Collectors.*;
 /**
  * @author valentinnastasi
  */
-@Service
-public class ProfileFormService implements IProfileFormService {
+public class ProfileFormService extends AbstractFormService<Profile, Long, ProfileFormObject, ProfileFormWrapper> {
 
-    private static final Logger logger = LogManager.getLogger(ProfileFormService.class);
-
-    private final IProfileDAO profileDAO;
-    private final ICountryDAO countryDAO;
-    private final IProgrammingLanguageDAO programmingLanguageDAO;
-    private final ICompanyTypeDAO companyTypeDAO;
-    private final IContractTypeDAO contractTypeDAO;
-    private final IFrameworkDAO frameworkDAO;
-    private final IRankTypeDAO rankTypeDAO;
-    private final IRoleTypeDAO roleTypeDAO;
+    private final IGenericEntityDAO<Country, Long> countryDAO;
+    private final IGenericEntityDAO<ProgrammingLanguage, Long> programmingLanguageDAO;
+    private final IGenericEntityDAO<CompanyType, Long> companyTypeDAO;
+    private final IGenericEntityDAO<ContractType, Long> contractTypeDAO;
+    private final IGenericEntityDAO<Framework, Long> frameworkDAO;
+    private final IGenericEntityDAO<RankType, Long> rankTypeDAO;
+    private final IGenericEntityDAO<RoleType, Long> roleTypeDAO;
 
     public ProfileFormService(
-            IProfileDAO profileDAO,
-            ICountryDAO countryDAO,
-            IProgrammingLanguageDAO programmingLanguageDAO,
-            ICompanyTypeDAO companyTypeDAO,
-            IContractTypeDAO contractTypeDAO,
-            IFrameworkDAO frameworkDAO,
-            IRankTypeDAO rankTypeDAO,
-            IRoleTypeDAO roleTypeDAO) {
+            IGenericEntityDAO<Profile, Long> profileDAO,
+            IGenericEntityDAO<Country, Long> countryDAO,
+            IGenericEntityDAO<ProgrammingLanguage, Long> programmingLanguageDAO,
+            IGenericEntityDAO<CompanyType, Long> companyTypeDAO,
+            IGenericEntityDAO<ContractType, Long> contractTypeDAO,
+            IGenericEntityDAO<Framework, Long> frameworkDAO,
+            IGenericEntityDAO<RankType, Long> rankTypeDAO,
+            IGenericEntityDAO<RoleType, Long> roleTypeDAO) {
 
-        this.profileDAO = profileDAO;
+        super(profileDAO);
         this.countryDAO = countryDAO;
         this.programmingLanguageDAO = programmingLanguageDAO;
         this.companyTypeDAO = companyTypeDAO;
@@ -56,117 +49,93 @@ public class ProfileFormService implements IProfileFormService {
 
     @Transactional(readOnly = true)
     @Override
-    public ProfileFormContainer prepareForm(Optional<Long> profileId) {
-        logger.debug("Initializing developer form for id {}", profileId);
-        ProfileFormContainer profileFormContainer = new ProfileFormContainer();
-        profileFormContainer.setCompanyTypes(companyTypeDAO.findAll());
-        profileFormContainer.setRoleTypes(roleTypeDAO.findAll());
-        profileFormContainer.setRankTypes(rankTypeDAO.findAll());
-        profileFormContainer.setProgrammingLanguages(programmingLanguageDAO.findAll());
-        profileFormContainer.setFrameworks(frameworkDAO.findAll());
-        profileFormContainer.setContractTypes(contractTypeDAO.findAll());
-        profileFormContainer.setCountries(countryDAO.findAll());
-
-        if (profileId.isPresent()) {
-            ProfileForm profileForm = prePopulateForm(profileId.get());
-            profileFormContainer.setProfileForm(profileForm);
-        } else {
-            profileFormContainer.setProfileForm(new ProfileForm());
-        }
-
-        return profileFormContainer;
+    public ProfileFormWrapper prepareForm(Optional<Long> identifier) {
+        Profile entity = findOrCreateEntity(identifier);
+        ProfileFormObject formObject = new ProfileFormObject();
+        entityToForm(entity, formObject);
+        ProfileFormWrapper formWrapper = new ProfileFormWrapper();
+        formWrapper.setForm(formObject);
+        formWrapper.setProgrammingLanguages(programmingLanguageDAO.findAll());
+        formWrapper.setCompanyTypes(companyTypeDAO.findAll());
+        formWrapper.setContractTypes(contractTypeDAO.findAll());
+        formWrapper.setCountries(countryDAO.findAll());
+        formWrapper.setFrameworks(frameworkDAO.findAll());
+        formWrapper.setRankTypes(rankTypeDAO.findAll());
+        formWrapper.setRoleTypes(roleTypeDAO.findAll());
+        return formWrapper;
     }
 
     @Transactional
     @Override
-    public void saveProfile(ProfileForm profileForm) {
-        Objects.requireNonNull(profileForm);
-        logger.debug("Saving the profile");
+    public Profile save(ProfileFormObject formObject) {
+        Profile profile = super.save(formObject);
+        setCustomFields(profile, formObject.getCustomFields());
+        return profile;
+    }
 
-        Profile profile;
-        if (profileForm.getId() != null) {
-            Optional<Profile> profileWrapped = profileDAO.findOne(profileForm.getId());
-            if (!profileWrapped.isPresent()) {
-                throw new IllegalStateException("Profile with id " + profileForm.getId() + " does not exist");
-            }
-            profile = profileWrapped.get();
-        } else {
-            profile = new Profile();
-            profile.setZoostationNumber(RandomStringUtils.randomAlphanumeric(6).toUpperCase());
+    @Override
+    protected void entityToForm(Profile entity, ProfileFormObject formObject) {
+        formObject.setId(entity.getId());
+        formObject.setZsNumber(entity.getZoostationNumber());
+        formObject.setAvailability(entity.getAvailability());
+        formObject.setEnglishLevel(entity.getEnglishLevel());
+        formObject.setExperience(entity.getExperience());
+        formObject.setHoursPerWeek(entity.getHoursPerWeek());
+        formObject.setPreferredCity(entity.getPreferredCity());
+        formObject.setRelocationReason(entity.getRelocationReason());
+        formObject.setTestRating(entity.getTestRating());
+        formObject.setTravelTime(entity.getTravelTime());
+        formObject.setVisaNeeded(entity.getVisaNeeded());
+        formObject.setWorkHistory(entity.getWorkHistory());
+        formObject.setContractTypeId(entity.getContractType().map(Identifiable::getId).orElse(null));
+        formObject.setMainProgrammingLanguageId(entity.getMainProgrammingLanguage().map(Identifiable::getId).orElse(null));
+        formObject.setOriginCountryId(entity.getOriginCountry().map(Identifiable::getId).orElse(null));
+        formObject.setRankTypeId(entity.getRankType().map(Identifiable::getId).orElse(null));
+        formObject.setRoleTypeId(entity.getRoleType().map(Identifiable::getId).orElse(null));
+        formObject.setSecondProgrammingLanguageId(entity.getSecondProgrammingLanguage().map(Identifiable::getId).orElse(null));
+        formObject.setPreferredCountryIds(entity.getPreferredCountries().stream().map(Identifiable::getId).collect(toList()));
+        formObject.setPreferredCompanyTypeIds(entity.getPreferredCompanyTypes().stream().map(Identifiable::getId).collect(toList()));
+        formObject.setKnownFrameworkIds(entity.getKnownFrameworks().stream().map(Identifiable::getId).collect(toList()));
+        formObject.setCustomFields(entity.getCustomFields().stream().collect(toMap(CustomProfileField::getFieldName, CustomProfileField::getFieldValue)));
+    }
+
+    @Override
+    protected void formToEntity(ProfileFormObject formObject, Profile entity) {
+        if (StringUtils.isEmpty(entity.getZoostationNumber())) {
+            entity.setZoostationNumber(RandomStringUtils.randomAlphanumeric(6).toUpperCase());
         }
+        entity.setId(formObject.getId());
+        entity.setVisaNeeded(formObject.getVisaNeeded());
+        entity.setWorkHistory(formObject.getWorkHistory());
+        entity.setTestRating(formObject.getTestRating());
+        entity.setAvailability(formObject.getAvailability());
+        entity.setEnglishLevel(formObject.getEnglishLevel());
+        entity.setExperience(formObject.getExperience());
+        entity.setHoursPerWeek(formObject.getHoursPerWeek());
+        entity.setTravelTime(formObject.getTravelTime());
+        entity.setPreferredCity(formObject.getPreferredCity());
+        entity.setRelocationReason(formObject.getRelocationReason());
+        setScalarField(formObject.getContractTypeId(), contractTypeDAO, entity::setContractType);
+        setScalarField(formObject.getMainProgrammingLanguageId(), programmingLanguageDAO, entity::setMainProgrammingLanguage);
+        setScalarField(formObject.getSecondProgrammingLanguageId(), programmingLanguageDAO, entity::setSecondProgrammingLanguage);
+        setScalarField(formObject.getRoleTypeId(), roleTypeDAO, entity::setRoleType);
+        setScalarField(formObject.getOriginCountryId(), countryDAO, entity::setOriginCountry);
+        setScalarField(formObject.getRankTypeId(), rankTypeDAO, entity::setRankType);
+        setCollectionField(formObject.getKnownFrameworkIds(), frameworkDAO, entity::setKnownFrameworks);
+        setCollectionField(formObject.getPreferredCountryIds(), countryDAO, entity::setPreferredCountries);
+        setCollectionField(formObject.getPreferredCompanyTypeIds(), companyTypeDAO, entity::setPreferredCompanyTypes);
+    }
 
-        profile.setVisaNeeded(profileForm.getVisaNeeded());
-        profile.setTravelTime(profileForm.getTravelTime());
-        profile.setAvailability(profileForm.getAvailability());
-        setComplexField(profileForm.getContractTypeId(), contractTypeDAO, profile::setContractType);
-        profile.setEnglishLevel(profileForm.getEnglishLevel());
-        profile.setExperience(profileForm.getExperience());
-        profile.setHoursPerWeek(profileForm.getHoursPerWeek());
-        setCollectionField(profileForm.getKnownFrameworkIds(), frameworkDAO, profile::setKnownFrameworks);
-        setComplexField(profileForm.getOriginCountryId(), countryDAO, profile::setOriginCountry);
-        profile.setPreferredCity(profileForm.getPreferredCity());
-        setCollectionField(profileForm.getPreferredCompanyTypeIds(), companyTypeDAO, profile::setPreferredCompanyTypes);
-        setCollectionField(profileForm.getPreferredCountryIds(), countryDAO, profile::setPreferredCountries);
-        setComplexField(profileForm.getRankTypeId(), rankTypeDAO, profile::setRankType);
-        profile.setRelocationReason(profileForm.getRelocationReason());
-        setComplexField(profileForm.getRoleTypeId(), roleTypeDAO, profile::setRoleType);
-        setComplexField(profileForm.getSecondProgrammingLanguageId(), programmingLanguageDAO, profile::setSecondProgrammingLanguage);
-        setComplexField(profileForm.getMainProgrammingLanguageId(), programmingLanguageDAO, profile::setMainProgrammingLanguage);
-        profile.setTestRating(profileForm.getTestRating());
-        profile.setWorkHistory(profileForm.getWorkHistory());
-
-        Profile savedProfile = profileDAO.save(profile);
-        savedProfile.getCustomFields().clear();
-
-        profileForm.getCustomFields().forEach((key, value) -> {
+    private void setCustomFields(Profile profile, Map<String, String> customFields) {
+        profile.getCustomFields().clear();
+        customFields.forEach((key, value) -> {
             CustomProfileField customProfileField = new CustomProfileField(key, value);
-            customProfileField.setProfile(savedProfile);
-            savedProfile.getCustomFields().add(customProfileField);
+            customProfileField.setProfile(profile);
+            profile.getCustomFields().add(customProfileField);
         });
-
     }
 
-    @Transactional
-    @Override
-    public void delete(Long id) {
-        Objects.requireNonNull(id);
-        logger.debug("Deleting profile with id {}", id);
-        profileDAO.delete(id);
-    }
-
-    private ProfileForm prePopulateForm(Long id) {
-        Optional<Profile> profileWrapped = profileDAO.findOne(id);
-        if (!profileWrapped.isPresent()) {
-            throw new IllegalStateException("Profile with id " + id + " does not exist");
-        }
-        Profile profile = profileWrapped.get();
-        ProfileForm profileForm = new ProfileForm();
-        profileForm.setId(profile.getId());
-        profileForm.setZsNumber(profile.getZoostationNumber());
-        profileForm.setAvailability(profile.getAvailability());
-        profileForm.setContractTypeId(profile.getContractType().map(ContractType::getId).orElse(null));
-        profileForm.setEnglishLevel(profile.getEnglishLevel());
-        profileForm.setExperience(profile.getExperience());
-        profileForm.setHoursPerWeek(profile.getHoursPerWeek());
-        profileForm.setKnownFrameworkIds(profile.getKnownFrameworks().stream().map(Framework::getId).collect(toList()));
-        profileForm.setMainProgrammingLanguageId(profile.getMainProgrammingLanguage().map(ProgrammingLanguage::getId).orElse(null));
-        profileForm.setOriginCountryId(profile.getOriginCountry().map(Country::getId).orElse(null));
-        profileForm.setPreferredCity(profile.getPreferredCity());
-        profileForm.setPreferredCompanyTypeIds(profile.getPreferredCompanyTypes().stream().map(CompanyType::getId).collect(toList()));
-        profileForm.setPreferredCountryIds(profile.getPreferredCountries().stream().map(Country::getId).collect(toList()));
-        profileForm.setRankTypeId(profile.getRankType().map(RankType::getId).orElse(null));
-        profileForm.setRelocationReason(profile.getRelocationReason());
-        profileForm.setRoleTypeId(profile.getRoleType().map(RoleType::getId).orElse(null));
-        profileForm.setSecondProgrammingLanguageId(profile.getSecondProgrammingLanguage().map(ProgrammingLanguage::getId).orElse(null));
-        profileForm.setTestRating(profile.getTestRating());
-        profileForm.setTravelTime(profile.getTravelTime());
-        profileForm.setVisaNeeded(profile.getVisaNeeded());
-        profileForm.setWorkHistory(profile.getWorkHistory());
-        profileForm.setCustomFields(profile.getCustomFields().stream().collect(toMap(CustomProfileField::getFieldName, CustomProfileField::getFieldValue)));
-        return profileForm;
-    }
-
-    private <F extends PersistentEntity> void setComplexField(Long id, IGenericDAO<F, Long> dao, Consumer<F> consumer) {
+    private <T extends PersistentEntity> void setScalarField(Long id, IGenericEntityDAO<T, Long> dao, Consumer<T> consumer) {
         if (id == null) {
             consumer.accept(null);
             return;
@@ -174,7 +143,7 @@ public class ProfileFormService implements IProfileFormService {
         dao.findOne(id).ifPresent(consumer);
     }
 
-    private <F extends PersistentEntity> void setCollectionField(Collection<Long> ids, IGenericDAO<F, Long> dao, Consumer<Set<F>> consumer) {
+    private <T extends PersistentEntity> void setCollectionField(Collection<Long> ids, IGenericEntityDAO<T, Long> dao, Consumer<Set<T>> consumer) {
         if (CollectionUtils.isEmpty(ids)) {
             consumer.accept(Collections.emptySet());
             return;

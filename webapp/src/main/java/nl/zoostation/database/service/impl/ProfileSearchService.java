@@ -1,45 +1,38 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.dao.*;
+import nl.zoostation.database.dao.IGenericEntityDAO;
+import nl.zoostation.database.dao.IGridDataDAO;
+import nl.zoostation.database.model.domain.*;
+import nl.zoostation.database.model.form.ProfileSearchFormObject;
+import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
 import nl.zoostation.database.model.grid.ProfileGridRow;
-import nl.zoostation.database.model.grid.SearchFilter;
-import nl.zoostation.database.model.grid.SearchQueryContainer;
-import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
-import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
-import nl.zoostation.database.model.input.SearchToken;
 import nl.zoostation.database.service.IProfileSearchService;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author valentinnastasi
  */
-@Service
-public class ProfileSearchService implements IProfileSearchService {
+public class ProfileSearchService extends SimpleGridDataService<ProfileGridRow> implements IProfileSearchService {
 
-    private final ICountryDAO countryDAO;
-    private final IProgrammingLanguageDAO programmingLanguageDAO;
-    private final ICompanyTypeDAO companyTypeDAO;
-    private final IContractTypeDAO contractTypeDAO;
-    private final IFrameworkDAO frameworkDAO;
-    private final IRankTypeDAO rankTypeDAO;
-    private final IRoleTypeDAO roleTypeDAO;
-    private final IGridDataDAO<ProfileGridRow> profileGridDataDAO;
+    private final IGenericEntityDAO<Country, Long> countryDAO;
+    private final IGenericEntityDAO<ProgrammingLanguage, Long> programmingLanguageDAO;
+    private final IGenericEntityDAO<CompanyType, Long> companyTypeDAO;
+    private final IGenericEntityDAO<ContractType, Long> contractTypeDAO;
+    private final IGenericEntityDAO<Framework, Long> frameworkDAO;
+    private final IGenericEntityDAO<RankType, Long> rankTypeDAO;
+    private final IGenericEntityDAO<RoleType, Long> roleTypeDAO;
 
     public ProfileSearchService(
-            ICountryDAO countryDAO,
-            IProgrammingLanguageDAO programmingLanguageDAO,
-            ICompanyTypeDAO companyTypeDAO,
-            IContractTypeDAO contractTypeDAO,
-            IFrameworkDAO frameworkDAO,
-            IRankTypeDAO rankTypeDAO,
-            IRoleTypeDAO roleTypeDAO,
-            IGridDataDAO<ProfileGridRow> profileGridDataDAO) {
+            IGridDataDAO<ProfileGridRow> profileGridDataDAO,
+            IGenericEntityDAO<Country, Long> countryDAO,
+            IGenericEntityDAO<ProgrammingLanguage, Long> programmingLanguageDAO,
+            IGenericEntityDAO<CompanyType, Long> companyTypeDAO,
+            IGenericEntityDAO<ContractType, Long> contractTypeDAO,
+            IGenericEntityDAO<Framework, Long> frameworkDAO,
+            IGenericEntityDAO<RankType, Long> rankTypeDAO,
+            IGenericEntityDAO<RoleType, Long> roleTypeDAO) {
 
+        super(profileGridDataDAO);
         this.countryDAO = countryDAO;
         this.programmingLanguageDAO = programmingLanguageDAO;
         this.companyTypeDAO = companyTypeDAO;
@@ -47,42 +40,21 @@ public class ProfileSearchService implements IProfileSearchService {
         this.frameworkDAO = frameworkDAO;
         this.rankTypeDAO = rankTypeDAO;
         this.roleTypeDAO = roleTypeDAO;
-        this.profileGridDataDAO = profileGridDataDAO;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public SearchQueryContainer prepareForm(SearchFilter searchFilter) {
-        SearchQueryContainer searchQueryContainer = new SearchQueryContainer();
-        searchQueryContainer.setRoleTypes(roleTypeDAO.findAll());
-        searchQueryContainer.setRankTypes(rankTypeDAO.findAll());
-        searchQueryContainer.setProgrammingLanguages(programmingLanguageDAO.findAll());
-        searchQueryContainer.setFrameworks(frameworkDAO.findAll());
-        searchQueryContainer.setCompanyTypes(companyTypeDAO.findAll());
-        searchQueryContainer.setContractTypes(contractTypeDAO.findAll());
-        searchQueryContainer.setCountries(countryDAO.findAll());
-
-        return searchQueryContainer;
+    public ProfileSearchFormWrapper prepareForm() {
+        ProfileSearchFormWrapper formWrapper = new ProfileSearchFormWrapper();
+        formWrapper.setForm(new ProfileSearchFormObject());
+        formWrapper.setRoleTypes(roleTypeDAO.findAll());
+        formWrapper.setRankTypes(rankTypeDAO.findAll());
+        formWrapper.setProgrammingLanguages(programmingLanguageDAO.findAll());
+        formWrapper.setFrameworks(frameworkDAO.findAll());
+        formWrapper.setCompanyTypes(companyTypeDAO.findAll());
+        formWrapper.setContractTypes(contractTypeDAO.findAll());
+        formWrapper.setCountries(countryDAO.findAll());
+        return formWrapper;
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public GridViewOutputSpec<ProfileGridRow> getGridData(GridViewInputSpec gridViewInputSpec) {
-        Objects.requireNonNull(gridViewInputSpec, () -> "Parameter 'gridViewInputSpec' is required");
-        List<ProfileGridRow> rows = profileGridDataDAO.getRows(gridViewInputSpec);
-        Long total = profileGridDataDAO.count(gridViewInputSpec, false);
-        Long totalFiltered = profileGridDataDAO.count(gridViewInputSpec, true);
-        GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = new GridViewOutputSpec<>();
-        gridViewOutputSpec.setRecords(rows);
-        gridViewOutputSpec.setTotalRecords(total);
-        gridViewOutputSpec.setFilteredRecords(totalFiltered);
-        return gridViewOutputSpec;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<? extends SearchToken> findTokens(String term, Map<String, Object> extras) {
-        Objects.requireNonNull(term, () -> "Parameter 'term' must not be null");
-        return countryDAO.findTokens(term, extras);
-    }
 }

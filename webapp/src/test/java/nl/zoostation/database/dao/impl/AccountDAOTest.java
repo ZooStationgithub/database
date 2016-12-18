@@ -1,7 +1,7 @@
 package nl.zoostation.database.dao.impl;
 
 import nl.zoostation.database.dao.BaseDAOTest;
-import nl.zoostation.database.dao.IAccountDAO;
+import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.Account;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.List;
 public class AccountDAOTest extends BaseDAOTest{
 
     @Autowired
-    private IAccountDAO accountDAO;
+    private IGenericEntityDAO<Account, Long> accountDAO;
 
     @Test
     public void testFindAll() throws Exception {

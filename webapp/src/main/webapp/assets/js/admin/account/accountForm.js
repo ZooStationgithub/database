@@ -9,25 +9,11 @@ AccountForm.prototype = function() {
 
     var panelSelector = '#panelFormAccount';
 
-    var handlers = function(thisObj) {
-        return {
-
-        }
-    };
-
     var showPanel = function(thisObj) {
-        // var $panel = $(panelSelector);
-        // $panel.find('.panel-body').slideDown();
-        // $panel.find('span.clickable').removeClass('panel-collapsed');
-        // $panel.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
         $(panelSelector).find('.panel-body').collapse('show');
     };
 
     var hidePanel = function(thisObj) {
-        // var $panel = $(panelSelector);
-        // $panel.find('.panel-body').slideUp();
-        // $panel.find('span.clickable').addClass('panel-collapsed');
-        // $panel.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
         $(panelSelector).find('.panel-body').collapse('hide');
     };
 

@@ -1,7 +1,9 @@
 package nl.zoostation.database.dao.impl;
 
 import nl.zoostation.database.dao.IGridDataDAO;
-import nl.zoostation.database.model.grid.*;
+import nl.zoostation.database.model.form.ProfileSearchFormObject;
+import nl.zoostation.database.model.form.ProfileSearchFormObject;
+import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.model.grid.annotations.From;
 import nl.zoostation.database.model.grid.annotations.Select;
 import nl.zoostation.database.model.grid.annotations.Where;
@@ -11,8 +13,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -24,13 +24,11 @@ import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
 /**
  * @author valentinnastasi
  */
-@Repository
 public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<ProfileGridRow> {
 
     private ThreadLocal<Map<String, Object>> parameterMap;
     private ThreadLocal<StringBuilder> queryBuilder;
 
-    @Autowired
     public ProfileGridDataDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
         parameterMap = new ThreadLocal<>();
@@ -41,8 +39,8 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
     @Override
     public List<ProfileGridRow> getRows(GridViewInputSpec gridViewInputSpec) {
         return wrappedCall(() -> {
-            SearchFilter searchFilter = (SearchFilter) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
-            buildDataQuery(searchFilter);
+            ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
+            buildDataQuery(formObject);
             NativeQuery<ProfileGridRow> nativeQuery = getSession().createNativeQuery(queryBuilder.get().toString(), "ProfileGridRow");
             setQueryParameters(nativeQuery);
             return nativeQuery.list();
@@ -53,8 +51,8 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
     @Override
     public Long count(GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
         return wrappedCall(() -> {
-            SearchFilter searchFilter = (SearchFilter) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
-            buildCountQuery(searchFilter, applyFilter);
+            ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
+            buildCountQuery(formObject, applyFilter);
             NativeQuery<Number> nativeQuery = getSession().createNativeQuery(queryBuilder.get().toString());
             setQueryParameters(nativeQuery);
             return nativeQuery.getSingleResult().longValue();
@@ -72,12 +70,12 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
         }
     }
 
-    private void buildDataQuery(SearchFilter searchFilter) {
-        Select selectAnn = searchFilter.getClass().getAnnotation(Select.class);
+    private void buildDataQuery(ProfileSearchFormObject profileSearchFormObject) {
+        Select selectAnn = profileSearchFormObject.getClass().getAnnotation(Select.class);
         if (selectAnn == null) {
             throw new IllegalStateException("Class should be annotated with @Select");
         }
-        From fromAnn = searchFilter.getClass().getAnnotation(From.class);
+        From fromAnn = profileSearchFormObject.getClass().getAnnotation(From.class);
         if (fromAnn == null) {
             throw new IllegalStateException("Class should be annotated with @From");
         }
@@ -85,15 +83,15 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
         queryBuilder.get()
                 .append("SELECT").append(" ").append(selectAnn.columns()).append(" ")
                 .append("FROM").append(" ").append(fromAnn.value()).append(" ");
-        buildWhereClause(searchFilter);
+        buildWhereClause(profileSearchFormObject);
     }
 
-    private void buildCountQuery(SearchFilter searchFilter, boolean applyFilter) {
-        Select selectAnn = searchFilter.getClass().getAnnotation(Select.class);
+    private void buildCountQuery(ProfileSearchFormObject profileSearchFormObject, boolean applyFilter) {
+        Select selectAnn = profileSearchFormObject.getClass().getAnnotation(Select.class);
         if (selectAnn == null) {
             throw new IllegalStateException("Class should be annotated with @Select");
         }
-        From fromAnn = searchFilter.getClass().getAnnotation(From.class);
+        From fromAnn = profileSearchFormObject.getClass().getAnnotation(From.class);
         if (fromAnn == null) {
             throw new IllegalStateException("Class should be annotated with @From");
         }
@@ -103,21 +101,21 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
                 .append("FROM").append(" ").append(fromAnn.value()).append(" ");
 
         if (applyFilter) {
-            buildWhereClause(searchFilter);
+            buildWhereClause(profileSearchFormObject);
         }
     }
 
-    private void buildWhereClause(SearchFilter searchFilter) {
+    private void buildWhereClause(ProfileSearchFormObject profileSearchFormObject) {
         Collection<String> filterQueries = new ArrayList<>();
 
-        Arrays.stream(searchFilter.getClass().getDeclaredFields()).forEach(field -> {
+        Arrays.stream(profileSearchFormObject.getClass().getDeclaredFields()).forEach(field -> {
             Where whereAnn = field.getAnnotation(Where.class);
             if (whereAnn == null) {
                 return;
             }
 
             String fieldName = field.getName();
-            Object fieldValue = getFieldValue(fieldName, searchFilter);
+            Object fieldValue = getFieldValue(fieldName, profileSearchFormObject);
             if (isEmpty(fieldValue)) {
                 return;
             }
@@ -134,7 +132,7 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
         }
     }
 
-    private Object getFieldValue(String fieldName, SearchFilter target) throws RuntimeException {
+    private Object getFieldValue(String fieldName, ProfileSearchFormObject target) throws RuntimeException {
         try {
             return PropertyUtils.getProperty(target, fieldName);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {

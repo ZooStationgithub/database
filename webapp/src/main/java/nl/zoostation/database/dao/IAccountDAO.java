@@ -7,10 +7,8 @@ import java.util.Optional;
 /**
  * @author valentinnastasi
  */
-public interface IAccountDAO extends IGenericDAO<Account, Long> {
+public interface IAccountDAO extends IGenericEntityDAO<Account, Long> {
 
     Optional<Account> findByLogin(String login);
-
-    void activate(String login);
 
 }

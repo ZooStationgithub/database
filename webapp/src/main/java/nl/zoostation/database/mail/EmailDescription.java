@@ -1,6 +1,9 @@
 package nl.zoostation.database.mail;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author valentinnastasi

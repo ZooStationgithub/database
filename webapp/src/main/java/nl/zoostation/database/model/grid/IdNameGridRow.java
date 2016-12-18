@@ -3,7 +3,7 @@ package nl.zoostation.database.model.grid;
 /**
  * @author valentinnastasi
  */
-public class IdNameGridRow {
+public class IdNameGridRow implements IGridRow<Long> {
 
     private Long id;
     private String name;
@@ -16,6 +16,7 @@ public class IdNameGridRow {
         this.name = name;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

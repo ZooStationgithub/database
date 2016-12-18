@@ -1,12 +1,10 @@
 package nl.zoostation.database.model.domain;
 
 import nl.zoostation.database.model.grid.ProfileGridRow;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;

@@ -18,7 +18,7 @@ public class FrameworkFormWrapper implements IFormWrapper<FrameworkFormObject> {
     }
 
     public void setForm(FrameworkFormObject form) {
-        this.formObject = formObject;
+        this.formObject = form;
     }
 
     public List<ProgrammingLanguage> getProgrammingLanguages() {

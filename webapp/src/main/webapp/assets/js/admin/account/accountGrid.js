@@ -42,16 +42,22 @@ AccountGrid.prototype = function () {
         id: {
             data: 'login',
             type: 'string',
+            searchable: false,
+            orderable: false,
             className: 'middle'
         },
         group: {
             data: 'group',
             type: 'string',
+            searchable: false,
+            orderable: false,
             className: 'middle'
         },
         creationDate: {
             data: 'creationDate',
             type: 'date',
+            searchable: false,
+            orderable: false,
             className: 'middle',
             render: function (cell, type, row) {
                 return moment(cell * 1000).format('DD-MM-YYYY HH:mm:ss');
@@ -60,6 +66,8 @@ AccountGrid.prototype = function () {
         activated: {
             data: 'activated',
             type: 'html',
+            searchable: false,
+            orderable: false,
             className: 'middle',
             render: function (cell, type, row) {
                 var icon = (cell == 1) ? 'glyphicon-ok text-success' : 'glyphicon-remove text-danger';

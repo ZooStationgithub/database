@@ -37,16 +37,22 @@ FrameworkGrid.prototype = function () {
         id: {
             data: 'id',
             type: 'number',
+            searchable: false,
+            orderable: false,
             className: 'middle'
         },
         name: {
             data: 'name',
             type: 'string',
+            searchable: false,
+            orderable: false,
             className: 'middle'
         },
         pl: {
             data: 'programmingLanguageName',
             type: 'string',
+            searchable: false,
+            orderable: false,
             className: 'middle'
         },
         edit: {

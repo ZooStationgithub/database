@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class SimpleGridDataDAO<E extends Identifiable, T extends IGridRow> extends SessionAwareDAO implements IGridDataDAO<T> {
 
-    private static final String QUERY_FIND_ALL = "from {0}";
+    private static final String QUERY_FIND_ALL = "from {0} order by id asc";
     private static final String QUERY_COUNT = "select count(distinct id) from {0}";
 
     private final Function<E, T> resultMapper;

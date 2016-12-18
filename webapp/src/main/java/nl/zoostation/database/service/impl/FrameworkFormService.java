@@ -2,6 +2,7 @@ package nl.zoostation.database.service.impl;
 
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.Framework;
+import nl.zoostation.database.model.domain.Identifiable;
 import nl.zoostation.database.model.domain.ProgrammingLanguage;
 import nl.zoostation.database.model.form.FrameworkFormObject;
 import nl.zoostation.database.model.form.FrameworkFormWrapper;
@@ -39,7 +40,7 @@ public class FrameworkFormService extends AbstractFormService<Framework, Long, F
     protected void entityToForm(Framework entity, FrameworkFormObject formObject) {
         formObject.setId(entity.getId());
         formObject.setName(entity.getName());
-        formObject.setProgrammingLanguageId(entity.getProgrammingLanguage().getId());
+        formObject.setProgrammingLanguageId(Optional.ofNullable(entity.getProgrammingLanguage()).map(Identifiable::getId).orElse(null));
     }
 
     @Override

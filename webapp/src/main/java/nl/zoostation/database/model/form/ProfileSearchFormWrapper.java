@@ -1,7 +1,6 @@
 package nl.zoostation.database.model.form;
 
 import nl.zoostation.database.model.domain.*;
-import nl.zoostation.database.model.input.SearchToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,6 @@ public class ProfileSearchFormWrapper {
     private List<RoleType> roleTypes;
     private List<RankType> rankTypes;
     private List<ContractType> contractTypes;
-    private List<SearchToken> selectedOriginCountry;
-    private List<SearchToken> selectedPreferredCountries;
 
     public ProfileSearchFormWrapper() {
         programmingLanguages = new ArrayList<>();
@@ -86,22 +83,6 @@ public class ProfileSearchFormWrapper {
 
     public void setContractTypes(List<ContractType> contractTypes) {
         this.contractTypes = contractTypes;
-    }
-
-    public List<SearchToken> getSelectedOriginCountry() {
-        return selectedOriginCountry;
-    }
-
-    public void setSelectedOriginCountry(List<SearchToken> selectedOriginCountry) {
-        this.selectedOriginCountry = selectedOriginCountry;
-    }
-
-    public List<SearchToken> getSelectedPreferredCountries() {
-        return selectedPreferredCountries;
-    }
-
-    public void setSelectedPreferredCountries(List<SearchToken> selectedPreferredCountries) {
-        this.selectedPreferredCountries = selectedPreferredCountries;
     }
 
     public ProfileSearchFormObject getForm() {

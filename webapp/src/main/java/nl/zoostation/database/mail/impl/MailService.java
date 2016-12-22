@@ -2,6 +2,7 @@ package nl.zoostation.database.mail.impl;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import nl.zoostation.database.exception.MailServiceException;
 import nl.zoostation.database.mail.EmailDescription;
 import nl.zoostation.database.mail.IMailService;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,8 +30,12 @@ public class MailService implements IMailService {
     @Override
     public void sendMail(EmailDescription... emailDescriptions) throws Exception {
         Arrays.stream(emailDescriptions).forEach(emailDescription -> {
-            MimeMessagePreparator messagePreparator = createMessagePreparator(emailDescription);
-            mailSender.send(messagePreparator);
+            try {
+                MimeMessagePreparator messagePreparator = createMessagePreparator(emailDescription);
+                mailSender.send(messagePreparator);
+            } catch (Exception e) {
+                throw new MailServiceException(e);
+            }
         });
     }
 

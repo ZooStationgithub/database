@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.domain.Identifiable;
 import nl.zoostation.database.model.grid.IGridRow;
@@ -33,14 +34,14 @@ public class SimpleGridDataDAO<E extends Identifiable, T extends IGridRow> exten
     }
 
     @Override
-    public List<T> getRows(GridViewInputSpec gridViewInputSpec) {
+    public List<T> getRows(@NotNull GridViewInputSpec gridViewInputSpec) {
         return getSession().createQuery(interpolate(QUERY_FIND_ALL, entityClass.getSimpleName()), getEntityType()).stream()
                 .map(resultMapper)
                 .collect(toList());
     }
 
     @Override
-    public Long count(GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
+    public Long count(@NotNull GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
         return getSession().createQuery(interpolate(QUERY_COUNT, getEntityType().getSimpleName()), Long.class).uniqueResult();
     }
 

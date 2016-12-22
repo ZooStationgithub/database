@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotEmpty;
 import nl.zoostation.database.dao.IAccountDAO;
 import nl.zoostation.database.model.domain.Account;
 import org.hibernate.SessionFactory;
@@ -21,7 +22,7 @@ public class AccountDAO extends SimpleGenericEntityDAO<Account, Long> implements
     }
 
     @Override
-    public Optional<Account> findByLogin(String login) {
+    public Optional<Account> findByLogin(@NotEmpty String login) {
         return getSession().createQuery(interpolate(QUERY_BY_LOGIN, Account.class.getSimpleName(), LOGIN), Account.class)
                 .setParameter(LOGIN, login).uniqueResultOptional();
     }

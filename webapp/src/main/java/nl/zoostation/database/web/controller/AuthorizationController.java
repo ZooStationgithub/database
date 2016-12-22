@@ -15,4 +15,9 @@ public class AuthorizationController {
         return "/login";
     }
 
+    @RequestMapping(value = "/accessdenied", method = RequestMethod.GET)
+    public String openAccessDeniedPage() {
+        return "/error/accessDenied";
+    }
+
 }

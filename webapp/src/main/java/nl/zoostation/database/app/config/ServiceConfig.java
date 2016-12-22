@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author valentinnastasi
  */
 @Configuration
-@Import({DaoConfig.class, MailConfig.class})
+@Import({DaoConfig.class, MailConfig.class, AopConfig.class})
 public class ServiceConfig {
 
     @Bean

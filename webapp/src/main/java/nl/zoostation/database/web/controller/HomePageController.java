@@ -1,6 +1,5 @@
 package nl.zoostation.database.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
@@ -49,7 +48,7 @@ public class HomePageController {
     }
 
     @RequestMapping({"/", "/home", "/index"})
-    public String openHomePage(HttpSession httpSession, Model model) throws JsonProcessingException {
+    public String openHomePage(HttpSession httpSession, Model model) {
         logger.debug("Opening home page");
 
         ProfileSearchFormWrapper formWrapper = profileSearchService.prepareForm();
@@ -70,22 +69,25 @@ public class HomePageController {
 
     @RequestMapping(value = "/profile/grid", method = RequestMethod.GET)
     @ResponseBody
-    public DataTablesResponse getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
+    public DataTablesResponse<ProfileGridRow> getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
         logger.debug("Handling request '/profile/grid GET'");
-
-        ProfileSearchFormObject formObject = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
-        httpSession.setAttribute(SEARCH_FILTER, formObject);
-
-        GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
-        gridViewInputSpec.getExtras().put(SEARCH_FILTER, formObject);
-
-        GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = profileSearchService.getGridData(gridViewInputSpec);
         DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>();
-        response.setDrawCounter(request.getDrawCounter());
-        response.setRecords(gridViewOutputSpec.getRecords());
-        response.setTotalRecords(gridViewOutputSpec.getTotalRecords());
-        response.setFilteredRecords(gridViewOutputSpec.getFilteredRecords());
 
+        try {
+            ProfileSearchFormObject formObject = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
+            httpSession.setAttribute(SEARCH_FILTER, formObject);
+
+            GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
+            gridViewInputSpec.getExtras().put(SEARCH_FILTER, formObject);
+
+            GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = profileSearchService.getGridData(gridViewInputSpec);
+            response.setDrawCounter(request.getDrawCounter());
+            response.setRecords(gridViewOutputSpec.getRecords());
+            response.setTotalRecords(gridViewOutputSpec.getTotalRecords());
+            response.setFilteredRecords(gridViewOutputSpec.getFilteredRecords());
+        } catch (Exception e) {
+            response.setError(e.getMessage());
+        }
         return response;
     }
 

@@ -26,6 +26,8 @@ RoleTypeGrid.prototype = function () {
                     method: 'delete'
                 }).done(function(response) {
                     refresh(thisObj);
+                }).fail(function(xhr, status) {
+                    console.log(xhr);
                 });
             }
         }

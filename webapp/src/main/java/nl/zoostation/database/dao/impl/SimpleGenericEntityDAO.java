@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.PersistentEntity;
 import org.hibernate.SessionFactory;
@@ -21,17 +22,17 @@ public class SimpleGenericEntityDAO<E extends PersistentEntity, K extends Serial
 
     @SuppressWarnings("unchecked")
     @Override
-    public E save(E entity) {
+    public E save(@NotNull E entity) {
         return (E) getSession().merge(entity);
     }
 
     @Override
-    public void delete(E entity) {
+    public void delete(@NotNull E entity) {
         getSession().delete(entity);
     }
 
     @Override
-    public void delete(K id) {
+    public void delete(@NotNull K id) {
         E entity = getSession().get(getEntityType(), id);
         getSession().delete(entity);
     }

@@ -14,7 +14,7 @@
 </header>
 
 <div class="wrapper container">
-    <form action='<spring:url value="/performlogin"/>' method="post">
+    <form action='<spring:url value="/login"/>' method="post">
 
         <c:if test="${param.error != null}">
             <div class="form-group row">

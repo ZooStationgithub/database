@@ -1,5 +1,6 @@
 package nl.zoostation.database.service.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.ProfileFormObject;
@@ -67,7 +68,7 @@ public class ProfileFormService extends AbstractFormService<Profile, Long, Profi
 
     @Transactional
     @Override
-    public Profile save(ProfileFormObject formObject) {
+    public Profile save(@NotNull ProfileFormObject formObject) {
         Profile profile = super.save(formObject);
         setCustomFields(profile, formObject.getCustomFields());
         return profile;

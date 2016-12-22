@@ -1,6 +1,8 @@
 package nl.zoostation.database.service.impl;
 
 import nl.zoostation.database.dao.IGenericEntityDAO;
+import nl.zoostation.database.exception.ObjectDescriptor;
+import nl.zoostation.database.exception.ObjectNotFoundException;
 import nl.zoostation.database.model.domain.Framework;
 import nl.zoostation.database.model.domain.Identifiable;
 import nl.zoostation.database.model.domain.ProgrammingLanguage;
@@ -49,7 +51,7 @@ public class FrameworkFormService extends AbstractFormService<Framework, Long, F
         entity.setName(formObject.getName());
 
         ProgrammingLanguage programmingLanguage = programmingLanguageDAO.findOne(formObject.getProgrammingLanguageId())
-                .orElseThrow(() -> new IllegalStateException("Programming language with ID " + formObject.getProgrammingLanguageId() + " not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(ProgrammingLanguage.class).with("ID", formObject.getProgrammingLanguageId())));
         entity.setProgrammingLanguage(programmingLanguage);
     }
 }

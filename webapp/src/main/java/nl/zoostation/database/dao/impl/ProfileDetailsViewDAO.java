@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
 import nl.zoostation.database.model.domain.CustomProfileField;
 import nl.zoostation.database.model.view.ProfileView;
@@ -24,7 +25,7 @@ public class ProfileDetailsViewDAO extends SimpleGenericReadOnlyEntityDAO<Profil
     }
 
     @Override
-    public Optional<ProfileView> findOne(Long id) {
+    public Optional<ProfileView> findOne(@NotNull Long id) {
         ProfileView profileView = getSession().get(ProfileView.class, id);
 
         if (profileView != null) {

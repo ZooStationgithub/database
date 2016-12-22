@@ -1,6 +1,9 @@
 package nl.zoostation.database.service.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
+import nl.zoostation.database.exception.ObjectDescriptor;
+import nl.zoostation.database.exception.ObjectNotFoundException;
 import nl.zoostation.database.mail.EmailDescription;
 import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.model.domain.Account;
@@ -55,7 +58,7 @@ public class AccountFormService extends AbstractFormService<Account, Long, Accou
 
     @Transactional
     @Override
-    public Account save(AccountFormObject formObject) {
+    public Account save(@NotNull AccountFormObject formObject) {
         Account account = super.save(formObject);
         EmailDescription emailDescription = new EmailDescription.Builder()
                 .setSubject("Account on zoostation.nl")
@@ -83,7 +86,7 @@ public class AccountFormService extends AbstractFormService<Account, Long, Accou
         entity.setCreationDate(Instant.now());
         entity.setActivationDate(null);
         AccountGroup accountGroup = accountGroupDAO.findOne(formObject.getGroupId())
-                .orElseThrow(() -> new IllegalStateException("Account group with ID " + formObject.getId() + " was not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(AccountGroup.class).with("ID", formObject.getGroupId())));
         entity.setAccountGroup(accountGroup);
     }
 

@@ -1,5 +1,6 @@
 package nl.zoostation.database.service.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.PersistentEntity;
 import nl.zoostation.database.model.form.IFormObject;
@@ -25,8 +26,7 @@ abstract class AbstractFormService<E extends PersistentEntity, K extends Seriali
 
     @Transactional
     @Override
-    public E save(F formObject) {
-        Objects.requireNonNull(formObject, () -> "Parameter 'formObject' must not be null");
+    public E save(@NotNull F formObject) {
         E entity = findOrCreateEntity(Optional.ofNullable(formObject.getId()));
         formToEntity(formObject, entity);
         return genericEntityDAO.save(entity);
@@ -34,8 +34,7 @@ abstract class AbstractFormService<E extends PersistentEntity, K extends Seriali
 
     @Transactional
     @Override
-    public void delete(K identifier) {
-        Objects.requireNonNull(identifier, () -> "Parameter 'identifier' must not be null");
+    public void delete(@NotNull K identifier) {
         genericEntityDAO.delete(identifier);
     }
 

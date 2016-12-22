@@ -1,5 +1,7 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotEmpty;
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
 import org.hibernate.SessionFactory;
 
@@ -33,7 +35,7 @@ public class SimpleGenericReadOnlyEntityDAO<E, K extends Serializable> extends S
     }
 
     @Override
-    public Optional<E> findOne(K id) {
+    public Optional<E> findOne(@NotNull K id) {
         return Optional.ofNullable(getSession().get(getEntityType(), id));
     }
 
@@ -43,7 +45,7 @@ public class SimpleGenericReadOnlyEntityDAO<E, K extends Serializable> extends S
     }
 
     @Override
-    public List<E> findMany(Collection<K> ids) {
+    public List<E> findMany(@NotEmpty Collection<K> ids) {
         return getSession().createQuery(interpolate(QUERY_SELECT_MANY, getEntityType().getSimpleName(), IDS), getEntityType())
                 .setParameterList(IDS, ids)
                 .list();

@@ -1,4 +1,4 @@
-package nl.zoostation.database.security;
+package nl.zoostation.database.web.security;
 
 import nl.zoostation.database.model.domain.Account;
 import nl.zoostation.database.service.IAccountManagementService;

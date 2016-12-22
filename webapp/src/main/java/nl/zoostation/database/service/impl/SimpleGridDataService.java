@@ -1,5 +1,6 @@
 package nl.zoostation.database.service.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.grid.IGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
@@ -23,8 +24,7 @@ public class SimpleGridDataService<T extends IGridRow<?>> implements IGridDataSe
 
     @Transactional(readOnly = true)
     @Override
-    public GridViewOutputSpec<T> getGridData(GridViewInputSpec gridViewInputSpec) {
-        Objects.requireNonNull(gridViewInputSpec, () -> "Parameter 'gridViewInputSpec' must not be null");
+    public GridViewOutputSpec<T> getGridData(@NotNull GridViewInputSpec gridViewInputSpec) {
         List<T> rows = gridDataDAO.getRows(gridViewInputSpec);
         Long totalFiltered = gridDataDAO.count(gridViewInputSpec, true);
         Long total = gridDataDAO.count(gridViewInputSpec, false);

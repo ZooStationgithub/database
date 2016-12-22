@@ -1,7 +1,10 @@
 package nl.zoostation.database.service.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
+import nl.zoostation.database.exception.ObjectDescriptor;
+import nl.zoostation.database.exception.ObjectNotFoundException;
 import nl.zoostation.database.mail.EmailDescription;
 import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.model.domain.Profile;
@@ -41,19 +44,16 @@ public class ProfileDetailsService extends TransactionAwareService implements IP
 
     @Transactional(readOnly = true)
     @Override
-    public ProfileView getDetails(Long id) {
-        Objects.requireNonNull(id, () -> "Parameter 'id' must not be null");
+    public ProfileView getDetails(@NotNull Long id) {
         return profileDetailsViewDAO.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("Profile with ID " + id + " not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(ProfileView.class).with("ID", id)));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public void requestMoreInfo(Long id) {
-        Objects.requireNonNull(id, () -> "Parameter 'id' must not be null");
-
+    public void requestMoreInfo(@NotNull Long id) {
         Profile profile = profileDAO.findOne(id)
-                .orElseThrow(() -> new IllegalStateException("Profile with ID " + id + " not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(Profile.class).with("ID", id)));
 
         Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String companyEmail = principal.getName();

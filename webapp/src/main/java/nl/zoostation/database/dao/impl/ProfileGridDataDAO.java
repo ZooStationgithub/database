@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
@@ -37,7 +38,7 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<ProfileGridRow> getRows(GridViewInputSpec gridViewInputSpec) {
+    public List<ProfileGridRow> getRows(@NotNull GridViewInputSpec gridViewInputSpec) {
         return wrappedCall(() -> {
             ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
             buildDataQuery(formObject);
@@ -49,7 +50,7 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
 
     @SuppressWarnings("unchecked")
     @Override
-    public Long count(GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
+    public Long count(@NotNull GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
         return wrappedCall(() -> {
             ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
             buildCountQuery(formObject, applyFilter);

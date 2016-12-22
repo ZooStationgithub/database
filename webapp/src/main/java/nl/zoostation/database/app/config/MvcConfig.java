@@ -25,7 +25,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @Import(ServiceConfig.class)
-@ComponentScan({"nl.zoostation.database.web.controller"})
+@ComponentScan({"nl.zoostation.database.web.controller", "nl.zoostation.database.web.handler"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override

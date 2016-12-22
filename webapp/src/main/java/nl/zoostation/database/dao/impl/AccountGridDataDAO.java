@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.model.grid.AccountGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
@@ -35,14 +36,14 @@ public class AccountGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
     }
 
     @Override
-    public List<AccountGridRow> getRows(GridViewInputSpec gridViewInputSpec) {
+    public List<AccountGridRow> getRows(@NotNull GridViewInputSpec gridViewInputSpec) {
         String onlineUser = SecurityContextHolder.getContext().getAuthentication().getName();
         Query query = getSession().createQuery(SELECT_QUERY).setParameter("onlineUser", onlineUser).setParameterList("forbiddenUsers", Collections.singleton(SU_USER));
         return query.list();
     }
 
     @Override
-    public Long count(GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
+    public Long count(@NotNull GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
         Query query = getSession().createQuery(COUNT_QUERY).setParameterList("forbiddenUsers", Collections.singleton(SU_USER));
         return (Long) query.uniqueResult();
     }

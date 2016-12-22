@@ -1,4 +1,4 @@
-package nl.zoostation.database.security;
+package nl.zoostation.database.web.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

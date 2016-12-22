@@ -1,5 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
+import nl.zoostation.database.annotations.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.Profile;
 import org.hibernate.LockMode;
@@ -15,7 +16,7 @@ public class ProfileDAO extends SimpleGenericEntityDAO<Profile, Long> implements
     }
 
     @Override
-    public void delete(Profile entity) {
+    public void delete(@NotNull Profile entity) {
         getSession().refresh(entity, LockMode.PESSIMISTIC_WRITE);
         entity.getKnownFrameworks().clear();
         entity.getCustomFields().clear();

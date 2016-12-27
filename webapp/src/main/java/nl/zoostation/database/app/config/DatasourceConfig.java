@@ -18,18 +18,17 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DatasourceConfig {
 
-    @Value("${database.url}")
-    private String url;
-    @Value("${database.user}")
-    private String user;
-    @Value("${database.password}")
-    private String password;
-    @Value("${database.driver}")
-    private String driverClassName;
-    @Value("${hibernate.dialect}")
-    private String hibernateDialect;
-    @Value("${database.schema}")
-    private String defaultSchema;
+    @Value("${database.url}") private String url;
+    @Value("${database.user}") private String user;
+    @Value("${database.password}") private String password;
+    @Value("${database.driver}") private String driverClassName;
+    @Value("${database.schema}") private String defaultSchema;
+    @Value("${hibernate.dialect}") private String hibernateDialect;
+    @Value("${hibernate.show_sq:true}") private String showSql;
+    @Value("${hibernate.order_updates:true}") private String orderUpdates;
+    @Value("${hibernate.cache.use_second_level_cache:true}") private String useSecondLevelCache;
+    @Value("${hibernate.hbm2ddl.auto:validate}") private String hbm2ddl;
+    @Value("${hibernate.cache.region.factory_class:rg.hibernate.cache.ehcache.EhCacheRegionFactory}") private String cacheFactoryClass;
 
     @Bean
     public DataSource dataSource() {
@@ -45,12 +44,13 @@ public class DatasourceConfig {
     public SessionFactory sessionFactory(DataSource dataSource) {
         org.hibernate.cfg.Configuration configuration = new LocalSessionFactoryBuilder(dataSource)
                 .scanPackages("nl.zoostation.database.model.domain", "nl.zoostation.database.model.view")
-                //.setProperty("hibernate.default_schema", defaultSchema)
-                .setProperty("hibernate.show_sql", "true")
+                .setProperty("hibernate.default_schema", defaultSchema)
                 .setProperty("hibernate.dialect", hibernateDialect)
-                .setProperty("hibernate.order_updates", "true")
-                .setProperty("hibernate.cache.use_second_level_cache", "true")
-                .setProperty("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+                .setProperty("hibernate.show_sql", showSql)
+                .setProperty("hibernate.order_updates", orderUpdates)
+                .setProperty("hibernate.cache.use_second_level_cache", useSecondLevelCache)
+                .setProperty("hibernate.hbm2ddl.auto", hbm2ddl)
+                .setProperty("hibernate.cache.region.factory_class", cacheFactoryClass);
         return configuration.buildSessionFactory();
     }
 

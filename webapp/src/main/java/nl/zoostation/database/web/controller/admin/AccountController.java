@@ -43,19 +43,20 @@ public class AccountController extends AbstractAdminTabController<AccountGridRow
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
     public String openTab() {
+        logger.trace("Now handling request '/admin/account/tab GET'");
         return super.openTab();
     }
 
     @RequestMapping(value = "/grid", method = RequestMethod.GET)
     @ResponseBody
     public DataTablesResponse<AccountGridRow> getGridData(DataTablesRequest dataTablesRequest) {
-        logger.debug("Now processing request '/account/grid GET' with dataTablesRequest {}", dataTablesRequest);
+        logger.trace("Now handling request '/admin/account/grid GET' with dataTablesRequest {}", dataTablesRequest);
         return super.getGridData(dataTablesRequest);
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String openForm(Model model) {
-        logger.debug("Now Processing request: '/admin/account/form GET'");
+        logger.trace("Now handling request: '/admin/account/form GET'");
         return super.openForm(Optional.empty(), model);
     }
 
@@ -65,7 +66,7 @@ public class AccountController extends AbstractAdminTabController<AccountGridRow
             BindingResult bindingResult,
             Model model) {
 
-        logger.debug("Processing request '/admin/account POST' for form object {}", account);
+        logger.trace("Now handling request '/admin/account POST' for form object {}", account);
 
         if (!StringUtils.equals(account.getPassword(), account.getConfirmPassword())) {
             bindingResult.addError(new FieldError("account", "confirmPassword", account.getConfirmPassword(), false, new String[]{"NoMatch.account.confirmPassword"}, null, ""));
@@ -81,7 +82,7 @@ public class AccountController extends AbstractAdminTabController<AccountGridRow
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") Long id) {
-        logger.debug("Now processing request");
+        logger.trace("Now handling request '/admin/account/{id} DELETE' with ID {}", id);
         return super.delete(id);
     }
 

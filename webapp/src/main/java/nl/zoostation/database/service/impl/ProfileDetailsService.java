@@ -10,6 +10,8 @@ import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.model.domain.Profile;
 import nl.zoostation.database.model.view.ProfileView;
 import nl.zoostation.database.service.IProfileDetailsService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,8 @@ import java.util.stream.Stream;
  * @author valentinnastasi
  */
 public class ProfileDetailsService extends TransactionAwareService implements IProfileDetailsService {
+
+    private static final Logger logger  = LogManager.getLogger(ProfileDetailsService.class);
 
     @Value("${mail.server.app.box}")
     private String appMailBox;
@@ -44,13 +48,17 @@ public class ProfileDetailsService extends TransactionAwareService implements IP
     @Transactional(readOnly = true)
     @Override
     public ProfileView getDetails(@NotNull Long id) {
-        return profileDetailsViewDAO.findOne(id)
+        logger.debug("Getting details for profile with ID {}", id);
+        ProfileView profileView = profileDetailsViewDAO.findOne(id)
                 .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(ProfileView.class).with("ID", id)));
+        logger.trace("profile details found: {}", profileView);
+        return profileView;
     }
 
     @Transactional(readOnly = true)
     @Override
     public void requestMoreInfo(@NotNull Long id) {
+        logger.debug("Requesting more info for profile with ID {}", id);
         Profile profile = profileDAO.findOne(id)
                 .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(Profile.class).with("ID", id)));
 

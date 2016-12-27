@@ -2,6 +2,7 @@ package nl.zoostation.database.model.domain;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -126,9 +127,9 @@ public class Account extends Identifiable {
         final StringBuilder sb = new StringBuilder("Account{");
         sb.append("id=").append(getId()).append(", ");
         sb.append("login='").append(login).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", creationDate=").append(creationDate);
-        sb.append(", activationDate=").append(activationDate);
+        sb.append(", password='").append("******").append('\'');
+        sb.append(", creationDate=").append(DateTimeFormatter.ISO_DATE_TIME.format(creationDate));
+        sb.append(", activationDate=").append(Optional.ofNullable(activationDate).map(DateTimeFormatter.ISO_DATE_TIME::format).orElse(null));
         sb.append('}');
         return sb.toString();
     }

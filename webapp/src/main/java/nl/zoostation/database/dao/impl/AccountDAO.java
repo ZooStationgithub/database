@@ -23,7 +23,10 @@ public class AccountDAO extends SimpleGenericEntityDAO<Account, Long> implements
 
     @Override
     public Optional<Account> findByLogin(@NotEmpty String login) {
-        return getSession().createQuery(interpolate(QUERY_BY_LOGIN, Account.class.getSimpleName(), LOGIN), Account.class)
+        logger.debug("Finding by login {}", login);
+        Optional<Account> account = getSession().createQuery(interpolate(QUERY_BY_LOGIN, Account.class.getSimpleName(), LOGIN), Account.class)
                 .setParameter(LOGIN, login).uniqueResultOptional();
+        logger.trace("Account found: {}", account);
+        return account;
     }
 }

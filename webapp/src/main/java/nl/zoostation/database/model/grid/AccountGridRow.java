@@ -74,4 +74,17 @@ public class AccountGridRow implements IGridRow<Long> {
     public void setOnline(Boolean online) {
         this.online = online;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AccountGridRow{");
+        sb.append("id=").append(id);
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", group='").append(group).append('\'');
+        sb.append(", creationDate=").append(creationDate);
+        sb.append(", activated=").append(activated);
+        sb.append(", online=").append(online);
+        sb.append('}');
+        return sb.toString();
+    }
 }

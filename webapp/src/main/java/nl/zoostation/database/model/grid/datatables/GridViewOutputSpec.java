@@ -45,4 +45,14 @@ public final class GridViewOutputSpec<T> {
     public void setRecords(Collection<T> records) {
         this.records = records;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("GridViewOutputSpec{");
+        sb.append("totalRecords=").append(totalRecords);
+        sb.append(", filteredRecords=").append(filteredRecords);
+        sb.append(", records=").append(records);
+        sb.append('}');
+        return sb.toString();
+    }
 }

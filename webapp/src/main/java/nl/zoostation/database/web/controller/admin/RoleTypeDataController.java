@@ -7,9 +7,10 @@ import nl.zoostation.database.service.IFormService;
 import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ import java.util.Optional;
 @RequestMapping("/admin/data/role")
 public class RoleTypeDataController extends AbstractAdminTabController<IdNameGridRow, IdNameFormObject, SimpleFormWrapper<IdNameFormObject>> {
 
+    private static final Logger logger = LogManager.getLogger(RoleTypeDataController.class);
+
     @Autowired
     public RoleTypeDataController(
             IGridDataService<IdNameGridRow> roleTypeGridDataService,
@@ -37,12 +40,14 @@ public class RoleTypeDataController extends AbstractAdminTabController<IdNameGri
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
     public String openTab() {
+        logger.trace("Now handling request '/admin/data/role/tab GET'");
         return super.openTab();
     }
 
     @RequestMapping(value = "/grid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public DataTablesResponse<IdNameGridRow> getGridData(DataTablesRequest dataTablesRequest) {
+        logger.trace("Now handling request '/admin/data/role/grid GET' with dataTablesRequest {}", dataTablesRequest);
         return super.getGridData(dataTablesRequest);
     }
 
@@ -50,6 +55,7 @@ public class RoleTypeDataController extends AbstractAdminTabController<IdNameGri
     public String openForm(
             @RequestParam("id") Optional<Long> id,
             Model model) {
+        logger.trace("Now handling request '/admin/data/role/form GET' with ID {}", id);
         return super.openForm(id, model);
     }
 
@@ -58,11 +64,13 @@ public class RoleTypeDataController extends AbstractAdminTabController<IdNameGri
             @ModelAttribute("roleType") @Valid IdNameFormObject form,
             BindingResult bindingResult,
             Model model) {
+        logger.trace("Now handling request '/admin/data/role POST' with form object {}", form);
         return super.save(form, bindingResult, model);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") Long id) {
+        logger.trace("Now handling request '/admin/data/role/{id} DELETE' with ID {}", id);
         return super.delete(id);
     }
 

@@ -23,16 +23,19 @@ public class SimpleGenericEntityDAO<E extends PersistentEntity, K extends Serial
     @SuppressWarnings("unchecked")
     @Override
     public E save(@NotNull E entity) {
+        logger.debug("Saving entity {}", entity);
         return (E) getSession().merge(entity);
     }
 
     @Override
     public void delete(@NotNull E entity) {
+        logger.debug("Deleting entity {}", entity);
         getSession().delete(entity);
     }
 
     @Override
     public void delete(@NotNull K id) {
+        logger.debug("Deleting entity with ID {}", id);
         E entity = getSession().get(getEntityType(), id);
         getSession().delete(entity);
     }

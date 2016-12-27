@@ -69,4 +69,17 @@ public class ProfileGridRow implements IGridRow<Long> {
     public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ProfileGridRow{");
+        sb.append("id=").append(id);
+        sb.append(", rank='").append(rank).append('\'');
+        sb.append(", mainProgrammingLanguage='").append(mainProgrammingLanguage).append('\'');
+        sb.append(", secondProgrammingLanguage='").append(secondProgrammingLanguage).append('\'');
+        sb.append(", testRating=").append(testRating);
+        sb.append(", originCountry='").append(originCountry).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

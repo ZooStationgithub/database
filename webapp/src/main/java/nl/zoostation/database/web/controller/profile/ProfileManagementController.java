@@ -33,7 +33,7 @@ public class ProfileManagementController {
 
     @RequestMapping(value = "/developer/edit", method = RequestMethod.GET)
     public String openEditPage(@RequestParam("u") Optional<Long> id, Model model) throws JsonProcessingException {
-        logger.debug("Handling request '/developer/edit GET' with id {}", id);
+        logger.trace("Now handling request '/developer/edit GET' with ID {}", id);
         ProfileFormWrapper formWrapper = profileFormService.prepareForm(id);
         model.addAttribute("profile", formWrapper.getForm());
         model.addAttribute("languages", formWrapper.getProgrammingLanguages());
@@ -50,14 +50,14 @@ public class ProfileManagementController {
     @RequestMapping(value = "/developer/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody ProfileFormObject profileForm) {
-        logger.debug("Handling request '/developer/edit POST' with profile form {}", profileForm);
+        logger.trace("Now handling request '/developer/edit POST' with form object {}", profileForm);
         profileFormService.save(profileForm);
     }
 
-    @RequestMapping(value = "/developer/delete", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/developer", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@RequestParam("u") Long id) {
-        logger.debug("Handling request '/developer/delete DELETE' with id {}", id);
+        logger.trace("Now handling request '/developer DELETE' with ID {}", id);
         profileFormService.delete(id);
     }
 

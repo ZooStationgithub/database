@@ -11,6 +11,8 @@ import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 
@@ -26,6 +28,8 @@ import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
  */
 public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<ProfileGridRow> {
 
+    private static final Logger logger = LogManager.getLogger(ProfileGridDataDAO.class);
+
     private ThreadLocal<Map<String, Object>> parameterMap;
     private ThreadLocal<StringBuilder> queryBuilder;
 
@@ -38,25 +42,31 @@ public class ProfileGridDataDAO extends SessionAwareDAO implements IGridDataDAO<
     @SuppressWarnings("unchecked")
     @Override
     public List<ProfileGridRow> getRows(@NotNull GridViewInputSpec gridViewInputSpec) {
-        return wrappedCall(() -> {
+        logger.debug("Getting row data for grid input spec {}", gridViewInputSpec);
+        List<ProfileGridRow> list = wrappedCall(() -> {
             ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
             buildDataQuery(formObject);
             NativeQuery<ProfileGridRow> nativeQuery = getSession().createNativeQuery(queryBuilder.get().toString(), "ProfileGridRow");
             setQueryParameters(nativeQuery);
             return nativeQuery.list();
         });
+        logger.trace("Row data ready: {}", list);
+        return list;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Long count(@NotNull GridViewInputSpec gridViewInputSpec, boolean applyFilter) {
-        return wrappedCall(() -> {
+        logger.debug("Counting grid rows (with filter? {}) for grid input spec {}", applyFilter, gridViewInputSpec);
+        Long result = wrappedCall(() -> {
             ProfileSearchFormObject formObject = (ProfileSearchFormObject) gridViewInputSpec.getExtras().get(SEARCH_FILTER);
             buildCountQuery(formObject, applyFilter);
             NativeQuery<Number> nativeQuery = getSession().createNativeQuery(queryBuilder.get().toString());
             setQueryParameters(nativeQuery);
             return nativeQuery.getSingleResult().longValue();
         });
+        logger.trace("Count finished: {}", result);
+        return result;
     }
 
     private <T> T wrappedCall(Supplier<T> supplier) {

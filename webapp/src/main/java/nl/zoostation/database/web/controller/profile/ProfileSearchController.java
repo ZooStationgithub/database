@@ -49,7 +49,7 @@ public class ProfileSearchController {
 
     @RequestMapping({"/", "/home", "/index"})
     public String openHomePage(HttpSession httpSession, Model model) {
-        logger.debug("Opening home page");
+        logger.trace("Now opening home page");
 
         ProfileSearchFormWrapper formWrapper = profileSearchService.prepareForm();
         if (Objects.isNull(httpSession.getAttribute(SEARCH_FILTER))) {
@@ -70,7 +70,7 @@ public class ProfileSearchController {
     @RequestMapping(value = "/profile/grid", method = RequestMethod.GET)
     @ResponseBody
     public DataTablesResponse<ProfileGridRow> getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
-        logger.debug("Handling request '/profile/grid GET'");
+        logger.trace("Now handling request '/profile/grid GET'");
         DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>();
 
         try {

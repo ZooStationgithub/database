@@ -27,7 +27,7 @@ public class ProfileDetailsController {
 
     @RequestMapping("/developer")
     public String openDetailsPage(@RequestParam("u") Long id, Model model) {
-        logger.debug("Now handling request '/developer GET' with id '{}'", id);
+        logger.trace("Now handling request '/developer GET' with ID {}", id);
         ProfileView profileView = profileDetailsService.getDetails(id);
         model.addAttribute("profile", profileView);
         return "/developerDetails";
@@ -36,7 +36,7 @@ public class ProfileDetailsController {
     @RequestMapping("/developer/info")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void requestMoreInfo(@RequestParam("u") Long id) {
-        logger.debug("Now handling request '/developer/info GET' for id {}", id);
+        logger.trace("Now handling request '/developer/info GET' for ID {}", id);
         profileDetailsService.requestMoreInfo(id);
     }
 

@@ -25,7 +25,7 @@ public class AccountActivationController {
 
     @RequestMapping(value = "/account/activate", method = RequestMethod.GET)
     public String activateAccount(@RequestParam("u") Long id) {
-        logger.debug("Processing request '/account/activate GET' for account id {}", id);
+        logger.trace("Now handling request '/account/activate GET' with ID {}", id);
         accountActivationService.activate(id);
         return "/accountActivated";
     }
@@ -33,7 +33,7 @@ public class AccountActivationController {
     @RequestMapping(value = "/admin/account/activate/resend/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void resendActivationLink(@PathVariable("id") Long id) {
-        logger.debug("Processing request '/account/activate/resend POST' for account id {}", id);
+        logger.trace("Now handling request '/account/activate/resend/{id} POST' for with ID {}", id);
         accountActivationService.resendActivation(id);
     }
 

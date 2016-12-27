@@ -48,6 +48,7 @@ public class AccountFormService extends AbstractFormService<Account, Long, Accou
     @Transactional(readOnly = true)
     @Override
     public AccountFormWrapper prepareForm(Optional<Long> identifier) {
+        logger.debug("Preparing form for account with ID {}", identifier);
         AccountFormObject formObject = new AccountFormObject();
         AccountFormWrapper formWrapper = new AccountFormWrapper();
         formWrapper.setForm(formObject);

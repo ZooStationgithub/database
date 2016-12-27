@@ -43,4 +43,14 @@ public class FrameworkFormObject implements IFormObject<Long> {
     public void setProgrammingLanguageId(Long programmingLanguageId) {
         this.programmingLanguageId = programmingLanguageId;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("FrameworkFormObject{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", programmingLanguageId=").append(programmingLanguageId);
+        sb.append('}');
+        return sb.toString();
+    }
 }

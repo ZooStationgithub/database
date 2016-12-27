@@ -20,6 +20,7 @@ public class SimpleFormService<E extends Named> extends AbstractFormService<E, L
     @Transactional(readOnly = true)
     @Override
     public SimpleFormWrapper<IdNameFormObject> prepareForm(Optional<Long> identifier) {
+        logger.debug("Preparing simple form for ID {}", identifier);
         E entity = findOrCreateEntity(identifier);
         IdNameFormObject formObject = new IdNameFormObject();
         entityToForm(entity, formObject);

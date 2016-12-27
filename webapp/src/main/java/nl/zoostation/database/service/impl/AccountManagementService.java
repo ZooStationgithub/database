@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class AccountManagementService extends TransactionAwareService implements IAccountManagementService {
 
-    private static final Logger LOGGER = LogManager.getLogger(AccountManagementService.class);
+    private static final Logger logger = LogManager.getLogger(AccountManagementService.class);
 
     @Value("${mail.server.app.box}")
     private String appMailBox;
@@ -48,16 +48,18 @@ public class AccountManagementService extends TransactionAwareService implements
     @Transactional(readOnly = true)
     @Override
     public Optional<Account> findByLogin(@NotEmpty String login) {
+        logger.debug("Fidning account with login '{}'", login);
         return accountDAO.findByLogin(login);
     }
 
     @Transactional
     @Override
     public void activate(@NotNull Long id) {
+        logger.debug("Activating account wth ID {}", id);
         Account account = accountDAO.findOne(id)
                 .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(Account.class).with("ID", id)));
         if (account.getActivationDate().isPresent()) {
-            LOGGER.warn("Account with ID {} is already activated", id);
+            logger.warn("Account with ID {} is already activated", id);
             return;
         }
         account.setActivationDate(Instant.now());
@@ -68,6 +70,7 @@ public class AccountManagementService extends TransactionAwareService implements
     @Transactional(readOnly = true)
     @Override
     public void resendActivation(@NotNull Long id) {
+        logger.debug("Resending activation link for account with ID {}", id);
         Account account = accountDAO.findOne(id)
                 .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(Account.class).with("ID", id)));
 

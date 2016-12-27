@@ -29,6 +29,7 @@ public class FrameworkFormService extends AbstractFormService<Framework, Long, F
     @Transactional(readOnly = true)
     @Override
     public FrameworkFormWrapper prepareForm(Optional<Long> identifier) {
+        logger.debug("Preparing form for framework with ID {}", identifier);
         Framework entity = findOrCreateEntity(identifier);
         FrameworkFormObject formObject = new FrameworkFormObject();
         entityToForm(entity, formObject);

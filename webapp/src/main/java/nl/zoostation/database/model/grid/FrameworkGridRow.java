@@ -22,4 +22,14 @@ public class FrameworkGridRow extends IdNameGridRow {
     public void setProgrammingLanguageName(String programmingLanguageName) {
         this.programmingLanguageName = programmingLanguageName;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("FrameworkGridRow{");
+        sb.append("id='").append(getId()).append("\'");
+        sb.append(", name='").append(getName()).append("\'");
+        sb.append("programmingLanguageName='").append(programmingLanguageName).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

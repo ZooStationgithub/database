@@ -7,6 +7,8 @@ import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
 import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.service.IProfileSearchService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -45,6 +47,7 @@ public class ProfileSearchService extends SimpleGridDataService<ProfileGridRow> 
     @Transactional(readOnly = true)
     @Override
     public ProfileSearchFormWrapper prepareForm() {
+        logger.debug("Preparing profile search form");
         ProfileSearchFormWrapper formWrapper = new ProfileSearchFormWrapper();
         formWrapper.setForm(new ProfileSearchFormObject());
         formWrapper.setRoleTypes(roleTypeDAO.findAll());

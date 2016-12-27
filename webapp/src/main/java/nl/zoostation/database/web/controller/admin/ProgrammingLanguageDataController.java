@@ -7,6 +7,8 @@ import nl.zoostation.database.service.IFormService;
 import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import java.util.Optional;
 @RequestMapping("/admin/data/pl")
 public class ProgrammingLanguageDataController extends AbstractAdminTabController<IdNameGridRow, IdNameFormObject, SimpleFormWrapper<IdNameFormObject>> {
 
+    private static final Logger logger = LogManager.getLogger(ProgrammingLanguageDataController.class);
+
     @Autowired
     public ProgrammingLanguageDataController(
             IGridDataService<IdNameGridRow> programmingLanguageGridDataService,
@@ -36,12 +40,14 @@ public class ProgrammingLanguageDataController extends AbstractAdminTabControlle
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
     public String openTab() {
+        logger.trace("Now handling request '/admin/data/pl/tab GET'");
         return super.openTab();
     }
 
     @RequestMapping(value = "/grid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DataTablesResponse getGridData(DataTablesRequest dataTablesRequest) {
+    public DataTablesResponse<IdNameGridRow> getGridData(DataTablesRequest dataTablesRequest) {
+        logger.trace("Now handling request '/admin/data/pl/grid GET' with dataTablesRequest {}", dataTablesRequest);
         return super.getGridData(dataTablesRequest);
     }
 
@@ -49,6 +55,7 @@ public class ProgrammingLanguageDataController extends AbstractAdminTabControlle
     public String openForm(
             @RequestParam("id") Optional<Long> id,
             Model model) {
+        logger.trace("Now handling request '/admin/data/pl/form GET' with ID {}", id);
         return super.openForm(id, model);
     }
 
@@ -57,11 +64,13 @@ public class ProgrammingLanguageDataController extends AbstractAdminTabControlle
             @ModelAttribute("programmingLanguage") @Valid IdNameFormObject form,
             BindingResult bindingResult,
             Model model) {
+        logger.trace("Now handling request '/admin/data/pl POST' with form object {}", form);
         return super.save(form, bindingResult, model);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") Long id) {
+        logger.trace("Now handling request '/admin/data/pl/{id} DELETE' with ID {}", id);
         return super.delete(id);
     }
 

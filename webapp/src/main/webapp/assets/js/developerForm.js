@@ -94,8 +94,8 @@ $(document).ready(function() {
 
     $('#btnDelete').one('click', function(event) {
         $.ajax({
-            url: '/developer/delete',
-            method: 'post',
+            url: '/developer',
+            method: 'delete',
             data: {
                 'u': $(event.target).data('id')
             }

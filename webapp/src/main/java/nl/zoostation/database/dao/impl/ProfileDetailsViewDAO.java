@@ -26,13 +26,16 @@ public class ProfileDetailsViewDAO extends SimpleGenericReadOnlyEntityDAO<Profil
 
     @Override
     public Optional<ProfileView> findOne(@NotNull Long id) {
+        logger.debug("Find profile view by ID {}", id);
         ProfileView profileView = getSession().get(ProfileView.class, id);
 
         if (profileView != null) {
             profileView.setAdditionalInfo(loadCustomFields(id));
         }
 
-        return Optional.ofNullable(profileView);
+        Optional<ProfileView> profileViewOptional = Optional.ofNullable(profileView);
+        logger.trace("View found: {}", profileViewOptional);
+        return profileViewOptional;
     }
 
     @SuppressWarnings("unchecked")

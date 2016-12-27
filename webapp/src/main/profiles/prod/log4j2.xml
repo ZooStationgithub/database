@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+
+    <Properties>
+        <Property name="log-path">/var/logs/zsdb/prod</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="${log-path}/zsdb.log" filePattern="${log-path}/zsdb-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.hibernate" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <Logger name="org.springframework" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <Logger name="nl.zoostation.database" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <Root level="warn">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

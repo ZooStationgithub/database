@@ -91,4 +91,18 @@ public final class GridViewInputSpec {
     public void setExtras(Map<String, Object> extras) {
         this.extras = extras;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("GridViewInputSpec{");
+        sb.append("pageStart=").append(pageStart);
+        sb.append(", pageLength=").append(pageLength);
+        sb.append(", globalFilter='").append(globalFilter).append('\'');
+        sb.append(", orderColumn='").append(orderColumn).append('\'');
+        sb.append(", orderDirection='").append(orderDirection).append('\'');
+        sb.append(", filterableColumns=").append(filterableColumns);
+        sb.append(", extras=").append(extras);
+        sb.append('}');
+        return sb.toString();
+    }
 }

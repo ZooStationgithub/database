@@ -2,9 +2,12 @@ package nl.zoostation.database.mail.impl;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.exception.MailServiceException;
 import nl.zoostation.database.mail.EmailDescription;
 import nl.zoostation.database.mail.IMailService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -19,6 +22,8 @@ import java.util.Arrays;
  */
 public class MailService implements IMailService {
 
+    private static final Logger logger  = LogManager.getLogger(MailService.class);
+
     private final JavaMailSender mailSender;
     private final Configuration freeMarkerConfiguration;
 
@@ -28,9 +33,10 @@ public class MailService implements IMailService {
     }
 
     @Override
-    public void sendMail(EmailDescription... emailDescriptions) throws Exception {
+    public void sendMail(@NotNull EmailDescription... emailDescriptions) throws Exception {
         Arrays.stream(emailDescriptions).forEach(emailDescription -> {
             try {
+                logger.debug("Preparing mail for {}", emailDescription.getToRecipients());
                 MimeMessagePreparator messagePreparator = createMessagePreparator(emailDescription);
                 mailSender.send(messagePreparator);
             } catch (Exception e) {
@@ -58,7 +64,9 @@ public class MailService implements IMailService {
     }
 
     private String createMailContent(EmailDescription emailDescription) throws IOException, TemplateException {
-        return FreeMarkerTemplateUtils.processTemplateIntoString(freeMarkerConfiguration.getTemplate(emailDescription.getTemplateName()), emailDescription.getModel());
+        String s = FreeMarkerTemplateUtils.processTemplateIntoString(freeMarkerConfiguration.getTemplate(emailDescription.getTemplateName()), emailDescription.getModel());
+        logger.debug("Mail content for {} is ready: {}", emailDescription.getToRecipients(), s);
+        return s;
     }
 
 }

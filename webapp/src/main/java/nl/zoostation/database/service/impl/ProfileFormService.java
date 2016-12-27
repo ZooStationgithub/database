@@ -8,6 +8,8 @@ import nl.zoostation.database.model.form.ProfileFormWrapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -19,6 +21,8 @@ import static java.util.stream.Collectors.*;
  * @author valentinnastasi
  */
 public class ProfileFormService extends AbstractFormService<Profile, Long, ProfileFormObject, ProfileFormWrapper> {
+
+    private static final Logger logger = LogManager.getLogger(ProfileFormService.class);
 
     private final IGenericEntityDAO<Country, Long> countryDAO;
     private final IGenericEntityDAO<ProgrammingLanguage, Long> programmingLanguageDAO;
@@ -51,6 +55,7 @@ public class ProfileFormService extends AbstractFormService<Profile, Long, Profi
     @Transactional(readOnly = true)
     @Override
     public ProfileFormWrapper prepareForm(Optional<Long> identifier) {
+        logger.debug("Preparing form for profile with ID {}", identifier);
         Profile entity = findOrCreateEntity(identifier);
         ProfileFormObject formObject = new ProfileFormObject();
         entityToForm(entity, formObject);

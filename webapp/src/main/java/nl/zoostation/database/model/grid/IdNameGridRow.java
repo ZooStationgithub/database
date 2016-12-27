@@ -32,4 +32,13 @@ public class IdNameGridRow implements IGridRow<Long> {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("IdNameGridRow{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

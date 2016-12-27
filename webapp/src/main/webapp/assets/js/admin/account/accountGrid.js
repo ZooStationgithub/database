@@ -31,6 +31,8 @@ AccountGrid.prototype = function () {
                     method: 'delete'
                 }).done(function(response) {
                     refresh(thisObj);
+                }).fail(function(xhr) {
+                    alert(xhr.responseJSON.message);
                 });
             }
         }

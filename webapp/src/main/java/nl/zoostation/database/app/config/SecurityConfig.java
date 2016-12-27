@@ -1,8 +1,8 @@
 package nl.zoostation.database.app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.zoostation.database.web.security.SecurityUserDetailsService;
 import nl.zoostation.database.service.IAccountManagementService;
+import nl.zoostation.database.web.security.SecurityUserDetailsService;
 import nl.zoostation.database.web.security.ZooStationAccessDeniedHandler;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

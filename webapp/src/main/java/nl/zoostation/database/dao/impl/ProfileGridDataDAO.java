@@ -1,8 +1,7 @@
 package nl.zoostation.database.dao.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGridDataDAO;
-import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.model.grid.annotations.From;

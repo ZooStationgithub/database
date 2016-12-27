@@ -11,9 +11,9 @@ $(document).ready(function () {
                 'u': id
             }
         }).done(function() {
-            alert("Mail was sent"); // TODO need a pretty popup here
-        }).fail(function() {
-            alert("An error occurred")
+            alert(messages['page.developer.details.mail']);
+        }).fail(function(xhr) {
+            alert(xhr.responseJSON.message);
         });
     });
 

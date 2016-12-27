@@ -6,6 +6,11 @@
 <head>
     <title><spring:message code="page.developer.details.title"/></title>
     <%@ include file="header.jsp" %>
+    <script>
+        var messages = {
+            'page.developer.details.mail' : "<spring:message code='page.developer.details.mail' javaScriptEscape='true'/>"
+        }
+    </script>
     <script src='<spring:url value="/assets/js/developerDetails.js"/>' type="application/javascript"></script>
 </head>
 <body>

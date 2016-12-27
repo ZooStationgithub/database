@@ -1,6 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import nl.zoostation.database.annotations.NotEmpty;
+import nl.zoostation.database.annotations.validation.NotEmpty;
 import nl.zoostation.database.dao.IAccountDAO;
 import nl.zoostation.database.model.domain.Account;
 import org.hibernate.SessionFactory;

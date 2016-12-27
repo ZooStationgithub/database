@@ -1,4 +1,4 @@
-package nl.zoostation.database.web.controller;
+package nl.zoostation.database.web.controller.profile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import nl.zoostation.database.model.form.ProfileFormObject;

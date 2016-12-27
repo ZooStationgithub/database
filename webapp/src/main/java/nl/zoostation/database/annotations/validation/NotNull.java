@@ -1,4 +1,4 @@
-package nl.zoostation.database.annotations;
+package nl.zoostation.database.annotations.validation;
 
 import java.lang.annotation.*;
 
@@ -8,5 +8,5 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
-public @interface NotEmpty {
+public @interface NotNull {
 }

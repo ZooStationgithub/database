@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.exception.ObjectDescriptor;
 import nl.zoostation.database.exception.ObjectNotFoundException;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 

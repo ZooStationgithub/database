@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.PersistentEntity;
 import nl.zoostation.database.model.form.IFormObject;
@@ -9,7 +9,6 @@ import nl.zoostation.database.service.IFormService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

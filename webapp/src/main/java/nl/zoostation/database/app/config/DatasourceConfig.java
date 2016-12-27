@@ -1,7 +1,6 @@
 package nl.zoostation.database.app.config;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +18,18 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DatasourceConfig {
 
-    @Value("${database.url}") private String url;
-    @Value("${database.user}") private String user;
-    @Value("${database.password}") private String password;
-    @Value("${database.driver}") private String driverClassName;
-    @Value("${hibernate.dialect}") private String hibernateDialect;
-    @Value("${database.schema}") private String defaultSchema;
+    @Value("${database.url}")
+    private String url;
+    @Value("${database.user}")
+    private String user;
+    @Value("${database.password}")
+    private String password;
+    @Value("${database.driver}")
+    private String driverClassName;
+    @Value("${hibernate.dialect}")
+    private String hibernateDialect;
+    @Value("${database.schema}")
+    private String defaultSchema;
 
     @Bean
     public DataSource dataSource() {
@@ -37,7 +42,7 @@ public class DatasourceConfig {
     }
 
     @Bean
-    public SessionFactory sessionFactory(@Autowired DataSource dataSource) {
+    public SessionFactory sessionFactory(DataSource dataSource) {
         org.hibernate.cfg.Configuration configuration = new LocalSessionFactoryBuilder(dataSource)
                 .scanPackages("nl.zoostation.database.model.domain", "nl.zoostation.database.model.view")
                 //.setProperty("hibernate.default_schema", defaultSchema)
@@ -50,7 +55,7 @@ public class DatasourceConfig {
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager(@Autowired SessionFactory sessionFactory) {
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }
 

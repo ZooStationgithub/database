@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.listeners;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 
 /**
  * @author valentinnastasi

@@ -11,13 +11,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.MessageSource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -34,8 +36,9 @@ public class AccountController extends AbstractAdminTabController<AccountGridRow
     @Autowired
     public AccountController(
             IGridDataService<AccountGridRow> accountGridDataService,
-            IAccountFormService accountFormService) {
-        super(accountGridDataService, accountFormService);
+            IAccountFormService accountFormService,
+            MessageSource messageSource) {
+        super(accountGridDataService, accountFormService, messageSource);
     }
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
@@ -68,14 +71,18 @@ public class AccountController extends AbstractAdminTabController<AccountGridRow
             bindingResult.addError(new FieldError("account", "confirmPassword", account.getConfirmPassword(), false, new String[]{"NoMatch.account.confirmPassword"}, null, ""));
         }
 
-        return super.save(account, bindingResult, model);
+        try {
+            return super.save(account, bindingResult, model);
+        } catch (PersistenceException e) {
+            bindingResult.addError(new FieldError("account", "email", account.getEmail(), false, new String[]{"Unique.account.email"}, null, ""));
+            return super.save(account, bindingResult, model);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         logger.debug("Now processing request");
-        super.delete(id);
+        return super.delete(id);
     }
 
     @Override

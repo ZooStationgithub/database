@@ -35,6 +35,8 @@ RoleTypeForm.prototype = function() {
             });
 
             event.preventDefault();
+        }).fail(function(xhr) {
+            alert(xhr.responseJSON.message);
         });
     };
 

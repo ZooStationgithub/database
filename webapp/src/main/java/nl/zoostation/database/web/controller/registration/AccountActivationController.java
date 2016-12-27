@@ -1,4 +1,4 @@
-package nl.zoostation.database.web.controller;
+package nl.zoostation.database.web.controller.registration;
 
 import nl.zoostation.database.service.IAccountManagementService;
 import org.apache.logging.log4j.LogManager;

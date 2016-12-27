@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.listeners;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.event.TransactionPhase;

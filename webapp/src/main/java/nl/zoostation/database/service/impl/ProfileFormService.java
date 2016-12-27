@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.ProfileFormObject;

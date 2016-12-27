@@ -1,6 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
 import nl.zoostation.database.model.domain.CustomProfileField;
 import nl.zoostation.database.model.view.ProfileView;

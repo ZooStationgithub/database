@@ -1,7 +1,7 @@
 package nl.zoostation.database.aspect;
 
-import nl.zoostation.database.annotations.NotEmpty;
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotEmpty;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.exception.ErrorMessage;
 import nl.zoostation.database.exception.InvalidParameterException;
 import org.apache.commons.collections.CollectionUtils;
@@ -23,19 +23,19 @@ import java.util.*;
 @Aspect
 public class MethodParameterValidationAspect {
 
-    @Pointcut("execution(* nl.zoostation.database.service..*(.., @nl.zoostation.database.annotations.NotNull (*),..))")
+    @Pointcut("execution(* nl.zoostation.database.service..*(.., @nl.zoostation.database.annotations.validation.NotNull (*),..))")
     public void notNullMethodArgumentInService() {
     }
 
-    @Pointcut("execution(* nl.zoostation.database.dao..*(.., @nl.zoostation.database.annotations.NotNull (*),..))")
+    @Pointcut("execution(* nl.zoostation.database.dao..*(.., @nl.zoostation.database.annotations.validation.NotNull (*),..))")
     public void notNullMethodArgumentInDAO() {
     }
 
-    @Pointcut("execution(* nl.zoostation.database.service..*(.., @nl.zoostation.database.annotations.NotEmpty (*),..))")
+    @Pointcut("execution(* nl.zoostation.database.service..*(.., @nl.zoostation.database.annotations.validation.NotEmpty (*),..))")
     public void notEmptyMethodArgumentInService() {
     }
 
-    @Pointcut("execution(* nl.zoostation.database.dao..*(.., @nl.zoostation.database.annotations.NotEmpty (*),..))")
+    @Pointcut("execution(* nl.zoostation.database.dao..*(.., @nl.zoostation.database.annotations.validation.NotEmpty (*),..))")
     public void notEmptyMethodArgumentInDAO() {
     }
 

@@ -1,6 +1,6 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
 import nl.zoostation.database.exception.ObjectDescriptor;
@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**

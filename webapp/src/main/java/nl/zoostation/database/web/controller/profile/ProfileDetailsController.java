@@ -1,4 +1,4 @@
-package nl.zoostation.database.web.controller;
+package nl.zoostation.database.web.controller.profile;
 
 import nl.zoostation.database.model.view.ProfileView;
 import nl.zoostation.database.service.IProfileDetailsService;

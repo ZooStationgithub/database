@@ -8,8 +8,9 @@ import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +29,9 @@ public class FrameworkDataController extends AbstractAdminTabController<Framewor
     @Autowired
     public FrameworkDataController(
             IGridDataService<FrameworkGridRow> frameworkGridDataService,
-            IFormService<?, Long, FrameworkFormObject, FrameworkFormWrapper> frameworkFormService) {
-        super(frameworkGridDataService, frameworkFormService);
+            IFormService<?, Long, FrameworkFormObject, FrameworkFormWrapper> frameworkFormService,
+            MessageSource messageSource) {
+        super(frameworkGridDataService, frameworkFormService, messageSource);
     }
 
     @RequestMapping(value = "/tab", method = RequestMethod.GET)
@@ -60,9 +62,8 @@ public class FrameworkDataController extends AbstractAdminTabController<Framewor
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
-        super.delete(id);
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        return super.delete(id);
     }
 
     @Override

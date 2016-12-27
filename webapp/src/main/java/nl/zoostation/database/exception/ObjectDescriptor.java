@@ -1,7 +1,6 @@
 package nl.zoostation.database.exception;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.collections.map.HashedMap;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -32,6 +32,8 @@ RankTypeForm.prototype = function() {
                     $(panelSelector).find('div.panel-body').empty().append(response);
                     init(thisObj);
                 }
+            }).fail(function(xhr) {
+                alert(xhr.responseJSON.message);
             });
 
             event.preventDefault();

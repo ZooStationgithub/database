@@ -87,8 +87,8 @@ $(document).ready(function() {
             data : JSON.stringify(serializeForm())
         }).done(function(data) {
             location.replace(contextPath + '/index'); // TODO add popup
-        }).fail(function(data) {
-            alert("Failure :(");
+        }).fail(function(xhr) {
+            alert(xhr.responseJSON.message);
         });
     });
 
@@ -101,8 +101,8 @@ $(document).ready(function() {
             }
         }).done(function(data) {
             location.replace(contextPath + '/index'); // TODO add popup
-        }).fail(function(data) {
-            alert("Failure :(");
+        }).fail(function(xhr) {
+            alert(xhr.responseJSON.message);
         });
     });
 

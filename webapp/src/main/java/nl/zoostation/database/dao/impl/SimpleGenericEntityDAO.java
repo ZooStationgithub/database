@@ -1,6 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.PersistentEntity;
 import org.hibernate.SessionFactory;

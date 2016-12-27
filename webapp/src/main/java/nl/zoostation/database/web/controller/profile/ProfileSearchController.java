@@ -1,4 +1,4 @@
-package nl.zoostation.database.web.controller;
+package nl.zoostation.database.web.controller.profile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
@@ -32,15 +32,15 @@ import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
  * @author valentinnastasi
  */
 @Controller
-public class HomePageController {
+public class ProfileSearchController {
 
-    private static final Logger logger = LogManager.getLogger(HomePageController.class);
+    private static final Logger logger = LogManager.getLogger(ProfileSearchController.class);
 
     private final ObjectMapper objectMapper;
     private final IProfileSearchService profileSearchService;
 
     @Autowired
-    public HomePageController(
+    public ProfileSearchController(
             ObjectMapper objectMapper,
             IProfileSearchService profileSearchService) {
         this.objectMapper = objectMapper;

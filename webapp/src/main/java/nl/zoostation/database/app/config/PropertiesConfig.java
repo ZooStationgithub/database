@@ -1,6 +1,5 @@
 package nl.zoostation.database.app.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +30,7 @@ public class PropertiesConfig {
     }
 
     @Bean
-    public LocalValidatorFactoryBean localValidatorFactoryBean(@Autowired MessageSource messageSource) {
+    public LocalValidatorFactoryBean localValidatorFactoryBean(MessageSource messageSource) {
         LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setValidationMessageSource(messageSource);
         return validatorFactoryBean;

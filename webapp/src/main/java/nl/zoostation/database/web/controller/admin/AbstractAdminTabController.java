@@ -1,14 +1,19 @@
 package nl.zoostation.database.web.controller.admin;
 
+import nl.zoostation.database.exception.DatabaseException;
 import nl.zoostation.database.model.form.IFormObject;
 import nl.zoostation.database.model.form.IFormWrapper;
 import nl.zoostation.database.model.grid.IGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
+import nl.zoostation.database.model.json.JsonErrorResponse;
 import nl.zoostation.database.service.IFormService;
 import nl.zoostation.database.service.IGridDataService;
 import nl.zoostation.database.web.datatables.DataTablesRequest;
 import nl.zoostation.database.web.datatables.DataTablesResponse;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -23,13 +28,16 @@ public abstract class AbstractAdminTabController<G extends IGridRow<Long>, F ext
 
     private final IGridDataService<G> gridDataService;
     private final IFormService<?, Long, F, W> formService;
+    private final MessageSource messageSource;
 
     protected AbstractAdminTabController(
             IGridDataService<G> gridDataService,
-            IFormService<?, Long, F, W> formService) {
+            IFormService<?, Long, F, W> formService,
+            MessageSource messageSource) {
 
         this.gridDataService = gridDataService;
         this.formService = formService;
+        this.messageSource = messageSource;
     }
 
     public String openTab() {
@@ -66,8 +74,17 @@ public abstract class AbstractAdminTabController<G extends IGridRow<Long>, F ext
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    public void delete(Long id) {
-        formService.delete(id);
+    public ResponseEntity delete(Long id) {
+        try {
+            formService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e) {
+            JsonErrorResponse jsonErrorResponse = new JsonErrorResponse();
+            jsonErrorResponse.setHttpCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            jsonErrorResponse.setExceptionClass(DatabaseException.class.getName());
+            jsonErrorResponse.setMessage(messageSource.getMessage("form.common.delete.inUse", null, LocaleContextHolder.getLocale()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonErrorResponse);
+        }
     }
 
     protected abstract String getTabViewName();

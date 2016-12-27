@@ -1,7 +1,7 @@
 package nl.zoostation.database.service.impl;
 
-import nl.zoostation.database.annotations.NotEmpty;
-import nl.zoostation.database.annotations.NotNull;
+import nl.zoostation.database.annotations.validation.NotEmpty;
+import nl.zoostation.database.annotations.validation.NotNull;
 import nl.zoostation.database.dao.IAccountDAO;
 import nl.zoostation.database.exception.ObjectDescriptor;
 import nl.zoostation.database.exception.ObjectNotFoundException;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

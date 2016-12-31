@@ -1,7 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.config.DBOperation;
-import com.excilys.ebi.spring.dbunit.test.DataSet;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.grid.FrameworkGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
@@ -16,7 +15,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 /**
  * @author val
  */
-@DataSet(locations = {"/datasets/existing_pl.xml", "/datasets/existing_frameworks.xml"}, tearDownOperation = DBOperation.DELETE)
+@DatabaseSetup({"/datasets/common/programming_languages.xml", "/datasets/common/frameworks.xml"})
 public class FrameworkGridDataDAOTest extends BaseDAOTest {
 
     @Autowired

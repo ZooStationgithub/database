@@ -1,7 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.config.DBOperation;
-import com.excilys.ebi.spring.dbunit.test.DataSet;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.grid.ProfileGridRow;
@@ -17,11 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author val
  */
-@DataSet(locations = {"/datasets/existing_role_types.xml", "/datasets/existing_rank_types.xml", "/datasets/existing_contract_types.xml",
-        "/datasets/existing_company_types.xml", "/datasets/existing_pl.xml", "/datasets/existing_frameworks.xml", "/datasets/existing_countries.xml",
-        "/datasets/existing_profiles.xml", "/datasets/existing_known_frameworks.xml", "/datasets/existing_preferred_company_types.xml",
-        "/datasets/existing_preferred_countries.xml", "/datasets/existing_profile_roles.xml", "/datasets/existing_profile_ranks.xml"},
-        tearDownOperation = DBOperation.DELETE)
+@DatabaseSetup({"/datasets/common/role_types.xml", "/datasets/common/rank_types.xml", "/datasets/common/company_types.xml",
+        "/datasets/common/contract_types.xml", "/datasets/common/countries.xml", "/datasets/common/programming_languages.xml",
+        "/datasets/common/frameworks.xml", "/datasets/common/profiles.xml"})
 public class ProfileGridDataDAOTest extends BaseDAOTest {
 
     @Autowired

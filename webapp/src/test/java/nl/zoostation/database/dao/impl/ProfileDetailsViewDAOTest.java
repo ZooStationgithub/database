@@ -1,7 +1,5 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.config.DBOperation;
-import com.excilys.ebi.spring.dbunit.test.DataSet;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.view.ProfileView;
 import org.junit.Ignore;
@@ -16,9 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author val
  */
 @Ignore("Hibernate doesn't support creating views")
-@DataSet(locations = {"/datasets/existing_role_types.xml", "/datasets/existing_rank_types.xml", "/datasets/existing_contract_types.xml",
-        "/datasets/existing_company_types.xml", "/datasets/existing_pl.xml", "/datasets/existing_frameworks.xml", "/datasets/existing_countries.xml",
-        "/datasets/existing_profiles.xml"}, tearDownOperation = DBOperation.DELETE)
 public class ProfileDetailsViewDAOTest extends BaseDAOTest {
 
     @Autowired

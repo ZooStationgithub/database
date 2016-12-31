@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <frameworks name="Spring" programming_language_id="1000"/>
+    <frameworks name="AngularJS" programming_language_id="1003"/>
+    <frameworks name="Qt" programming_language_id="1001"/>
+    <frameworks name="jQuery" programming_language_id="1003"/>
+    <frameworks name="NodeJS" programming_language_id="1003"/>
+    <frameworks name="Hibernate" programming_language_id="1000"/>
+    <frameworks name="Alibaba" programming_language_id="1001"/>
+</dataset>

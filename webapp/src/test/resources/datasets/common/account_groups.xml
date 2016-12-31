@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <account_groups id="1000" display_name="Administrator" security_role="ROLE_ADMIN"/>
+    <account_groups id="1001" display_name="Company" security_role="ROLE_COMPANY"/>
+    <account_groups id="1002" display_name="ZooStation" security_role="ROLE_ZS_USER"/>
+</dataset>

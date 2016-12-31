@@ -1,11 +1,9 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.config.DBOperation;
-import com.excilys.ebi.spring.dbunit.test.DataSet;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.grid.AccountGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
-import org.assertj.core.groups.Tuple;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.List;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author val
  */
-@DataSet(locations = {"/datasets/existing_account_groups.xml", "/datasets/existing_accounts.xml"}, tearDownOperation = DBOperation.DELETE)
+@DatabaseSetup({"/datasets/common/account_groups.xml", "/datasets/common/accounts.xml"})
 public class AccountGridDataDAOTest extends BaseDAOTest {
 
     private static final String ONLINE_USER = "online@online.online";
@@ -50,7 +49,7 @@ public class AccountGridDataDAOTest extends BaseDAOTest {
     public void testGetRows() throws Exception {
         List<AccountGridRow> rows = accountGridDataDAO.getRows(new GridViewInputSpec());
         assertThat(rows).isNotNull().hasSize(5).extracting("login", "group", "creationDate", "activated", "online")
-            .contains(tuple("a@b.c", "Administrator", toInstant("2016-12-31 12:30:10.000"), false, false),
+                .contains(tuple("a@b.c", "Administrator", toInstant("2016-12-31 12:30:10.000"), false, false),
                         tuple("d@e.f", "Administrator", toInstant("2016-12-31 12:20:10.000"), true, false),
                         tuple("g@h.i", "Company", toInstant("2016-12-31 12:10:10.000"), true, false),
                         tuple("g@k.l", "ZooStation", toInstant("2016-12-31 12:40:10.000"), false, false),

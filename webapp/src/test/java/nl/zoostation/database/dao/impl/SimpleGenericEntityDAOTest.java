@@ -1,8 +1,8 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.config.DBOperation;
-import com.excilys.ebi.spring.dbunit.test.DataSet;
-import com.excilys.ebi.spring.dbunit.test.ExpectedDataSet;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.domain.Framework;
 import nl.zoostation.database.model.domain.ProgrammingLanguage;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author val
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-@DataSet(locations = "/datasets/existing_pl.xml", tearDownOperation = DBOperation.DELETE)
+@DatabaseSetup({"/datasets/common/programming_languages.xml", "/datasets/common/frameworks.xml"})
 public class SimpleGenericEntityDAOTest extends BaseDAOTest {
 
     @Autowired
@@ -35,8 +35,8 @@ public class SimpleGenericEntityDAOTest extends BaseDAOTest {
         assertThat(framework).isNotNull();
     }
 
-    @ExpectedDataSet(locations = "/datasets/one_framework.xml", columnsToIgnore = "id")
     @Test
+    @ExpectedDatabase(value = "/datasets/SimpleGenericEntityDAOTest/saveInsert_expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void testSaveInsert() throws Exception {
         Framework framework = new Framework();
         framework.setName("Alibaba");
@@ -47,49 +47,44 @@ public class SimpleGenericEntityDAOTest extends BaseDAOTest {
         assertThat(savedFramework.getId()).isNotNull();
     }
 
-    @DataSet(locations = "/datasets/one_framework.xml")
-    @ExpectedDataSet(locations = "/datasets/updated_framework.xml")
     @Test
+    @ExpectedDatabase(value = "/datasets/SimpleGenericEntityDAOTest/saveUpdate_expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void testSaveUpdate() throws Exception {
         Framework framework = new Framework();
-        framework.setId(1100L);
+        framework.setId(1005L);
         framework.setName("TRALALA");
-        framework.setProgrammingLanguage(programmingLanguageDAO.findOne(1000L).get());
+        framework.setProgrammingLanguage(programmingLanguageDAO.findOne(1003L).get());
         frameworkDAO.save(framework);
         frameworkDAO.flush();
     }
 
-    @DataSet(locations = {"/datasets/existing_frameworks.xml", "/datasets/one_framework.xml"})
-    @ExpectedDataSet(locations = "/datasets/existing_frameworks.xml")
     @Test
+    @ExpectedDatabase(value = "/datasets/SimpleGenericEntityDAOTest/delete_expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void testDelete() throws Exception {
         Framework framework = new Framework();
-        framework.setId(1100L);
+        framework.setId(1005L);
         frameworkDAO.delete(framework);
         frameworkDAO.flush();
     }
 
-    @DataSet(locations = {"/datasets/existing_frameworks.xml", "/datasets/one_framework.xml"})
-    @ExpectedDataSet(locations = "/datasets/existing_frameworks.xml")
     @Test
+    @ExpectedDatabase(value = "/datasets/SimpleGenericEntityDAOTest/delete_expected.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void testDeleteById() throws Exception {
-        frameworkDAO.delete(1100L);
+        frameworkDAO.delete(1005L);
         frameworkDAO.flush();
     }
 
-    @DataSet(locations = {"/datasets/existing_frameworks.xml", "/datasets/one_framework.xml"})
     @Test
     public void testFindOne() throws Exception {
-        Optional<Framework> frameworkOptional = frameworkDAO.findOne(1100L);
+        Optional<Framework> frameworkOptional = frameworkDAO.findOne(1005L);
         assertThat(frameworkOptional).isNotEmpty();
         Framework framework = frameworkOptional.get();
-        assertThat(framework.getId()).isEqualTo(1100L);
-        assertThat(framework.getName()).isEqualTo("Alibaba");
+        assertThat(framework.getId()).isEqualTo(1005L);
+        assertThat(framework.getName()).isEqualTo("Hibernate");
         assertThat(framework.getProgrammingLanguage()).isNotNull();
-        assertThat(framework.getProgrammingLanguage().getId()).isEqualTo(1001L);
+        assertThat(framework.getProgrammingLanguage().getId()).isEqualTo(1000L);
     }
 
-    @DataSet(locations = "/datasets/existing_frameworks.xml")
     @Test
     public void testFindMany() throws Exception {
         List<Framework> list = frameworkDAO.findMany(Arrays.asList(1000L, 1001L, 1100L));
@@ -97,7 +92,6 @@ public class SimpleGenericEntityDAOTest extends BaseDAOTest {
                 .contains(new Framework(1000L, "Spring"), new Framework(1001L, "AngularJS"));
     }
 
-    @DataSet(locations = "/datasets/existing_frameworks.xml")
     @Test
     public void testFindAll() throws Exception {
         List<Framework> list = frameworkDAO.findAll();

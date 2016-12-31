@@ -1,6 +1,6 @@
 package nl.zoostation.database.dao.impl;
 
-import com.excilys.ebi.spring.dbunit.test.DataSet;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import nl.zoostation.database.dao.BaseDAOTest;
 import nl.zoostation.database.model.domain.Account;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author val
  */
-@DataSet(locations = {"/datasets/existing_account_groups.xml", "/datasets/existing_accounts.xml"})
+@DatabaseSetup({"/datasets/common/account_groups.xml", "/datasets/common/accounts.xml"})
 public class AccountDAOTest extends BaseDAOTest {
 
     @Autowired

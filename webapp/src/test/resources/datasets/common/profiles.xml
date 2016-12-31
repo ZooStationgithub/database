@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <profiles id="1000" zs_number="0001" main_pr_lng_id="1000" second_pr_lng_id="1002" test_rating="89" origin_country_id="1005" visa_needed="1" experience="5" work_history="A sample text" english_level="5" travel_time="10" preferred_city="Leiden" availability="3" hours_per_week="40" relocation_reason="A sample text" contract_type_id="1000"  />
+    <profiles id="1001" zs_number="0002" main_pr_lng_id="1003" origin_country_id="1000" visa_needed="0" english_level="5" availability="1" hours_per_week="30" contract_type_id="1000"  />
+    <profiles id="1002" zs_number="0003" test_rating="99" origin_country_id="1008" experience="2" work_history="A sample text" english_level="4" travel_time="5" preferred_city="Amsterdam" availability="2" hours_per_week="40" contract_type_id="1001"  />
+
+    <known_frameworks profile_id="1000" framework_id="1002"/>
+    <known_frameworks profile_id="1000" framework_id="1003"/>
+    <known_frameworks profile_id="1000" framework_id="1000"/>
+    <known_frameworks profile_id="1001" framework_id="1004"/>
+    <known_frameworks profile_id="1002" framework_id="1000"/>
+
+    <preferred_company_types profile_id="1000" company_type_id="1002"/>
+    <preferred_company_types profile_id="1002" company_type_id="1000"/>
+
+    <preferred_countries profile_id="1000" country_id="1006"/>
+    <preferred_countries profile_id="1000" country_id="1003"/>
+    <preferred_countries profile_id="1001" country_id="1005"/>
+    <preferred_countries profile_id="1002" country_id="1002"/>
+    <preferred_countries profile_id="1002" country_id="1001"/>
+    <preferred_countries profile_id="1002" country_id="1004"/>
+
+    <profile_ranks profile_id="1000" rank_type_id="1000"/>
+    <profile_ranks profile_id="1002" rank_type_id="1000"/>
+
+    <profile_roles profile_id="1000" role_type_id="1000"/>
+    <profile_roles profile_id="1001" role_type_id="1001"/>
+
+</dataset>

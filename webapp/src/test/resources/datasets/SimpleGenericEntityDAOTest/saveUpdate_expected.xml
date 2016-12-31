@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <frameworks id="1000" name="Spring" programming_language_id="1000"/>
+    <frameworks id="1001" name="AngularJS" programming_language_id="1003"/>
+    <frameworks id="1002" name="Qt" programming_language_id="1001"/>
+    <frameworks id="1003" name="jQuery" programming_language_id="1003"/>
+    <frameworks id="1004" name="NodeJS" programming_language_id="1003"/>
+    <frameworks id="1005" name="TRALALA" programming_language_id="1003"/>
+</dataset>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <rank_types id="1000" name="Junior"/>
+    <rank_types id="1001" name="Medior"/>
+    <rank_types id="1002" name="Senior"/>
+</dataset>

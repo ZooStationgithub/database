@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <known_frameworks profile_id="1000" framework_id="1002"/>
+    <known_frameworks profile_id="1000" framework_id="1003"/>
+    <known_frameworks profile_id="1000" framework_id="1000"/>
+    <known_frameworks profile_id="1001" framework_id="1004"/>
+    <known_frameworks profile_id="1002" framework_id="1000"/>
+</dataset>

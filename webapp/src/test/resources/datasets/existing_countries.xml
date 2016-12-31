@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <countries id="1000" name="USA" code="US"/>
+    <countries id="1001" name="Great Britain" code="UK"/>
+    <countries id="1002" name="France" code="FR"/>
+    <countries id="1003" name="Germany" code="DE"/>
+    <countries id="1004" name="Netherlands" code="NL"/>
+    <countries id="1005" name="Belgium" code="BE"/>
+    <countries id="1006" name="Italy" code="IT"/>
+    <countries id="1007" name="Spain" code="ES"/>
+    <countries id="1008" name="Ireland" code="IR"/>
+</dataset>

@@ -49,4 +49,6 @@ public class SimpleGenericEntityDAO<E extends PersistentEntity, K extends Serial
         }
     }
 
+
+
 }

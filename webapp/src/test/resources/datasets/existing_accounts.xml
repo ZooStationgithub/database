@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <accounts id="1001" login="d@e.f" password="123456788" creation_date="2016-12-31 12:20:10.000000000" activation_date="2016-12-31 15:00:00.000000000" group_id="1000"/>
+    <accounts id="1000" login="a@b.c" password="123456789" creation_date="2016-12-31 12:30:10.000000000" group_id="1000"/>
+    <accounts id="1002" login="g@h.i" password="123456787" creation_date="2016-12-31 12:10:10.000000000" activation_date="2016-12-31 20:05:10.000000000" group_id="1001"/>
+    <accounts id="1003" login="g@k.l" password="123456786" creation_date="2016-12-31 12:40:10.000000000" group_id="1002"/>
+    <accounts id="1004" login="online@online.online" password="123456785" creation_date="2016-12-31 12:50:10.000000000" group_id="1001"/>
+    <accounts id="1005" login="su" password="su" creation_date="1970-01-01 00:00:00.000000000" activation_date="1970-01-01 00:00:00.000000000" group_id="1002"/>
+</dataset>

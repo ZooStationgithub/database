@@ -44,7 +44,7 @@ public class DatasourceConfig {
     public SessionFactory sessionFactory(DataSource dataSource) {
         org.hibernate.cfg.Configuration configuration = new LocalSessionFactoryBuilder(dataSource)
                 .scanPackages("nl.zoostation.database.model.domain", "nl.zoostation.database.model.view")
-                .setProperty("hibernate.default_schema", defaultSchema)
+                //.setProperty("hibernate.default_schema", defaultSchema)
                 .setProperty("hibernate.dialect", hibernateDialect)
                 .setProperty("hibernate.show_sql", showSql)
                 .setProperty("hibernate.order_updates", orderUpdates)

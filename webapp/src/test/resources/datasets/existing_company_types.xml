@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <company_types id="1000" name="Big"/>
+    <company_types id="1001" name="Medium"/>
+    <company_types id="1002" name="Small"/>
+</dataset>

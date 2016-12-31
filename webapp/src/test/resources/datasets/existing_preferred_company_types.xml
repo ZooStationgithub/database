@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <preferred_company_types profile_id="1000" company_type_id="1002"/>
+    <preferred_company_types profile_id="1002" company_type_id="1000"/>
+</dataset>

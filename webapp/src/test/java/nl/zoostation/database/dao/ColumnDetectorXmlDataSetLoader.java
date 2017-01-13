@@ -16,11 +16,8 @@ public class ColumnDetectorXmlDataSetLoader extends FlatXmlDataSetLoader {
     protected IDataSet createDataSet(Resource resource) throws Exception {
         FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
         builder.setColumnSensing(true);
-        InputStream inputStream = resource.getInputStream();
-        try {
+        try (InputStream inputStream = resource.getInputStream()) {
             return builder.build(inputStream);
-        } finally {
-            inputStream.close();
         }
     }
 }

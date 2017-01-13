@@ -26,6 +26,12 @@ public class AccountFormObject implements IFormObject<Long> {
     public AccountFormObject() {
     }
 
+    public AccountFormObject(String email, String password, Long groupId) {
+        this.email = email;
+        this.password = password;
+        this.groupId = groupId;
+    }
+
     @Override
     public Long getId() {
         return null;

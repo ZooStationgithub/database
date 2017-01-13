@@ -84,6 +84,6 @@ public class AccountManagementService extends TransactionAwareService implements
                 .addModelEntry("id", account.getId())
                 .build();
 
-        doAfterCommit(() -> mailService.sendMail(emailDescription));
+        doAfterCommit(() -> mailService.sendMailAsync(emailDescription));
     }
 }

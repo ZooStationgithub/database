@@ -57,6 +57,9 @@ public class MethodParameterValidationAspect {
                 return;
             }
             Object value = argument.getValue();
+            if (Objects.isNull(value)) {
+                throw new InvalidParameterException(ErrorMessage.NULL_PARAMETER, targetClassName, argument.getName());
+            }
             if (value instanceof CharSequence && StringUtils.isEmpty((CharSequence) value)) {
                 throw new InvalidParameterException(ErrorMessage.EMPTY_STRING_PARAMETER, targetClassName, argument.getName());
             }

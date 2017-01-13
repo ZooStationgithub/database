@@ -5,7 +5,6 @@ import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.dao.IGenericReadOnlyEntityDAO;
 import nl.zoostation.database.dao.IGridDataDAO;
 import nl.zoostation.database.mail.IMailService;
-import nl.zoostation.database.mail.impl.MailService;
 import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.*;
 import nl.zoostation.database.model.grid.AccountGridRow;
@@ -18,28 +17,17 @@ import nl.zoostation.database.service.impl.*;
 import nl.zoostation.database.service.listeners.TransactionEventListeners;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @author valentinnastasi
  */
 @Configuration
-@Import({DaoConfig.class, MailConfig.class, AopConfig.class})
 public class ServiceConfig {
 
     @Bean
     public TransactionEventListeners transactionEventListeners() {
         return new TransactionEventListeners();
-    }
-
-    @Bean(name = "mailService")
-    public IMailService createMailService(
-            JavaMailSender mailSender,
-            freemarker.template.Configuration freeMarkerConfiguration) {
-
-        return new MailService(mailSender, freeMarkerConfiguration);
     }
 
     @Bean(name = "accountFormService")

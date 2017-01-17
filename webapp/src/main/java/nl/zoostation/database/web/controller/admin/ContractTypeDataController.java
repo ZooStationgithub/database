@@ -1,6 +1,5 @@
 package nl.zoostation.database.web.controller.admin;
 
-import nl.zoostation.database.model.domain.ContractType;
 import nl.zoostation.database.model.form.IdNameFormObject;
 import nl.zoostation.database.model.form.SimpleFormWrapper;
 import nl.zoostation.database.model.grid.IdNameGridRow;

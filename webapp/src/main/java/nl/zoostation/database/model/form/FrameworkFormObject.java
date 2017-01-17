@@ -20,6 +20,12 @@ public class FrameworkFormObject implements IFormObject<Long> {
     public FrameworkFormObject() {
     }
 
+    public FrameworkFormObject(Long id, String name, Long programmingLanguageId) {
+        this.id = id;
+        this.name = name;
+        this.programmingLanguageId = programmingLanguageId;
+    }
+
     public Long getId() {
         return id;
     }

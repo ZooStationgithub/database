@@ -7,9 +7,8 @@ import nl.zoostation.database.model.form.ProfileSearchFormObject;
 import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
 import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.service.IProfileSearchService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * @author valentinnastasi

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.stream.Stream;
 
 /**
@@ -24,7 +23,7 @@ import java.util.stream.Stream;
  */
 public class ProfileDetailsService extends TransactionAwareService implements IProfileDetailsService {
 
-    private static final Logger logger  = LogManager.getLogger(ProfileDetailsService.class);
+    private static final Logger logger = LogManager.getLogger(ProfileDetailsService.class);
 
     @Value("${mail.server.app.box}")
     private String appMailBox;
@@ -62,8 +61,7 @@ public class ProfileDetailsService extends TransactionAwareService implements IP
         Profile profile = profileDAO.findOne(id)
                 .orElseThrow(() -> new ObjectNotFoundException(ObjectDescriptor.ofName(Profile.class).with("ID", id)));
 
-        Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String companyEmail = principal.getName();
+        String companyEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
         EmailDescription[] emailDescriptions = Stream.of(
                 new EmailDescription.Builder()

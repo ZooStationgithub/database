@@ -13,7 +13,6 @@ import nl.zoostation.database.model.grid.ProfileGridRow;
 import nl.zoostation.database.model.view.ProfileView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import static org.mockito.Mockito.mock;
 

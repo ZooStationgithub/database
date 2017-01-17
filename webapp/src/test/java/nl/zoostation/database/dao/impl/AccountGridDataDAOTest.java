@@ -8,8 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.Instant;
@@ -19,10 +17,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static nl.zoostation.database.tools.MockUtils.mockSecurityContext;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author val
@@ -37,7 +34,7 @@ public class AccountGridDataDAOTest extends BaseDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        setSecurityContextHolder();
+        SecurityContextHolder.setContext(mockSecurityContext(ONLINE_USER));
     }
 
     @After
@@ -66,14 +63,6 @@ public class AccountGridDataDAOTest extends BaseDAOTest {
     public void testCountWithFilter() throws Exception {
         Long result = accountGridDataDAO.count(new GridViewInputSpec(), true);
         assertThat(result).isEqualTo(5);
-    }
-
-    private void setSecurityContextHolder() {
-        SecurityContext mockSecurityContext = mock(SecurityContext.class);
-        Authentication mockAuthentication = mock(Authentication.class);
-        when(mockSecurityContext.getAuthentication()).thenReturn(mockAuthentication);
-        when(mockAuthentication.getName()).thenReturn(ONLINE_USER);
-        SecurityContextHolder.setContext(mockSecurityContext);
     }
 
     private Instant toInstant(String s) {

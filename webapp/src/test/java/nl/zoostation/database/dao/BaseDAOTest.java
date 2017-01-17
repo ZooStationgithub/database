@@ -3,7 +3,6 @@ package nl.zoostation.database.dao;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 import nl.zoostation.database.app.config.DaoConfig;
-import nl.zoostation.database.app.config.TestDaoConfig;
 import nl.zoostation.database.app.config.DatasourceConfig;
 import nl.zoostation.database.app.config.PropertiesConfig;
 import org.junit.runner.RunWith;

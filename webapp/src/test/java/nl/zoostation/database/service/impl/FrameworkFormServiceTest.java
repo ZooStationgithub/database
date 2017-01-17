@@ -7,6 +7,7 @@ import nl.zoostation.database.model.domain.ProgrammingLanguage;
 import nl.zoostation.database.model.form.FrameworkFormObject;
 import nl.zoostation.database.model.form.FrameworkFormWrapper;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,9 +37,9 @@ public class FrameworkFormServiceTest extends BaseServiceTest {
     private FrameworkFormService frameworkFormService;
 
     @SuppressWarnings("unchecked")
-    @Before
-    public void setUp() throws Exception {
-        Mockito.reset(programmingLanguageDAO);
+    @After
+    public void tearDown() throws Exception {
+        Mockito.reset(programmingLanguageDAO, frameworkDAO);
     }
 
     @Test

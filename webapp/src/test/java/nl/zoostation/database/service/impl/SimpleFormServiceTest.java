@@ -5,6 +5,7 @@ import nl.zoostation.database.model.domain.ProgrammingLanguage;
 import nl.zoostation.database.model.form.IdNameFormObject;
 import nl.zoostation.database.model.form.SimpleFormWrapper;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -31,8 +32,8 @@ public class SimpleFormServiceTest extends BaseServiceTest {
     private SimpleFormService<ProgrammingLanguage> programmingLanguageFormService;
 
     @SuppressWarnings("unchecked")
-    @Before
-    public void setUp() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         Mockito.reset(programmingLanguageDAO);
     }
 

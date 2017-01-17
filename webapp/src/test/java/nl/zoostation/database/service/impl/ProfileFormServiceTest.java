@@ -6,6 +6,7 @@ import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.ProfileFormObject;
 import nl.zoostation.database.model.form.ProfileFormWrapper;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author valentinnastasi
  */
+@SuppressWarnings("unchecked")
 public class ProfileFormServiceTest extends BaseServiceTest {
 
     private static final long ID = 1L;
@@ -64,8 +66,12 @@ public class ProfileFormServiceTest extends BaseServiceTest {
     @SuppressWarnings("unchecked")
     @Before
     public void setUp() throws Exception {
-        Mockito.reset(countryDAO, programmingLanguageDAO, companyTypeDAO, contractTypeDAO, frameworkDAO, rankTypeDAO, roleTypeDAO, profileDAO);
         initFormLists();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Mockito.reset(countryDAO, programmingLanguageDAO, companyTypeDAO, contractTypeDAO, frameworkDAO, rankTypeDAO, roleTypeDAO, profileDAO);
     }
 
     @Test

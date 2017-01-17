@@ -2,6 +2,7 @@ package nl.zoostation.database.aspect;
 
 import nl.zoostation.database.annotations.validation.NotEmpty;
 import nl.zoostation.database.annotations.validation.NotNull;
+import nl.zoostation.database.app.tools.ObjectUtils;
 import nl.zoostation.database.exception.ErrorMessage;
 import nl.zoostation.database.exception.InvalidParameterException;
 import org.apache.commons.collections.CollectionUtils;
@@ -41,6 +42,10 @@ public class MethodParameterValidationAspect {
 
     @Before("notNullMethodArgumentInService() || notNullMethodArgumentInDAO()")
     public void checkNullParameter(JoinPoint joinPoint) {
+        if (ObjectUtils.isMock(joinPoint.getTarget())) {
+            return;
+        }
+
         String targetClassName = joinPoint.getTarget().getClass().getSimpleName();
         MethodArgument.of(joinPoint).forEach(a -> {
             if (a.hasAnnotation(NotNull.class) && Objects.isNull(a.getValue())) {
@@ -51,6 +56,10 @@ public class MethodParameterValidationAspect {
 
     @Before("notEmptyMethodArgumentInService() || notEmptyMethodArgumentInDAO()")
     public void checkEmptyParameter(JoinPoint joinPoint) {
+        if (ObjectUtils.isMock(joinPoint.getTarget())) {
+            return;
+        }
+
         String targetClassName = joinPoint.getTarget().getClass().getSimpleName();
         MethodArgument.of(joinPoint).forEach(argument -> {
             if (!argument.hasAnnotation(NotEmpty.class)) {

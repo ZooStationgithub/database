@@ -6,6 +6,7 @@ import nl.zoostation.database.mail.EmailDescription;
 import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.model.domain.Account;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -38,8 +39,8 @@ public class AccountManagementServiceTest extends BaseServiceTest {
     @Autowired
     private AccountManagementService accountManagementService;
 
-    @Before
-    public void setUp() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         Mockito.reset(accountDAO, mailService);
     }
 

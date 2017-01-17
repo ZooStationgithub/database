@@ -4,6 +4,7 @@ import nl.zoostation.database.dao.IGenericEntityDAO;
 import nl.zoostation.database.model.domain.*;
 import nl.zoostation.database.model.form.ProfileSearchFormWrapper;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -47,8 +48,12 @@ public class ProfileSearchServiceTest extends BaseServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Mockito.reset(countryDAO, programmingLanguageDAO, companyTypeDAO, contractTypeDAO, frameworkDAO, rankTypeDAO, roleTypeDAO);
         initFormLists();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Mockito.reset(countryDAO, programmingLanguageDAO, companyTypeDAO, contractTypeDAO, frameworkDAO, rankTypeDAO, roleTypeDAO);
     }
 
     @Test

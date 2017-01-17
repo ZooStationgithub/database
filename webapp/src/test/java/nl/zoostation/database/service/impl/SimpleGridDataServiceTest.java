@@ -5,6 +5,7 @@ import nl.zoostation.database.model.grid.IdNameGridRow;
 import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import nl.zoostation.database.model.grid.datatables.GridViewOutputSpec;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -28,8 +29,8 @@ public class SimpleGridDataServiceTest extends BaseServiceTest {
     private SimpleGridDataService<IdNameGridRow> programmingLanguageGridDataService;
 
     @SuppressWarnings("unchecked")
-    @Before
-    public void setUp() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         Mockito.reset(programmingLanguageGridDataDAO);
     }
 

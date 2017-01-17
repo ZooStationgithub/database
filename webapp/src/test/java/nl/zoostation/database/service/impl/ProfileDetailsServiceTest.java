@@ -49,12 +49,12 @@ public class ProfileDetailsServiceTest extends BaseServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Mockito.reset(profileDetailsViewDAO, profileDAO, mailService);
         SecurityContextHolder.setContext(mockSecurityContext(USER));
     }
 
     @After
     public void tearDown() throws Exception {
+        Mockito.reset(profileDetailsViewDAO, profileDAO, mailService);
         SecurityContextHolder.clearContext();
     }
 

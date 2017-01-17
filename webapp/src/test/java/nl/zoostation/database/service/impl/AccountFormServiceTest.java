@@ -11,6 +11,7 @@ import nl.zoostation.database.model.domain.SecurityRole;
 import nl.zoostation.database.model.form.AccountFormObject;
 import nl.zoostation.database.model.form.AccountFormWrapper;
 import nl.zoostation.database.service.BaseServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -44,9 +45,9 @@ public class AccountFormServiceTest extends BaseServiceTest {
     @Autowired
     private AccountFormService accountFormService;
 
-    @Before
-    public void setUp() throws Exception {
-        Mockito.reset(accountDAO, mailService);
+    @After
+    public void tearDown() throws Exception {
+        Mockito.reset(accountDAO, accountGroupDAO, mailService);
     }
 
     @Test

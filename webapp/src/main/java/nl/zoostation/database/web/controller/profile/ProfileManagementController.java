@@ -54,9 +54,9 @@ public class ProfileManagementController {
         profileFormService.save(profileForm);
     }
 
-    @RequestMapping(value = "/developer", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/developer/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam("u") Long id) {
+    public void delete(@PathVariable("id") Long id) {
         logger.trace("Now handling request '/developer DELETE' with ID {}", id);
         profileFormService.delete(id);
     }

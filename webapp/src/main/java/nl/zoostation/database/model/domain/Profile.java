@@ -80,28 +80,23 @@ public class Profile extends Identifiable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "known_frameworks", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "framework_id"))
-    @Cascade(CascadeType.ALL)
     private Set<Framework> knownFrameworks = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "preferred_countries", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "country_id"))
-    @Cascade(CascadeType.ALL)
     private Set<Country> preferredCountries = new HashSet<>();
 
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "preferred_company_types", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "company_type_id"))
-    @Cascade(CascadeType.ALL)
     private Set<CompanyType> preferredCompanyTypes = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "profile_ranks", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "rank_type_id"))
-    //@Cascade(CascadeType.ALL)
     private RankType rankType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "profile_roles", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "role_type_id"))
-    //@Cascade(CascadeType.ALL)
     private RoleType roleType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile", orphanRemoval = true)

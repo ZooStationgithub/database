@@ -94,11 +94,8 @@ $(document).ready(function() {
 
     $('#btnDelete').one('click', function(event) {
         $.ajax({
-            url: '/developer',
-            method: 'delete',
-            data: {
-                'u': $(event.target).data('id')
-            }
+            url: '/developer/' + $(event.target).data('id'),
+            method: 'delete'
         }).done(function(data) {
             location.replace(contextPath + '/index'); // TODO add popup
         }).fail(function(xhr) {

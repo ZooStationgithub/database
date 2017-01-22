@@ -8,6 +8,7 @@ import nl.zoostation.database.model.grid.datatables.GridViewInputSpec;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static nl.zoostation.database.app.Constants.Parameters.SEARCH_FILTER;
@@ -65,5 +66,28 @@ public class ProfileGridDataDAOTest extends BaseDAOTest {
         List<ProfileGridRow> rows = profileGridDataDAO.getRows(gridViewInputSpec);
         assertThat(rows).isNotNull().hasSize(1).usingFieldByFieldElementComparator()
                 .contains(new ProfileGridRow(1001L, null, "JavaScript", null, null, "USA"));
+    }
+
+    @Test
+    public void testGetRowsWithFilteredVisaNeeded() throws Exception {
+        ProfileSearchFormObject searchFormObject = new ProfileSearchFormObject();
+        searchFormObject.setVisaNeeded(true);
+        GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
+        gridViewInputSpec.getExtras().put(SEARCH_FILTER, searchFormObject);
+        List<ProfileGridRow> rows = profileGridDataDAO.getRows(gridViewInputSpec);
+        assertThat(rows).isNotNull().hasSize(1).usingFieldByFieldElementComparator()
+                .contains(new ProfileGridRow(1000L, "Junior", "Java", "Python", 89, "Belgium"));
+    }
+
+    @Test
+    public void testGetRowsWithFilteredFrameworks() throws Exception {
+        ProfileSearchFormObject searchFormObject = new ProfileSearchFormObject();
+        searchFormObject.setKnownFrameworkIds(Arrays.asList(1000L, 1002L, 1003L));
+        GridViewInputSpec gridViewInputSpec = new GridViewInputSpec();
+        gridViewInputSpec.getExtras().put(SEARCH_FILTER, searchFormObject);
+        List<ProfileGridRow> rows = profileGridDataDAO.getRows(gridViewInputSpec);
+        assertThat(rows).isNotNull().hasSize(2).usingFieldByFieldElementComparator()
+                .contains(new ProfileGridRow(1000L, "Junior", "Java", "Python", 89, "Belgium"),
+                        new ProfileGridRow(1002L, "Junior", null, null, 99, "Ireland"));
     }
 }

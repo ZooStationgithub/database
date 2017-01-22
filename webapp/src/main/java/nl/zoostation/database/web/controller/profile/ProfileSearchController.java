@@ -72,6 +72,7 @@ public class ProfileSearchController {
     public DataTablesResponse<ProfileGridRow> getGridData(HttpSession httpSession, DataTablesRequest request) throws IOException {
         logger.trace("Now handling request '/profile/grid GET'");
         DataTablesResponse<ProfileGridRow> response = new DataTablesResponse<>();
+        response.setDrawCounter(request.getDrawCounter());
 
         try {
             ProfileSearchFormObject formObject = deserializeSearchFilter(request.getExtras().get(SEARCH_FILTER));
@@ -81,7 +82,6 @@ public class ProfileSearchController {
             gridViewInputSpec.getExtras().put(SEARCH_FILTER, formObject);
 
             GridViewOutputSpec<ProfileGridRow> gridViewOutputSpec = profileSearchService.getGridData(gridViewInputSpec);
-            response.setDrawCounter(request.getDrawCounter());
             response.setRecords(gridViewOutputSpec.getRecords());
             response.setTotalRecords(gridViewOutputSpec.getTotalRecords());
             response.setFilteredRecords(gridViewOutputSpec.getFilteredRecords());

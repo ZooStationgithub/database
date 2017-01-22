@@ -71,7 +71,8 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.4.RELEASE'
     testCompile group: 'org.dbunit', name: 'dbunit', version: '2.5.0'
     testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version: '1.2.0'
-
+    testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.2.0'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
 }
 
 war {
@@ -90,7 +91,12 @@ jacocoTestReport {
 
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [ ])
+            fileTree(dir: it, exclude: [
+                    'nl/zoostation/database/app/config/**',
+                    'nl/zoostation/database/app/Constants**',
+                    'nl/zoostation/database/model/**',
+                    'nl/zoostation/database/aspect/ExceptionTranslatorAspect.class'
+            ])
         })
     }
 }

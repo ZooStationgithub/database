@@ -7,12 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a target="_blank" href="javascript:void(0)" class="navbar-brand"><spring:message
-                    code="navbar.app.name"/></a>
+            <a target="_blank" href="javascript:void(0)">
+                <img src='<spring:url value="/assets/img/logo.png"/>'  width="126" height="45" style="margin-top: 3px"/>
+            </a>
         </div>
         <div class="collapse navbar-collapse">
             <sec:authorize access="isAuthenticated()">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="margin-left: 30px">
                     <li>
                         <a href='<spring:url value="/index"/>'>
                             <span class="glyphicon glyphicon-home"></span>

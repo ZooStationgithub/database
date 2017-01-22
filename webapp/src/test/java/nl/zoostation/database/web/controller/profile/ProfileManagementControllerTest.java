@@ -74,7 +74,7 @@ public class ProfileManagementControllerTest extends StandaloneBaseControllerTes
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete("/developer").param("u", String.valueOf(ID)))
+        mockMvc.perform(delete("/developer/" + ID))
                 .andExpect(status().isNoContent());
 
         verify(profileFormService).delete(eq(ID));

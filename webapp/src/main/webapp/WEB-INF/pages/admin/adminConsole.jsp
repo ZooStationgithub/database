@@ -93,25 +93,18 @@
 
                 <div id="adminTabContent" class="tab-content">
                     <div id="accounts" class="tab-pane fade" role="tabpanel">
-                        <h1>This is account tab</h1>
                     </div>
                     <div id="programming-languages" class="tab-pane fade" role="tabpanel">
-                        <h1>This is programming languages tab</h1>
                     </div>
                     <div id="frameworks" class="tab-pane fade" role="tabpanel">
-                        <h1>This is frameworks tab</h1>
                     </div>
                     <div id="contract-types" class="tab-pane fade" role="tabpanel">
-                        <h1>This is contract-types tab</h1>
                     </div>
                     <div id="company-types" class="tab-pane fade" role="tabpanel">
-                        <h1>This is company-types tab</h1>
                     </div>
                     <div id="role-types" class="tab-pane fade" role="tabpanel">
-                        <h1>This is role-types tab</h1>
                     </div>
                     <div id="rank-types" class="tab-pane fade" role="tabpanel">
-                        <h1>This is rank-types tab</h1>
                     </div>
                 </div>
             </div>

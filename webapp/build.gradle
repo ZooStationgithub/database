@@ -2,7 +2,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 group 'nl.zoostation'
-version '0.1-SNAPSHOT'
+version '1.0.0-BETA'
 
 apply plugin: 'war'
 apply plugin: 'idea'

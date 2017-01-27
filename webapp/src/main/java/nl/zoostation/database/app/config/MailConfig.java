@@ -2,7 +2,6 @@ package nl.zoostation.database.app.config;
 
 import nl.zoostation.database.mail.IMailService;
 import nl.zoostation.database.mail.impl.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +51,9 @@ public class MailConfig {
     }
 
     @Bean
-    public IMailService mailService(@Autowired JavaMailSender mailSender, @Autowired freemarker.template.Configuration freeMarkerConfiguration) {
+    public IMailService mailService(
+            JavaMailSender mailSender,
+            freemarker.template.Configuration freeMarkerConfiguration) {
         return new MailService(mailSender, freeMarkerConfiguration);
     }
 

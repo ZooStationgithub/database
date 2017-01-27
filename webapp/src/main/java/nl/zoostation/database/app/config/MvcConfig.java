@@ -2,10 +2,10 @@ package nl.zoostation.database.app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.zoostation.database.web.datatables.DataTablesRequestResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,13 +20,18 @@ import java.util.List;
 
 /**
  * @author valentinnastasi
- * @created 14/10/2016 09:53
  */
 @Configuration
 @EnableWebMvc
-@Import(ServiceConfig.class)
 @ComponentScan({"nl.zoostation.database.web.controller", "nl.zoostation.database.web.handler"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
+
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+    public MvcConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -35,17 +40,12 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
+        converters.add(new MappingJackson2HttpMessageConverter(objectMapper));
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new DataTablesRequestResolver());
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper().findAndRegisterModules();
     }
 
     @Bean

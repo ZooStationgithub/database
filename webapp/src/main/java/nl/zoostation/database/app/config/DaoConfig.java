@@ -14,13 +14,11 @@ import nl.zoostation.database.model.view.ProfileView;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author valentinnastasi
  */
 @Configuration
-@Import(DatasourceConfig.class)
 public class DaoConfig {
 
     @Bean(name = "accountDAO")

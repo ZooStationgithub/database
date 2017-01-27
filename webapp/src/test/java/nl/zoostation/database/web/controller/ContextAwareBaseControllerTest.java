@@ -1,5 +1,6 @@
 package nl.zoostation.database.web.controller;
 
+import nl.zoostation.database.app.config.IntegrationConfig;
 import nl.zoostation.database.app.config.MvcConfig;
 import nl.zoostation.database.app.config.PropertiesConfig;
 import nl.zoostation.database.app.config.TestServiceConfig;
@@ -18,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {PropertiesConfig.class, MvcConfig.class, TestServiceConfig.class})
+@ContextConfiguration(classes = {PropertiesConfig.class, IntegrationConfig.class, MvcConfig.class, TestServiceConfig.class})
 public abstract class ContextAwareBaseControllerTest {
 
     @Autowired

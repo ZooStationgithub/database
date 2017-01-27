@@ -256,12 +256,16 @@
     </div>
     <div id="cardItemTemplate" style="display: none">
         <li class="person col-sm-12 col-md-6">
+            <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_COMPANY')">
             <button class="btn btn-info custom-tooltip" title="Read more" target="view-details" data-id="{{:id}}">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </button>
+            </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_SU', 'ROLE_ADMIN', 'ROLE_ZS_USER')">
             <button class="btn btn-success custom-tooltip" title="Edit" target="edit" data-id="{{:id}}">
                 <i class="glyphicon glyphicon-pencil"></i>
             </button>
+            </sec:authorize>
 
             <table class="table table-striped">
                 <tr>

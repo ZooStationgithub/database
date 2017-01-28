@@ -1,9 +1,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
 <html>
 <head>
     <title><spring:message code="page.admin.title"/></title>
+    <meta name="_msg_page.accountList.tooltip.delete" content='<spring:message code='page.accountList.tooltip.delete' javaScriptEscape='true'/>'>
+    <meta name="_msg_page.accountList.tooltip.link" content='<spring:message code='page.accountList.tooltip.link' javaScriptEscape='true'/>'>
+
     <%@ include file="../header.jsp" %>
+
+    <dandelion:bundle includes="admin" />
+    <%--
     <link rel="stylesheet" href='<spring:url value="/assets/css/dataTables.bootstrap.css"/>'>
     <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>'>
     <script type="application/javascript">
@@ -38,6 +45,7 @@
     <script src='<spring:url value="/assets/js/admin/rank/rankForm.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/rank/rankTab.js"/>' type="application/javascript"></script>
     <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
+    --%>
 </head>
 <body>
 

@@ -2,12 +2,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title><spring:message code="page.error.title"/></title>
     <%@ include file="../header.jsp" %>
-    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>'/>
+    <dandelion:bundle includes="global" />
 </head>
 <body>
 

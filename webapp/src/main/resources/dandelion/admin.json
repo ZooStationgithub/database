@@ -1,0 +1,143 @@
+{
+  "bundle": "admin",
+  "dependencies": [
+    "global",
+    "moment",
+    "select2",
+    "datatables"
+  ],
+  "assets": [
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/account/accountGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/account/accountForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/account/accountTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/pl/plGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/pl/plForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/pl/plTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/framework/frameworkGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/framework/frameworkForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/framework/frameworkTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/contract/contractGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/contract/contractForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/contract/contractTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/company/companyGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/company/companyForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/company/companyTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/role/roleGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/role/roleForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/role/roleTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/rank/rankGrid.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/rank/rankForm.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/rank/rankTab.js"
+      }
+    },
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/admin/adminConsole.js"
+      }
+    }
+  ]
+}

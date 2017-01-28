@@ -1,0 +1,40 @@
+{
+  "bundle": "global",
+  "assets": [
+    {
+      "name": "jquery",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/lib/jquery-3.1.1.min.js"
+      }
+    },
+    {
+      "name": "bootstrap-js",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/lib/bootstrap.min.js"
+      }
+    },
+    {
+      "name": "app-js",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/app.js"
+      }
+    },
+    {
+      "name": "bootstrap-css",
+      "type": "css",
+      "locations": {
+        "remote": "//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      }
+    },
+    {
+      "name": "app-css",
+      "type": "css",
+      "locations": {
+        "webapp": "/assets/css/style.css"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "bundle": "datatables",
+  "assets": [
+    {
+      "name": "datatables-js",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/lib/jquery.dataTables.min.js"
+      }
+    },
+    {
+      "name": "datatables-bootstrap-js",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/lib/dataTables.bootstrap.min.js"
+      }
+    },
+    {
+      "name": "datatables-bootstrap-css",
+      "type": "css",
+      "locations": {
+        "webapp": "/assets/css/dataTables.bootstrap.css"
+      }
+    }
+  ]
+}

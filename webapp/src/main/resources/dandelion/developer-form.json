@@ -1,0 +1,16 @@
+{
+  "bundle": "developer-form",
+  "dependencies": [
+    "global",
+    "select2",
+    "jsrender"
+  ],
+  "assets": [
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/developerForm.js"
+      }
+    }
+  ]
+}

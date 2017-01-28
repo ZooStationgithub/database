@@ -1,0 +1,14 @@
+{
+  "bundle": "developer-details",
+  "dependencies": [
+    "global"
+  ],
+  "assets": [
+    {
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/developerDetails.js"
+      }
+    }
+  ]
+}

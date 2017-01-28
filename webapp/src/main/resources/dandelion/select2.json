@@ -1,0 +1,19 @@
+{
+  "bundle": "select2",
+  "assets": [
+    {
+      "name": "select2-js",
+      "type": "js",
+      "locations": {
+        "webapp": "/assets/js/lib/select2.min.js"
+      }
+    },
+    {
+      "name": "select2-css",
+      "type": "css",
+      "locations": {
+        "webapp": "/assets/css/select2.min.css"
+      }
+    }
+  ]
+}

@@ -47,6 +47,9 @@ AdminConsolePage.prototype = function() {
 
 $(document).ready(function () {
 
+    messages['page.accountList.tooltip.delete'] = $("meta[name='_msg_page.accountList.tooltip.delete']").attr("content");
+    messages['page.accountList.tooltip.link'] = $("meta[name='_msg_page.accountList.tooltip.link']").attr("content");
+
     var pageContext = new AdminConsolePage();
     pageContext.openTab(0);
 

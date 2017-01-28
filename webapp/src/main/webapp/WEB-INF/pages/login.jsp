@@ -1,10 +1,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Login</title>
     <%@ include file="header.jsp" %>
+    <dandelion:bundle includes="global" />
 </head>
 
 <body>

@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title><spring:message code="page.accountActivated.title"/></title>
     <%@ include file="header.jsp" %>
-    <dandelion:bundle includes="global" />
+    <jwr:style src="/bundles/main.css"/>
+    <jwr:script src="/bundles/main.js"/>
 </head>
 <body>
 

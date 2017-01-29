@@ -1,22 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title><spring:message code="page.developer.details.title"/></title>
     <meta name="_msg_page.developer.details.mail" content='<spring:message code='page.developer.details.mail' javaScriptEscape='true'/>'>
     <%@ include file="header.jsp" %>
-    <dandelion:bundle includes="developer-details" />
-    <%--
-    <script>
-        var messages = {
-            'page.developer.details.mail' : "<spring:message code='page.developer.details.mail' javaScriptEscape='true'/>"
-        }
-    </script>
-    <script src='<spring:url value="/assets/js/developerDetails.js"/>' type="application/javascript"></script>
-    -->
+    <jwr:style src="/bundles/main.css"/>
+    <jwr:script src="/bundles/developerDetails.js"/>
 </head>
 <body>
 

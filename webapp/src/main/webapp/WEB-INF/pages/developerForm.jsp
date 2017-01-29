@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +12,8 @@
         </c:choose>
     </title>
     <%@ include file="header.jsp" %>
-    <dandelion:bundle includes="developer-form" />
-    <%--
-    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>' />
-    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/developerForm.js"/>' type="application/javascript"></script>
-    --%>
+    <jwr:style src="/bundles/developerForm.css"/>
+    <jwr:script src="/bundles/developerForm.js"/>
 </head>
 <body>
 

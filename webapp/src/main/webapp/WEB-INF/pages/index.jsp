@@ -2,21 +2,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title><spring:message code="page.index.title"/></title>
     <%@ include file="header.jsp" %>
-    <dandelion:bundle includes="index" />
-    <%--
-    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>' />
-    <script src='<spring:url value="/assets/js/lib/jsrender.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/index.js"/>' type="application/javascript"></script>
-    --%>
+    <jwr:style src="/bundles/index.css" />
+    <jwr:script src="/bundles/index.js" />
 </head>
 <body>
 

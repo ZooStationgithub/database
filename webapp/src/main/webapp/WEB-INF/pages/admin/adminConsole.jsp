@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="dandelion" uri="http://github.com/dandelion" %>
+<%@ taglib uri="http://jawr.net/tags" prefix="jwr" %>
 <html>
 <head>
     <title><spring:message code="page.admin.title"/></title>
@@ -9,43 +9,8 @@
 
     <%@ include file="../header.jsp" %>
 
-    <dandelion:bundle includes="admin" />
-    <%--
-    <link rel="stylesheet" href='<spring:url value="/assets/css/dataTables.bootstrap.css"/>'>
-    <link rel="stylesheet" href='<spring:url value="/assets/css/select2.min.css"/>'>
-    <script type="application/javascript">
-        var messages = {
-            'page.accountList.tooltip.delete' : "<spring:message code='page.accountList.tooltip.delete' javaScriptEscape='true'/>",
-            'page.accountList.tooltip.link' : "<spring:message code='page.accountList.tooltip.link' javaScriptEscape='true'/>"
-        };
-    </script>
-    <script src='<spring:url value="/assets/js/lib/jquery.dataTables.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/dataTables.bootstrap.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/select2.min.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/lib/moment.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/account/accountGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/account/accountForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/account/accountTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/pl/plGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/pl/plForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/pl/plTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/framework/frameworkGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/framework/frameworkForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/framework/frameworkTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/contract/contractGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/contract/contractForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/contract/contractTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/company/companyGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/company/companyForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/company/companyTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/role/roleGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/role/roleForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/role/roleTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/rank/rankGrid.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/rank/rankForm.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/rank/rankTab.js"/>' type="application/javascript"></script>
-    <script src='<spring:url value="/assets/js/admin/adminConsole.js"/>' type="application/javascript"></script>
-    --%>
+    <jwr:style src="/bundles/admin.css"/>
+    <jwr:script src="/bundles/admin.js"/>
 </head>
 <body>
 

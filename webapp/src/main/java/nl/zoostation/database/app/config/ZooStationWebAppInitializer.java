@@ -1,15 +1,15 @@
 package nl.zoostation.database.app.config;
 
-import com.github.dandelion.core.web.DandelionFilter;
-import com.github.dandelion.core.web.DandelionServlet;
+import net.jawr.web.servlet.JawrServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.*;
-import java.util.EnumSet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
 /**
  * @author valentinnastasi
@@ -22,8 +22,9 @@ public class ZooStationWebAppInitializer implements WebApplicationInitializer {
         servletContext.addListener(new ContextLoaderListener(context));
 
         addDispatcherServlet(servletContext, context);
-        addDandelionServlet(servletContext);
-        addDandelionFilter(servletContext);
+        addJawrJavaScriptServlet(servletContext);
+        addJawrCssServlet(servletContext);
+        addJawrBinaryServlet(servletContext);
     }
 
     private WebApplicationContext createWebApplicationContext() {
@@ -39,16 +40,27 @@ public class ZooStationWebAppInitializer implements WebApplicationInitializer {
         dispatcherServlet.setLoadOnStartup(1);
     }
 
-    private void addDandelionServlet(ServletContext servletContext) {
-        ServletRegistration.Dynamic dandelionServlet = servletContext.addServlet("dandelionServlet", new DandelionServlet());
-        dandelionServlet.addMapping("/ddlAssets/*");
+    private void addJawrJavaScriptServlet(ServletContext servletContext) {
+        ServletRegistration.Dynamic jsServlet = servletContext.addServlet("jsServlet", new JawrServlet());
+        jsServlet.addMapping("*.js");
+        jsServlet.setInitParameter("configLocation", "/jawr.properties");
+        jsServlet.setLoadOnStartup(1);
     }
 
-    private void addDandelionFilter(ServletContext servletContext) {
-        EnumSet<DispatcherType> types = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.ERROR);
+    private void addJawrCssServlet(ServletContext servletContext) {
+        ServletRegistration.Dynamic cssServlet = servletContext.addServlet("cssServlet", new JawrServlet());
+        cssServlet.addMapping("*.css");
+        cssServlet.setInitParameter("configLocation", "/jawr.properties");
+        cssServlet.setInitParameter("type", "css");
+        cssServlet.setLoadOnStartup(1);
+    }
 
-        FilterRegistration.Dynamic dandelionFilter = servletContext.addFilter("dandelionFilter", new DandelionFilter());
-        dandelionFilter.addMappingForUrlPatterns(types, true, "/*");
+    private void addJawrBinaryServlet(ServletContext servletContext) {
+        ServletRegistration.Dynamic binaryServlet = servletContext.addServlet("binaryServlet", new JawrServlet());
+        binaryServlet.addMapping("*.png", "*.jpg", "*.gif", "*.woff", "*.ttf", "*.woff2", "*.svg", "*.eot");
+        binaryServlet.setInitParameter("configLocation", "/jawr.properties");
+        binaryServlet.setInitParameter("type", "binary");
+        binaryServlet.setLoadOnStartup(0);
     }
 
 }
